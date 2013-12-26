@@ -1,0 +1,594 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                          TThhee EEllmm AAlliiaass SSyysstteemm UUsseerrss GGuuiiddee
+
+
+
+
+                        _W_h_a_t _a_l_i_a_s_e_s _a_r_e _a_n_d _h_o_w _t_o _u_s_e _t_h_e_m
+                               _i_n _t_h_e EEllmm _m_a_i_l _s_y_s_t_e_m
+
+
+                                     Dave Taylor
+
+                            Hewlett-Packard Laboratories
+                                 1501 Page Mill Road
+                                    Palo Alto CA
+                                        94304
+
+
+
+                   email:  taylor@hplabs.HP.COM  or  hplabs!taylor
+
+
+
+          >>> Elm is now in the public trust. Bug reports, comments, etc. to: <<<
+
+                                    Syd Weinstein
+                               Datacomp Systems, Inc.
+                                   3837 Byron Road
+                          Huntingdon Valley, PA 19006-2320
+
+                          email: elm@DSI.COM  or  dsinc!elm
+
+
+                       ((CC)) Copyright 1986, 1987 by Dave Taylor
+            ((CC)) Copyright 1988, 1989, 1990 by The USENET Community Trust
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                          TThhee EEllmm AAlliiaass SSyysstteemm UUsseerrss GGuuiiddee
+
+                                    (Version 2.3)
+
+
+                                     Dave Taylor
+
+                            Hewlett-Packard Laboratories
+                                 1501 Page Mill Road
+                                    Palo Alto CA
+                                        94304
+
+                   email: taylor@hplabs.HP.COM  or  hplabs!taylor
+
+
+          >>>  Elm  is now in the public trust. Bug reports, comments, etc.
+                                       to: <<<
+
+                                    Syd Weinstein
+                               Datacomp Systems, Inc.
+                                   3837 Byron Road
+                          Huntingdon Valley, PA 19006-2320
+
+                          email: elm@DSI.COM  or  dsinc!elm
+
+
+                                     May 1, 1990
+
+
+
+
+
+
+               This document is intended as a supplement to the  _E_l_m  _U_s_e_r_s
+          _G_u_i_d_e and is only of interest to those users desiring more knowl-
+          edge about how aliases work and how to create strange and  excit-
+          ing  aliases  for their systems (okay, so maybe it's not _t_h_a_t ex-
+          citing!)
+
+
+               This document is broken up into the following sections; user
+          aliases,  group  aliases,  system aliases, editing and installing
+          new aliases,  the  host  routing  database,  the  domain  routing
+          database, general warnings and other chitchat.
+
+
+
+
+
+
+
+          Alias Users Guide                                     Version 2.3
+
+
+
+
+
+          Alias Users Guide                                     Version 2.3
+
+
+
+          11..  UUsseerr AAlliiaasseess
+
+          The  most simple type of aliases in the EEllmm system are individual
+          user aliases.  These are made up of three parts;
+               _a_l_i_a_s_n_a_m_e _l_i_s_t  =  _u_s_e_r_n_a_m_e  =  _a_d_d_r_e_s_s 1
+          Where the _a_l_i_a_s_n_a_m_e _l_i_s_t is either a single aliasname2 or a  list
+          of  aliasnames separated by commas.  Aliasnames are case insensi-
+          tive and will be converted to all lower case by the alias system.
+
+               _U_s_e_r_n_a_m_e is used to indicate the full `real name' of the us-
+          er.  For example, if you had an alias for `taylor' to get to  me,
+          the  _u_s_e_r_n_a_m_e  field would contain `Dave Taylor' or perhaps `Dave
+          Taylor at HP' or some other permutation.  EEllmm uses this  informa-
+          tion to add the users full name to the addresses of outbound mail
+          to get more readable addresses.
+
+               _A_d_d_r_e_s_s is either the users full electronic mail address or,
+          if the machine routing database is installed, the minimum address
+          needed to specify the destination.  For example, say our  routing
+          database  contained information on how to get to machine `hp-sdd'
+          and I wanted to have an address for my  friend  Ken  there  --  I
+          could  have  his address specified as simply `ken@hp-sdd' (or al-
+          ternatively `hp-sdd!ken' since the two are  functionally  equiva-
+          lent).
+
+
+               Let's get on to some examples, shall we?
+
+          Consider this excerpt from my own _._e_l_m_/_a_l_i_a_s_e_s_._t_e_x_t file;
+
+               ## MMaaiill aalliiaasseess ffoorr DDaavvee TTaayylloorr
+               ## FFrriieennddss ffrroomm UUCCSSDD
+               aaddddiiee          == AAddddiiee SSiillvvaa    == aaddddiiee@@hhpp--ssdddd..SSDDDD..HHPP..CCOOMM
+               ffrraannkk,,mmiinnjjaarreezz == FFrraannkk MMiinnjjaarreezz == MMiinnjjaarreezz..VVeerriiffyy@@ddoocckkmmaasstteerr..aarrppaa
+               ppiizzzziinnii        == KKeenn PPiizzzziinnii    == hhppllaabbss!!uuccbbvvaaxx!!uuccddaavviiss!!ppaaii!!kkeenn
+
+          Note that the alias for Frank Minjarez has two _a_l_i_a_s_n_a_m_e_s associ-
+          ated with it, ffrraannkk and mmiinnjjaarreezz.  Also notice that the first and
+          second  aliases  use the ARPA Internet style naming convention of
+          _u_s_e_r_@_m_a_c_h_i_n_e whereas the third uses  the  UUCP  notation  of  _m_a_-
+          _c_h_i_n_e_!_u_s_e_r.
+
+               For  the  most  part,  the  notational format is transparent
+          within the alias file -- the only time it _d_o_e_s make a  difference
+
+          __________
+          1. Notice that the alias separator has moved from being
+          a colon character (`:') to the equals sign (`=').  This
+          is due to the  requirements  of  the  X.400  addressing
+          scheme.
+          2.  aliasnames  can be any combination of letters, num-
+          bers,  dashes  (`-'),  periods  (`.'),  or  underscores
+          (`_').  Letter case is not significant.  That is `FRED'
+          and `Fred' are identical.
+
+
+          May 1, 1990                                                Page 2
+
+
+
+
+
+          Alias Users Guide                                     Version 2.3
+
+
+
+          is  if you have to specify more than the machine that the user is
+          receiving mail on (as in the third example above).
+
+               Suffice to say that if you must specify  any  sort  of  uucp
+          route  that  you should use the uucp notation as much as possible
+          to ensure that the system expands the correct machine name.  Sim-
+          ilarly,  if  you're bouncing mail through different ARPA Internet
+          sites (to get to a foreign system, as in the example  below)  you
+          should use the notation that system expects:
+
+                              lliissttsseerrvv%%bbyyuuaaddmmiinn..BBIITTNNEETT@@rruuggtteerrss..eedduu
+
+
+          22..  GGrroouupp AAlliiaasseess
+
+          After  the confusion of user aliases, group aliases are even more
+          fun!  For the most part the notation is very similar;
+
+                         _a_l_i_a_s_n_a_m_e _l_i_s_t   =   _g_r_o_u_p_n_a_m_e   =   _l_i_s_t _o_f  _p_e_o_-
+          _p_l_e
+
+          Where  _a_l_i_a_s_n_a_m_e _l_i_s_t and _g_r_o_u_p_n_a_m_e are exactly equivalent to the
+          corresponding fields in user aliases.
+
+               The interesting part is the _l_i_s_t _o_f _p_e_o_p_l_e field; this field
+          is  actually  in the same notation as the aliasname list, so it's
+          really quite easy to create.  It's best to illustrate by example:
+
+               ffrriieennddss,, mmyyppaallss == TThhee GGaanngg ooff SSiixx == jjooee,, llaarrrryy,, mmaarryy,, jjooaannnnaa,,
+                                                   nnaannccyy,, mmiicchhaaeell
+
+          (Notice that you can continue onto as many lines as you'd like so
+          long as each additional line start with either a SPACE or  a  TAB
+          character)
+
+               The  major limitation with group aliases is that each of the
+          people in the list must be a _p_r_e_v_i_o_u_s_l_y _d_e_f_i_n_e_d _a_l_i_a_s or a  valid
+          mail address on the current machine.
+
+               What  does  this  mean?   That the following excerpt from an
+          alias file:
+
+               hhaawwaaiiii == TThhee HHaawwaaiiiiaann TTwwiinnss == jjooee@@ccss..rriitt..eedduu,, mmaaooaa
+               mmaaooaa   == MMaaooaa LLiicchhtteennsskkii JJrr == mmaaooaa@@HHaawwaaiiii..ccss..uuhh..eedduu
+
+          will fail for two reasons -- not only does the group _l_i_s_t _o_f _p_e_o_-
+          _p_l_e  contain a complex address, but it also contains an aliasname
+          that is defined _f_u_r_t_h_e_r _o_n in the _._e_l_m_/_a_l_i_a_s_e_s_._t_e_x_t file.
+
+               The correct way to have the previous aliases in the file are
+          to have them organized like:
+
+               jjooee    == JJooee LLiicchhtteennsskkii     == jjooee@@ccss..rriitt..eedduu
+               mmaaooaa   == MMaaooaa LLiicchhtteennsskkii JJrr == mmaaooaa@@HHaawwaaiiii..ccss..uuhh..eedduu
+
+
+          May 1, 1990                                                Page 3
+
+
+
+
+
+          Alias Users Guide                                     Version 2.3
+
+
+
+               hhaawwaaiiii == TThhee HHaawwaaiiiiaann TTwwiinnss == jjooee,, mmaaooaa
+
+          which will then work correctly.
+
+          Fortunately, while this seems fairly picky, when you run _n_e_w_a_l_i_a_s
+          to install the new aliases, you'll get  relevant  and  meaningful
+          error messages to help you fix your aliases up correctly.
+
+
+          33..  SSyysstteemm AAlliiaasseess
+
+          System  aliases are functionally equivalent to the individual EEllmm
+          alias lists each EEllmm user has (both user aliases and group alias-
+          es)  but  are  _r_e_a_d  _o_n_l_y for everyone but the EEllmm administrator.
+          The format of the file is identical to the users  file,  and  the
+          only  difference  is  that this file is expected to be located in
+          the  directory  that  contains  the  _s_y_s_t_e_m___h_a_s_h___f_i_l_e  and   _s_y_s_-
+          _t_e_m___d_a_t_a___f_i_l_e files (see the _E_l_m _C_o_n_f_i_g_u_r_a_t_i_o_n _G_u_i_d_e for more de-
+          tails on these variables).
+
+               Simply create the system alias file in the specified  direc-
+          tory  as  you  would a normal alias file, and install it the same
+          way (see the following section for more details on that).
+
+               Voila!!
+
+
+          44..  EEddiittiinngg aanndd IInnssttaalllliinngg NNeeww AAlliiaasseess
+
+          To install new aliases, you need merely to create, or modify, the
+          file  _._e_l_m_/_a_l_i_a_s_e_s_._t_e_x_t  until  you're  satisfied  with it and it
+          meets the requirements discussed above.  You can then try to  in-
+          stall it with the command;
+
+                 $ nneewwaalliiaass
+
+          which  will either report back the number of aliases installed or
+          any errors encountered trying to parse and store the given  alias
+          list.
+
+               Note  that  blank lines are no problem and that comments are
+          not only allowed but actually encouraged, and must  have  `##'  as
+          the first character of each comment line.
+
+          Finally, if you find that you're hitting the ``Too many aliases''
+          error, then you'll need to  reconfigure  the  entire  EEllmm  system
+          (again, see _T_h_e _E_l_m _C_o_n_f_i_g_u_r_a_t_i_o_n _G_u_i_d_e).
+
+
+          55..  TThhee HHoossttnnaammee RRoouuttiinngg DDaattaabbaassee
+
+          Floating  about on the various networks is a rather nifty program
+          by a  number  of  people,  including  Peter  Honeyman  and  Steve
+          Bellovin,  called _p_a_t_h_a_l_i_a_s.  What this software does is take the
+
+
+          May 1, 1990                                                Page 4
+
+
+
+
+
+          Alias Users Guide                                     Version 2.3
+
+
+
+          Usenet articles in the group ``comp.mail.maps'' and  change  them
+          into a file of the form;
+
+                 _h_o_s_t_n_a_m_e    <tab>    _a_d_d_r_e_s_s
+
+          which  then  must be sorted alphabetically and stored in the file
+          pointed to by _p_a_t_h_f_i_l_e for EEllmm (and other programs) to use.
+
+               If you don't have the program, or don't want to use it,  you
+          can  simulate  this  file by listing machines in the same format.
+          The exact format expected is;
+
+                 _h_o_s_t_n_a_m_e<tab>_m_a_c_h_i_n_e_-_a_d_d_r_e_s_s
+
+          where _h_o_s_t_n_a_m_e is a limited identifier  (no  special  characters)
+          and  machine-address  MUST  contain the sequence `%s' (and conse-
+          quently any other percent signs that appear in the  address  must
+          be  paired) so that the call in the program ``sprintf(buffer, ma-
+          chine-address, username)'' will generate a valid return  address.
+          This file must be sorted alphabetically for Elm to use it proper-
+          ly.
+
+               By way of example, here are a few entries from my own file;
+
+               HHPPLL         %%ss@@hhppllaabbss
+               PPAARRCC        %%ss%%%%XXeerrooxx..PPAA..CCOOMM@@hhppllaabbss
+               aammcc--hhqq      %%ss%%%%AAMMCC--HHQQ..AARRPPAA@@hhppllaabbss
+               iimmssssss       %%ss%%%%IIMMSSSSSS%%%%AAII..SSTTAANNFFOORRDD..EEDDUU@@hhppllaabbss
+               iinnffoopprroo     hhppllaabbss!!iinnffoopprroo!!%%ss
+               iinntteerrlleeaaff   ssuunn!!iinntteerrlleeaaff!!%%ss
+
+          As you can see, the addresses can  get  pretty  complicated.   In
+          fact  it's  due  purely  to the complexity of addresses that this
+          file is so useful.
+
+          Some brief examples:
+
+               $$ eellmm jjooee@@HHPPLL
+               TToo:: jjooee@@hhppllaabbss
+               $$ eellmm mmiicchheellllee@@iimmssssss
+               TToo:: mmiicchheellllee%%IIMMSSSSSS%%AAII..SSTTAANNFFOORRDD..EEDDUU@@hhppllaabbss
+               $$ eellmm ffiieeddlleerr@@iinnffoopprroo
+               TToo:: hhppllaabbss!!iinnffoopprroo!!ffiieeddlleerr
+
+          If you'd like further information on the _p_a_t_h_a_l_i_a_s  program,  try
+          keeping   track   of   the   entries   in   the   netnews   group
+          _c_o_m_p_._s_o_u_r_c_e_s_._u_n_i_x -- it's posted about once a year or so...
+
+
+          66..  TThhee DDoommaaiinn RRoouuttiinngg DDaattaabbaassee
+
+          Another interesting feature of the EEllmm system  is  the  shorthand
+          domain  routing database.  This is the same database (in the same
+          strange format)  as  used  by  the  publically  available  _u_u_m_a_i_l
+
+
+          May 1, 1990                                                Page 5
+
+
+
+
+
+          Alias Users Guide                                     Version 2.3
+
+
+
+          program.
+
+               In a nutshell, the file contains information of the form;
+
+               _d_o_m_a_i_n_,   _p_a_t_h_-_t_o_-_g_a_t_e_w_a_y_,  _r_e_w_r_i_t_e_-_t_e_m_p_l_a_t_e
+
+          The _d_o_m_a_i_n field must begin with a leading `.' and is usually or-
+          dered in the same way as the standard domain  entries  (that  is,
+          ``.HP.COM'' not ``.COM.HP'').
+
+               _P_a_t_h_-_t_o_-_g_a_t_e_w_a_y  is routing information on how to get to the
+          particular gateway that this domain expects, and always is a  ma-
+          chine/host  name  (to be found in the pathalias database, see the
+          previous section) preceded by a `>' character.
+
+               _R_e_w_r_i_t_e_-_t_e_m_p_l_a_t_e is the most interesting of the  three,  and
+          is  akin  to a printf string for C.  The changes are that instead
+          of `%s' `%d' and so on, the actual ``percent''  values  represent
+          various parts of the address, namely;
+
+               SSyymmbbooll   RReepprreesseennttss
+                 %U     The username in the To: address
+                 %N     The remote machine name
+                 %D     %N + domain information
+                 %R     path to %N from pathalias
+                 %P     _p_a_t_h_-_t_o_-_g_a_t_e_w_a_y entry
+                 %%     The `%' character
+
+          with  this  very  un-intuitive setup, let's look at a few entries
+          from the domains database and then see how they work:
+
+               ..EEUURR..UUUUCCPP,, ,, ,, %%RR!!%%UU
+               ..AATTTT..CCOOMM,, >>aatttt,, ,, %%PP!!%%DD!!%%UU
+               ..HHPP..CCOOMM,, ,, ,, %%RR!!%%UU
+               ..UUUUCCPP,, ,, ,, %%RR!!%%UU
+               ..CCOOMM,, >>hhppllaabbss,, ,, %%PP!!%%UU@@%%DD
+               ..CCSSNNEETT,, >>hhppllaabbss,, ,, %%PP!!1188::1122::0000%%%%DD@@CCSSNNEETT--RREELLAAYY..AARRPPAA
+               ..EEDDUU,, >>hhppllaabbss,, ,, %%PP!!%%UU@@%%DD
+
+          (Note the presence of a third field that is always null.  This is
+          for  compatibility  with  the  _u_u_m_a_i_l  program.  Also notice that
+          there is a space after each and every comma, even if  that  field
+          has an entry.)
+
+               To  see how it all works, let's suppose that we want to send
+          a message to `jad@cs.purdue.edu'.  This would break down into the
+          following fields:
+
+               %U = _j_a_d
+               %N = _c_s
+               %D = _c_s_._p_u_r_d_u_e_._e_d_u
+
+          When the EEllmm program matches the _._e_d_u  entry
+
+
+
+          May 1, 1990                                                Page 6
+
+
+
+
+
+          Alias Users Guide                                     Version 2.3
+
+
+
+               ..EEDDUU,, >>hhppllaabbss,, ,, %%PP!!%%UU@@%%DD
+
+          the other field instantiated would be:
+
+               %P = _p_a_t_h _t_o _h_p_l_a_b_s
+               template = _%_P_!_%_U_@_%_D
+
+          If, say, our path to _h_p_l_a_b_s was _h_p_c_n_o_e_!_h_p_l_a_b_s, then the fully ex-
+          panded address would be:
+
+               hhppccnnooee!!hhppllaabbss!!jjaadd@@ccss..ppuurrdduuee..eedduu
+
+          and so on.
+
+          What does this mean to the average user?  It means that  you  can
+          for  the  most  part send mail to people on different networks by
+          simply using their full address, including  any  domain  informa-
+          tion,  so  that  mail  to addresses like ``Jack@AI.MIT.EDU'' will
+          work, a message to ``SueAnn@BBN.MAILNET'' will work and so on!
+
+
+          77..  OOtthheerr SSttuuffff nnoott CCoovveerreedd YYeett
+
+          Probably the biggest question you have in your mind right now  is
+          ``But  how the heck does this relate to my existing _B_e_r_k_e_l_e_y _M_a_i_l
+          aliases and the lower-level _s_e_n_d_m_a_i_l alias system??''  Well, rest
+          assured  that if you _r_e_a_l_l_y want to have your aliases down in the
+          transport you can.  No problem.  All you'll need to do is to turn
+          off the address validation routine in EEllmm.
+
+               And  for those ex-_B_e_r_k_e_l_e_y _M_a_i_l fans, you can translate your
+          aliases into the format that EEllmm wants by  running  them  through
+          the _a_w_k script listed in the appendix.
+
+               Finally,  if you have any problems or questions, try looking
+          in the _n_e_w_a_l_i_a_s manual entry, or dropping me a line at the ``usu-
+          al'' email address.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          May 1, 1990                                                Page 7
+
+
+
+
+
+          Alias Users Guide                                     Version 2.3
+
+
+
+                                    AAppppeennddiixx OOnnee
+                     AAnn AAWWKK SSccrriipptt ffoorr TTrraannssllaattiinngg AAlliiaasseess ffrroomm
+          aa _B_e_r_k_e_l_e_y _M_a_i_l ````..mmaaiillrrcc'''' FFiillee ttoo aann _E_l_m ````..eellmm//aalliiaasseess..tteexxtt''''
+                                        FFiillee
+
+
+          BBEEGGIINN {{ pprriinntt ""## EEllmm ..eellmm//aalliiaasseess..tteexxtt ffiillee,, ffrroomm aa ..mmaaiillrrcc ffiillee......""
+               pprriinntt """"
+               }}
+          nneexxtt__lliinnee ==== 11 {{
+               nneexxtt__lliinnee == 00;;
+               ggrroouupp == """"
+               ffoorr ((ii == 11;; ii <<== NNFF;; ii++++)) {{
+                 iiff ((ii ==== NNFF &&&& $$ii ==== ""\\\\"")) sseepp == """"
+                 eellssee                       sseepp == "",, ""
+                 iiff (($$ii ==== ""\\\\"")) {{
+                   ggrroouupp == sspprriinnttff((""%%ss,,"",, ggrroouupp))
+                   nneexxtt__lliinnee == 11;;
+                 }}
+                 eellssee iiff ((lleennggtthh((ggrroouupp)) >> 00))
+                   ggrroouupp == sspprriinnttff((""%%ss%%ss%%ss"",, ggrroouupp,, sseepp,, $$ii));;
+                 eellssee
+                   ggrroouupp == $$ii;;
+                 }}
+                 pprriinntt ""\\tt"" ggrroouupp
+               }}
+          $$11 ~~ //[[AAaa]]lliiaass || [[GGgg]]rroouupp// {{
+               iiff (( NNFF ==== 33))
+                 pprriinntt $$22 "" == uusseerr aalliiaass == "" $$33;;
+               eellssee {{
+                 ggrroouupp == """"
+                 ffoorr ((ii == 33;; ii <<== NNFF;; ii++++)) {{
+                   iiff ((ii ==== NNFF &&&& $$ii ==== ""\\\\"")) sseepp == """"
+                   eellssee        sseepp == "",, ""
+                   iiff (($$ii ==== ""\\\\"")) {{
+                     ggrroouupp == sspprriinnttff((""%%ss,,"",, ggrroouupp))
+                     nneexxtt__lliinnee == 11;;
+                   }}
+                   eellssee iiff ((lleennggtthh((ggrroouupp)) >> 00))
+                     ggrroouupp == sspprriinnttff((""%%ss%%ss%%ss"",, ggrroouupp,, sseepp,, $$ii));;
+                   eellssee
+                     ggrroouupp == $$ii;;
+                   }}
+                   pprriinntt $$22 "" == ggrroouupp aalliiaass == "" ggrroouupp;;
+                 }}
+               }}
+
+          Note:  this  script  is  contained  in the release under the name
+          ``mailrc.awk'' in the utilities directory ``utils''.
+
+
+
+
+
+
+
+          May 1, 1990                                                Page 8
+
+
+

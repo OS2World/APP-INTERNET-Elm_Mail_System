@@ -1,0 +1,283 @@
+	Elm 2.3 Patch 11 - More bug/portability fixes
+	Mon Jan  7 20:31:33 EST 1991 (Creation date, not posting date)
+Fix missed j=0 assign in newalias
+From: Shawn Shealy  <shawn@Columbia.NCR.COM>
+
+Fix warning message in editmsg on voidsig machines
+From: Chip Salzenberg
+
+
+	Elm 2.3 Patch 10 - More bug/portability fixes
+	Wed Dec 19 09:52:45 EST 1990 (Creation date, not posting date)
+Add back missing line in length check
+From: Syd
+
+Fix not checking for mail before scanning
+From: Syd via report from Joern Lubkoll
+
+
+	Elm 2.3 Patch 9 - More bug/portability fixes
+	Wed Dec  5 22:10:09 EST 1990 (Creation date, not posting date)
+Add yp search to /etc/yp as well as /usr/etc/yp
+From: Lee Ziegenhals
+
+Remove start_highlight and end_highlight, no longer used
+From: W. David Higgins
+
+Add uninstall target to doc Makefile.SH
+From: Rusty Haddock
+
+Init time zone header to avoid garbage strings
+From: Norman J. Meluch
+
+Added FAILED_SAVE log case to filter utils.
+Fixed out of order lines.
+From: Steve Campbell
+
+Remove opterr from newmail, unused and some getopts
+dont define it.
+From: Syd via Peter King
+
+Fix arepdaem lock file creation flags, wrong modes left over
+from open call
+From: Syd via Terry Furman
+
+Fix header end on reply due to white space continuation allowing
+it to go too far.
+From: Syd via report from Tom Davis <tdd@endure.cl.msu.edu>
+
+
+	Elm 2.3 Patch 8 - Important fix to Patch 7
+	Oct 10 13:02 EDT 1990 (Creation date, not posting date)
+Please FOLKS, follow the 'After Patching Instructions', it'll save
+us all alot of e-mail.....
+
+This is the quickie patch to fix up a few things that PL7 didn't
+do as cleanly as it should have.
+
+Make the symbol submitflagss look less like a type, it is real.
+From: Syd
+
+Fix calling sequence to copy_message for new MMDF argument
+From: Syd
+
+Allow Priority: normal is upper or lower N (quickie fix)
+From: Syd
+
+
+	Elm 2.3 Patch 7 - Misc bug fixes
+	Sun Oct  7 21:33:58 EDT 1990 (Creation date, not posting date)
+Fixes when newmail detects that the mail folder has grown in size it prints a newline, even
+if there were no new subjects in the folder.
+From: Uwe Doering <gemini%geminix.mbx.sub.org@RELAY.CS.NET>
+
+fix the bounce problem reported earlier when using MMDF submit as the MTA.
+From: Jim Clausing <jac%brahms.tinton.ccur.com@RELAY.CS.NET>
+
+fix where x.400 type mailers cause Elm to tag all messages as urgent.
+From: ldk@udev.cdc.com (ld kelley x-6857)
+
+allow non-elm mailers to correctly parse filter's folders.
+From: sane!genmri!doug@crdgw1.ge.com (Doug Becker)
+
+Added missing parens to an imbedded assignment.
+From: Phil Hochstetler <phil@sequent.com>
+
+Add ifndef X-Mailer to fastmail
+From: Syd
+
+Fix EB29 - alternate editor being used all the time
+From: Michael Clay
+
+newmail did not correctly present sender name if the source
+of the mail is local from the system.
+From: JT McDuffie <guardian!jt@Sun.COM>
+
+
+	Elm 2.3 Patch 6 - Misc bug fixes
+	Wed Aug 15 22:43:46 EDT 1990 (Creation date, not posting date)
+The newly introduced function 'stricmp' has a name conflict with a libc
+function under SunOS 4.1.  Changed name to istrcmp.
+From: scs@lokkur.dexter.mi.us (Steve Simmons)
+
+Change resync not to delete empty files
+From: Syd
+
+the user's (unmodified) limit criteria was being compared w/
+the lower-case version of the header contents.
+From: dwolfe@earth.sps.mot.com (Dave Wolfe)
+
+deal with several of the problems that have come up trying to use the MMDF
+submit program directly rather than going through the sendmail stub
+included with MMDF.  This should take care of the problem of not being
+able to send mail to usernames beginning with "i" and with the
+'No valid author specified' problem.
+From: jac%brahms.tinton.ccur.com@RELAY.CS.NET
+
+Fix to use time instead of bytes for changes to file and to process
+each entry on delete properly
+From: Denis Lambot <d241s016!lde@swn.siemens.be>
+
+
+	Elm 2.3 Patch 5 - Misc bug fixes
+	Thu Jul 12 23:37:22 EDT 1990 (Creation date, not posting date)
+Be sure that output characters are not negative integers.
+From: tct!chip@uunet.UU.NET (Chip Salzenberg)
+
+patch fixes some minor typing mistakes in error messages
+From: hz247bi@duc220.uni-duisburg.de (Bieniek)
+
+Fix cursor getting lost on some system calls by forcing
+an absolute move.
+From: Syd, reported by Douglas Lamb
+
+When Elm is compiled with the NO_XHEADER symbol defined, it failed
+to put a blank line between the message header and message body.
+From: mca@medicus.medicus.com (Mark Adams)
+
+Fix MMDF case, where MSG_SEPERATOR has newline, buffer check
+didnt, thus it didnt detect the MSG_SEPERATOR.
+From: jbwaters@bsu-cs.bsu.edu (J. Brian Waters)
+
+Make domain name checking case independent
+From: Syd, reported by Steven Baur
+
+
+	Elm 2.3 Patch 4 - 8 Bit Changes
+	Tue Jun 26 20:45:13 EDT 1990 (Creation date, not posting date)
+Fix encoding to encode lines that start with [ and are not
+valid Elm keywords.  It was confusing decode.
+From: Syd via a report from Lenny Tropiano
+
+Add a new configuration internal variable to support
+remembering correctly hostcomp for Configure -d
+From: Chip Salzenberg
+
+Make 8 bit work and add some better defaults to the
+configure script.
+From: Syd via patch idea from Robert Claeson <prc@erbe.se>
+
+Fix typo in Instruct and Configure
+From: David Kozinn <monymsys!david>
+
+Fix boundry check on argument count in fastmail
+From: Syd reported by Eric J. Peterson
+
+
+	Elm 2.3 Patch 3 - Release cleanup - Part III of III
+	Thu Jun 21 23:35:40 EDT 1990 (Creation date, not posting date)
+Fix symbol for NO_XHEADER
+From: tom@tarzan.UUCP (Thomas Krickstadt)
+
+Add inbox as another fixed mailbox name
+From: heiser@tdw201.ed.ray.com
+
+Add carriage return to edit return because of loss
+of where col is on calling external editor
+From: Syd
+
+allow the calendar scan function to allow items to be indented as in the doc example.
+From: uunet!med9k.parvenu.COM!jpen (Jerry Pendergraft)
+
+Fix wrong file name on elm man page
+From: indra@bach.AMD.COM (Indra Singhal)
+
+Add new libc nm code from Larry Wall for newest configure changes
+Update uname check for executing uname
+From: Syd
+
+The example for including command output doesn't match the text or the
+comment.  Use :r for clean insertion (!! replaces the current line).
+From: pdc%lunch.wpd@sgi.com (Paul Close)
+
+Fix error message and add infile clear before use.
+From: hans@duttnph.tudelft.nl (Hans Buurman)
+
+Reduce chances of readmsg being confused by "From " lines.
+From: Marius Olafsson
+
+Make elm not show To user if user also sent message
+From: Marius Olafsson
+
+patch to fix up the Log headers.
+From: pdc%lunch.wpd@sgi.com (Paul Close)
+
+Add include to leavembox due to AIX needing utimebuf and its
+included from time.h
+From: Syd
+
+Make lock use same name for file to lock as elm
+From: Edwin Wiles
+
+Add check for read past eof in get_entry in aliasdb
+From: Ross Johnson
+
+
+	Elm 2.3 Patch 2 - Release cleanup - Part II
+	Sat Jun  9 22:59:02 EDT 1990 (Creation date, not posting date)
+Update install to update test prompts for alias current message
+From: Syd
+
+Some wait system calls return with -1 and errno=4 (interrupted system call) when the
+editor is invoked, suspended, and then resumed.  Loop until wait returns pid, or
+returns -1 *if errno != EINTR*.  If wait returns -1 and errno = EINTR, we wait again.
+Some flock()s refuse to exclusively lock a fd open for read-only access.
+From: pdc%lunch.wpd@sgi.com (Paul Close)
+
+Use a close-on-exec pipe to diagnose exec() failures.
+From: tct!chip@uunet.UU.NET (Chip Salzenberg)
+
+Allow use of submit with mmdf instead of sendmail stub
+From: martin <martin@hppcmart.grenoble.hp.com>
+
+
+	Elm 2.3 Patch 1 - Release cleanup - Part I
+	Tue Jun  5 22:25:25 EDT 1990 (Creation date, not posting date)
+Fixed Metaconfig prototype for voidsig, the test was backwards
+(had a -z where a -n should have been)
+From: Syd
+
+The open system call in actions.c for EMERGENCY_MAILBOX and EMER_MBOX
+were tested with the inequality >= 0 exactly backwards.
+If the user's system mail box (/usr/spool/mail/user_id) is
+removed the attempt of filter to flock it fails.  If it does not exist then
+it should create it and then lock it.
+From: john@hopf.math.nwu.edu (John Franks)
+
+Allow nesting on () in comment in address
+From: Chip Rosenthal <chip@chinacat.Unicom.COM>
+
+Fix boundary condition in add_name_to_list() where it fails to
+print error message.
+From: Chip Rosenthal <chip@chinacat.Unicom.COM>
+
+Fixes the 'g' Group Reply command to send to the cc list also.
+A bad variable name caused it to be ignored.
+From: chip@chinacat.Unicom.COM (Chip Rosenthal)
+
+Fixes when ALLOW_SUBSHELL #define'd and you are in the
+Message Header Edit Screen and the mail you just composed
+is not a reply THEN the subshell command is executed.
+From: zvr@natasha.cs.wisc.EDU (Alexios Zavras)
+
+Fixes where src/curses.c attempts to set the screen size via the ioctl
+TIOCGWINSIZ if it exsists. It should only use the row or col size as
+returned from the ioctl if they are not 0.
+From: muller%sdcc10@ucsd.edu (Keith Muller)
+
+alias command in ELM2.3 fails because of the wrong sized aliases.hash
+newalias did not truncate existing file (aliases.hash)
+From: Toshinori Maeno <tmaeno@cc.titech.ac.jp>
+
+Fix htonl() double define problems
+From: Syd
+
+Fix aliases.hash.tmp being over 14 chars and causing rename problems
+on a 14 character limit system.
+From: Syd
+
+Fix now spurious error message for alias recursive expansion
+when alias lookup is on a string over 20 chars long.  If that
+long, its just not an alias, so just return.
+From: Syd
+

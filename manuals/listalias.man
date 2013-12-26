@@ -1,0 +1,33 @@
+NAME
+     listalias - list user and system aliases
+
+SYNOPSIS
+     listalias [ regular-expression ]
+
+DESCRIPTION
+     Listalias outputs a line per alias  in  both  the  user  and  the  system
+     aliases.  Each line is of the form;
+
+        <alias>     <address>  (<comment>)
+
+     If an optional regular expression is used, just the  aliases  that  match
+     the specified expression are listed.  If not, they are all listed.
+
+     Either way, the output is sorted.
+
+AUTHOR
+     Dave Taylor, Hewlett-Packard Laboratories.
+
+SEE ALSO
+     newalias(1L), elm(1L), checkalias(1L)
+
+BUGS
+     Since the program uses a pipe to egrep, how expressions are evaluated  is
+     a function of that program, not this one!
+
+BUG REPORTS TO
+     Syd Weinstein elm@DSI.COM (dsinc!elm)
+
+COPYRIGHTS
+     (c) Copyright 1986, 1987 by Dave Taylor
+     (c) Copyright 1988, 1989, 1990 by The USENET Community Trust

@@ -1,0 +1,104 @@
+NAME
+     elm - an interactive mail system
+
+SYNOPSIS
+     elm [ -achkKmrwz ] [ -f alternate-folder ] [ -d debug-level ]
+     elm [ -s subject ] list of aliases or addresses
+
+DESCRIPTION
+     Elm is an interactive screen-oriented mailer program that supercedes mail
+     and mailx.
+
+     There are three main ways to use the elm mailer.   One  way  to  use  the
+     mailer  is  to  specify  a list of addresses on the command line when the
+     mailer is invoked.  This will allow sending of a single  message  to  the
+     specified  recipients  with  all the options usually available in the elm
+     system itself. For example, the command
+
+          elm -s testing joe
+
+     would initiate the sending of a message to the alias joe with the subject
+     "testing" indicated and would put you into an editor for you to enter the
+     text of the message.  If the subject flag and argument were not  present,
+     you would be prompted for a message subject.
+
+     The second way, used most commonly when transmitting files and  such,  is
+     to  specify  the  subject  of  the  message  and the recipients using the
+     command line and redirect a file as standard  input.   For  example,  the
+     command
+
+          elm -s testing joe < test.c
+
+     would mail a copy of the file test.c  to  alias  joe,  with  the  subject
+     "testing" indicated.  The subject flag and argument are optional.
+
+     The third  way,  elm  is  invoked  with  neither  subject  nor  addresses
+     specified on the command line and without standard input redirected.  You
+     can then read  any  messages  in  your  incoming  mailbox  (or  specified
+     folder), reply to messages in the mailbox, mail messages, etc.
+
+     Options are:
+
+       -a        Arrow - force the arrow cursor (instead of the inverse bar)
+
+       -c        Checkalias - expand the following aliases and return.
+
+       -d level  Debug   -   set   specified   debug   level   -   Output   to
+                 "$HOME/ELM:debug.info"
+
+       -f alternative-folder
+                 Folder - read folder (specified)  rather  than  the  incoming
+                 mailbox.
+
+       -h        Help - give a list of starting options.
+
+       -?        Synonymous with the "-h" option.
+
+       -k        Keypad - force knowledge of HP terminal  keyboard,  to  allow
+                 the use of the NEXT, PREV and HOME/SHIFT-HOME keys.
+
+       -K        Keypad + softkeys - enable use of softkeys  on  HP  terminals
+                 only.
+
+       -m        Menu off - Use the extra lines for more message headers.
+
+       -s subj   Subject - specify subject for message to mail.
+
+       -v        Version - print version and configuration information.
+
+       -z        Zero - don't enter Elm if no mail is pending.
+
+AUTHOR
+     Dave Taylor, Hewlett-Packard Laboratories
+
+SEE ALSO
+     The Elm documentation package, including:  The Elm Users Guide,  The  Elm
+     Reference  Guide,  The  Elm  Alias System Users Guide, The Elm Forms Mode
+     Guide, The Elm Filter Guide, The Elm Configuration Guide
+
+     newalias(1L), checkalias(1L), mail(1), mailx(1), frm(1L), printmail(1L)
+
+FILES
+     /usr/local/lib/elm-help.*         help files
+     /usr/local/lib/aliases.text       system alias source
+     /usr/local/lib/aliases.hash       system alias hash table
+     /usr/local/lib/aliases.data       system alias data table
+     $HOME/.elm/aliases.text           user alias source
+     $HOME/.elm/aliases.hash           user alias hash table
+     $HOME/.elm/aliases.data           user alias data table
+     $HOME/.elm/elmrc                  customized mailer parameters
+     $HOME/.elm/elmheaders             customized message headers
+     /tmp/snd.$$                       outgoing mail edit buffer
+     /tmp/mbox.logname            temporary mailbox
+     $HOME/ELM:debug.info              Debug output if turned on
+
+DIAGNOSTICS
+     Should know about keyboards/softkey terminals other than  HP.   (If  only
+     termcap were that powerful!)
+
+BUG REPORTS TO
+     Syd Weinstein elm@DSI.COM (dsinc!elm)
+
+COPYRIGHTS
+     (c) Copyright 1986, 1987 by Dave Taylor
+     (c) Copyright 1988, 1989, 1990 by The USENET Community Trust

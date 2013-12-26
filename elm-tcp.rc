@@ -1,0 +1,31 @@
+#
+# System configuration file:
+# for elm with IBM TCP/IP sendmail transport
+#
+
+Rmail=sendmail
+
+# enable this to use sendmail in "detached" mode, when sending mail
+#Options=background
+
+NodeName=host
+Domain=host.domain
+#FromDomain=host.domain
+#ReplyTo=user@host.domain
+Postmaster=postmaster
+
+# in ConfDir, config files are looked for
+ConfDir=c:/tcpip/etc
+# in MailDir, the user mailbox is stored/expected
+MailDir=c:/tcpip/mail
+# in SpoolDir, log files will be created by sndmail and rcvmail
+SpoolDir=c:/tcpip/etc
+
+TempDir=c:/tcpip/tmp
+
+Mailbox=user
+Name=Default User
+Home=c:/tcpip/home
+
+Editor=emacs %s
+Pager=less %s

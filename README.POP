@@ -1,0 +1,80 @@
+Using Elm for OS/2 together with OS/2 Warp 3.0 Internet Access Kit (POP3 mail)
+------------------------------------------------------------------------------
+
+The following text was posted as a Usenet news article and describes
+how Elm can be used with the POP3 mail system implemented in the OS/2
+Warp 3.0 Internet access kit. See also ELMPOP.FAQ for someone else's
+recipe.
+
+
+From: sdrumm@rocket.cc.umr.edu (Scott Drumm)
+Newsgroups: comp.os.os2.networking.tcp-ip
+Subject: Re: EMail (Elm / LaMail)
+Date: 8 Jan 1995 03:01:42 GMT
+Organization: UMR Missouri's Technological University
+Message-ID: <3enkim$l27@hptemp1.cc.umr.edu>
+
+: I will be posting the results of my work installing Elm when everything is
+: running properly.  For now, the necessary code can be located on hobbes in
+: the following directories:
+
+As promised, here is my current setup for running Elm/POP...Everything is
+running correctly, and both incoming and outgoing mail is being accepted.
+
+To implement Elm w/ POP client, you need the following files:
+ 	Elm v2.3.11:	       /os2/32bit/unix/elm23_2.zip
+        POP Client v2.21:      /os2/32bit/unix/popcl221.zip
+as well as whatever version of the EMX Runtime Libraries you like (emxrt*.zip)
+
+Installation:
+  Unzip Elm into it's own subdir and add the /Elm/bin directory to your
+path in config.sys.  Also unzip POP Client into the /Elm/bin directory.
+
+  Add the following lines to your Config.Sys file (assuming Elm in D:\ELM
+and the EMX Runtime Library in D:\EMX):
+    SET TERM=mono
+    SET TERMCAP=D:\EMX\ETC\TERMCAP.DAT
+    SET UUPCSYSRC=D:\ELM\ELM-TCP.RC
+    SET UUPCUSRRC=D:\ELM\ELM-TCP.RC
+
+  Next, configure the ELM-TCP.RC file for your host and dir structure
+(assuming the IAK was installed in D:\TCPIP).  As an example, I have
+included a portion of my ELM-TCP.RC file, which connects me to
+albert.nuc.umr.edu:
+
+    ConfDir=D:\tcpip\etc
+    MailDir=D:\tcpip\mail
+    TempDir=D:\tcpip\tmp
+
+    Mailbox=sdrumm
+    Name=Scott W. Drumm
+    Home=D:\tcpip\home
+
+  Now configure the PopCliD.cmd file for your host as follows:
+
+    host = 'albert.nuc.umr.edu'
+    loginname = 'sdrumm'
+    password = 'xxxxxxxx'
+    delay = ###
+
+    mda_path = 'filter.exe'
+    mda_args = '-v -u sdrumm'
+
+  Reboot, and that should be it.  Create icons for Elm and PopClient if
+you wish, or add them to FileBar/LaunchPad.
+
+  A couple of additional notes....
+	1. You'll need to specify a pager in ELM-TC.RC such as OnScreen,
+List, whatever OR select 'o' from the Elm menu, and enter 'builtin' in the
+"Display mail using" field.
+        2. Elm likes to have it's help files in \TCPIP\ETC\ELM.  I didn't
+argue wit it on that one.  :)
+	3. The file README.PGP in /Elm tells you how to add support for
+PGP (Pretty Good Privacy) if you'd like.
+
+
+: /----------------------------\/--------------------------------------------\
+: | US NAVY: FULL SPEED AHEAD  |               OS/2 v3.0 - Warp              |
+: | sdrumm@saucer.cc.umr.edu   |       Isn't it time to expect more from     |
+: | sdrumm@albert.nuc.umr.edu  |            your operating system?           |
+: \----------------------------/\--------------------------------------------/

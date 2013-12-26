@@ -1,0 +1,47 @@
+This file describes major changes made to the Elm source distribution
+between Releases 2.2 and 2.3.  Please remember that Elm is a volunteer
+project, we did what we had time for, and perhaps, what interested us.
+If you have a suggestion, or a fix, submit it, and better yet,
+volunteer to impliment it.
+
+        Syd Weinstein		Sat Apr 28 22:16:46 EDT 1990
+
+Complete rewrite of date parsing to allow for RFC822 dates and time zones.
+
+DEL is no longer a syn. for x.
+
+Add BSD style screen sizing when the IOCTL calls exist.
+
+Remove direct access to the L.sys/Systems file and only use uuname.
+
+Add -v option for Elm version and options information.
+
+Allows specifying the temp directory to be used by Elm.
+
+Allow for restricting shell escapes from Elm.  (But of course, not
+from any pager or editor Elm would invoke)
+
+Add PID type locking to the lock file.
+
+Make Elm confirm an x command if changes pending, allow X to be the
+old non confirming x command.
+
+Allow for disabling the X-Mailer header if desired.
+
+Complete revamp of Configure using new Metaconfig modules.
+
+Add some checking for space problems and force an emergency exit in those
+cases.
+
+Allow the alias file to be used across heterogenous networks by
+keeping it in network byte order if NFS is available.
+
+Add support for MMDF style mailboxes.
+
+Aliases are now case insensitive as per survey results
+
+Recursive aliases now work again.
+
+And many bug fixes.
+
+************************************************************************

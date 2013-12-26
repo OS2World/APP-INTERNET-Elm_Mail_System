@@ -1,0 +1,143 @@
+Frequently Asked Questions for setting up Elm+POP using OS/2 Warp IAK, 
+version 1.02.
+
+By Modem Biker, mdmbkr@qnet.com.
+
+Index:
+I. Credits
+II. Introduction
+III. How to set up Elm+POP
+IV. Other things
+
+I. Credits
+People who contributed to the FAQ:
+
+Lachlan O'Dea - figured out time zone settings, thanks!
+Nuisance, on IRC, for pointing out some path errors and other
+	trivial things :)
+
+Special Thanks:
+villeww, the most patient guy on IRC...
+
+
+II. Introduction:
+	Elm was originally a UNIX based mail reader/sender.  At the time, 
+it was a vast improvement over UNIX's original 'mail' program, which 
+sucked.  Today, many people use Pine, though I still prefer Elm.
+	Anyways, Elm was recently ported to OS/2 for use with the IAK 
+(Internet Access Kit).  By itself, Elm can be used on a network with a
+full time link, but doesn't work too well with a PPP modem dialout or 
+other temporary connection.  This is where POP Client comes in.  When 
+used in conjunction with Elm, one can have a very functional and powerful 
+mail system based on POP3 and using Elm as their reader.
+	Following are step-by-step instructions for getting it to work.  (BTW,
+you may have noticed that this isn't a FAQ, I just call it that anyways.. :^)
+
+III. How to set up Elm+POP:
+
+First, you will need to get three things:  The Elm program, the POP 
+Client, and EMX (including run-time files).  These can all be found 
+on the Hobbes FTP site:
+
+hobbes.nmsu.edu:/os2/unix/popcl221.zip          The Pop Client
+hobbes.nmsu.edu:/os2/unix/elm23_2.zip           The Elm program
+hobbes.nmsu.edu:/os2/unix/emx09a/emxrt.zip      EMX
+
+	When you get the files, do the following:
+	a) unzip emxrt.zip into \os2\dll
+	b) unzip elm23_2.zip into \elm (make the directory) 
+		(be sure to use the -d option when unzipping)
+	c) unzip popcl221.zip into \elm
+
+Now, go to the \elm directory and copy the following files into \tcpip\bin:
+	POPCLIENT.EXE
+	POPCLID.CMD
+
+Then modify popclid.cmd to reflect your system (this should be fairly 
+	self-explanatory).
+The only thing to note is that mda_path should be set to 'filter.exe' 
+	and mda_args should be set to '-v -u username'  where username 
+	is your login ID.
+
+Now you will need to edit your config.sys and add several environment 
+variables:
+
+	SET TERM=ansi
+	SET TERMCAP=D:\ELM\BIN\TERMCAP.DAT
+	SET UUPCSYSRC=D:\ELM\ELM-TCP.RC
+	SET UUPCUSRRC=D:\ELM\ELM-TCP.RC
+
+Also add the following to your PATH statement:
+
+	\ELM\BIN;
+
+Next, edit \elm\elm-tcp.rc to reflect your system (should be fairly 
+	self-explanatory).
+Be sure to create the directory \tcpip\home.
+
+Finally, copy \tcpip\etc\sendmail.uml to \tcpip\etc\sendmail.cf.  Edit 
+sendmail.cf to reflect your system; this may need some tweaking.  One
+thing to watch out for: be sure to leave the V_ heading for each line 
+(where _ represents a letter).  For example:
+
+# The unqualified (domain-less) name of the mail relay
+DVpop3   
+# Notice the 'DV' before 'pop3'.
+
+# The fully-qualified domain name of the mail hub
+DHhub.qnet.com
+# Again, notice the 'DH' before 'hub.qnet.com'.
+
+# Official canonical hostname.
+Djlute.qnet.com
+# This time, it's 'Dj'.  I'm not sure if the case matters, but I decided 
+# not to fool with it.
+
+
+When you're done doing all of this, reboot.  Connect to your service, 
+and run Elm.  Hit 'o' from the menu, and enter 'builtin' in the 
+'Display mail using' field.  Then hit '>' to save the change and hit 
+'i' to return to the menu.  Now hit 'q' to quit Elm.
+
+This should get you set up just fine.  If you have any problems, email 
+	me at mdmbkr@qnet.com.
+
+IV. Other things
+	1. PMBiff
+		PMBiff is the equivalent of X-Biff.  It is a small (37k) 
+	program that displays a little mailbox icon on your screen.  If 
+	you have mail, the flag on the mailbox goes up and a .WAV file 
+	of your choice is played.  Nice.
+	2. Timezones
+		The time is automatically stamped to all messages that 
+	you send.  This is done in two ways: 1) the LOCAL time is stamped, 
+	and 2) The time in relation to GMT is stamped.  In order to get a 
+	correct GMT stamp, you must set the TZ environment variable.  It 
+	is done in a way very much like that of Unix, since the TZ variable 
+	is actually used by EMX, not Elm (EMX is a library originally created 
+	for Unix systems).  Here is the syntax:
+
+	SET TZ = (local timezone)(hours away from Greenwich)(daylight
+		savings timezone)(hours away from Greenwich during DS)
+		(date of DS start)(date of DS end)
+
+		If you live to the east of Greenwich, use -N hours.  If you live
+	to the west, use +N hours.
+
+	Example:
+		SET TZ = EST+8EDT+7,M10.1.0,M4.1.0
+
+		This would set the time zone to Eastern Standard Time, 8 hours 
+	west of Greenwich, and 7 hours west during Daylight savings time.  
+	Daylight savings would go into effect on the 10th of October, and end
+	on the 4th of January.
+
+		More information is available in the Unix man pages for C 
+	functions.
+
+
+
+Well, that's it.. I hope this has been helpful.  If you have any problems, 
+don't hesitate to email me at mdmbkr@qnet.com.
+
+ --Modem Biker

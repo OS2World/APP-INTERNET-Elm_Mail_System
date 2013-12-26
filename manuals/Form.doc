@@ -1,0 +1,462 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                EEllmm FFoorrmmss MMooddee GGuuiiddee
+
+
+
+                     _W_h_a_t _F_o_r_m_s _M_o_d_e _i_s_, _h_o_w _t_o _u_s_e _i_t _t_o _c_r_e_a_t_e
+                   _c_u_s_t_o_m _f_o_r_m_s_, _h_o_w _t_o _r_e_p_l_y _t_o _f_o_r_m_s_, _a_n_d _h_o_w _t_o
+                            _u_s_e _i_t _f_o_r _A_T_&_T _M_a_i_l _m_e_s_s_a_g_e_s
+
+
+                                     Dave Taylor
+
+                            Hewlett-Packard Laboratories
+                                 1501 Page Mill Road
+                                    Palo Alto CA
+                                        94304
+
+
+
+                   email: taylor@hplabs.HP.COM  or  hplabs!taylor
+
+
+
+          >>> Elm is now in the public trust. Bug reports, comments, etc. to: <<<
+
+                                    Syd Weinstein
+                               Datacomp Systems, Inc.
+                                   3837 Byron Road
+                          Huntingdon Valley, PA 19006-2320
+
+                          email: elm@DSI.COM  or  dsinc!elm
+
+
+
+                       ((CC)) Copyright 1986, 1987 by Dave Taylor
+            ((CC)) Copyright 1988, 1989, 1990 by The USENET Community Trust
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            AA GGuuiiddee ttoo FFoorrmmss MMooddee iinn EEllmm
+
+                                    (Version 2.3)
+
+                                     Dave Taylor
+
+                            Hewlett-Packard Laboratories
+                                 1501 Page Mill Road
+                                    Palo Alto CA
+                                        94304
+
+                   email: taylor@hplabs.HP.COM  or  hplabs!taylor
+
+
+          >>>  Elm  is now in the public trust. Bug reports, comments, etc.
+                                       to: <<<
+
+
+                                    Syd Weinstein
+                               Datacomp Systems, Inc.
+                                   3837 Byron Road
+                          Huntingdon Valley, PA 19006-2320
+
+                          email: elm@DSI.COM  or  dsinc!elm
+
+                                     May 1, 1990
+
+
+          While there are a lot of mail systems that allow the transmission
+          of text and primitive pictures, to send and reply to more complex
+          forms is simply not possible.  EEllmm, however, took the forms  mode
+          implemented  as part of the AT&T Mail package and has expanded on
+          it to be a smoothly fit part of the overall mail system.
+
+          Forms mode gives you the ability to send `template' files to peo-
+          ple and receive the filled-in replies.1 Let's look at an  example
+          right off.
+
+          Say  we  were going to use computer mail as a way to file defects
+          with software.  There is a certain amount of information we  want
+          to be able to collect when each report is made, and if it is in a
+          specific format we can use programs to file the defects upon  re-
+          ceipt.
+
+          The form we'll try to emulate starts out looking like:
+
+          __________
+          _1_.  _n_o_t_e  _t_h_a_t  _t_h_i_s _f_e_a_t_u_r_e _a_s_s_u_m_e_s _t_h_a_t _t_h_e _p_e_r_s_o_n _o_n
+          _t_h_e _o_t_h_e_r _e_n_d _i_s _a_l_s_o _u_s_i_n_g _t_h_e _E_l_m _m_a_i_l _s_y_s_t_e_m_.
+
+
+          Forms Mode Guide                                      Version 2.3
+
+
+
+
+
+          Forms Mode Guide                                      Version 2.3
+
+
+
+
+                                Defect Reporting Form
+
+          Program: ______________                         Version: ________
+          Operating System: _____                         Version: ________
+
+          Defect Type: __________
+
+          Date Found: ___________                 By Whom: ______________
+          Date Reported: ________                 Phone: ________________
+
+          Description: ___________________________________________________
+          ________________________________________________________________
+          ________________________________________________________________
+          __________________________________________________________________
+
+          This  form can actually be created almost exactly as listed above
+          in the EEllmm mail system by using your standard editor and can then
+          be mailed about as needed.
+
+          Let's say that we want a bit more information, however, especial-
+          ly with fields like ``Defect Type'', we want to list all the rec-
+          ommended  answers.   To create the actual form, we need merely to
+          replace the underlines in the above form with spaces.  The multi-
+          line  comments  can  simply  be indicated by a `:' by itself on a
+          line;
+
+
+
+                                Defect Reporting Form
+
+          Program:                                        Version:
+          Operating System:                               Version:
+
+          (Valid Defect Types are: user-error, doc-error, fatal, other)
+          Defect Type:
+
+          Date Found:                               By Whom:
+          Date Reported:                            Phone:
+
+          Description
+          :
+
+          Thank you for filling in this form.
+
+          __________________________________________________________________
+
+          As we can see, it is quite simple to create forms!!
+
+
+          Now that we have an idea what we're talking about, let's actually
+          officially define the system...
+
+
+
+
+          May 1, 1990                   Page 2
+
+
+
+
+
+          Forms Mode Guide                                      Version 2.3
+
+
+
+          FFoorrmmss MMooddee SSppeecciiffiiccaattiioonn
+
+          [Note  that  this is all taken from the document _S_t_a_n_d_a_r_d _f_o_r _E_x_-
+          _c_h_a_n_g_i_n_g _F_o_r_m_s _o_n _A_T_&_T _M_a_i_l, Version 1.9 of 6/7/86, from AT&T]
+
+          The forms mode is really quite simple.  Simple enough that it  is
+          amazing  that  it  hadn't  been implemented before AT&T Mail came
+          along!!
+
+          In a nutshell, each field is delimited by a  `:'  followed  by  a
+          number  of blank spaces or tabs that represent the valid size for
+          that field.  That is, if we have a line in the form like;
+               ``Phone (area-code):     Number:          ''
+          The area-code field will be limited to three characters  and  the
+          number  to  nine.   (this is kind of hard to see with the propor-
+          tionally spaced formatted copy, alas).  The only exception to the
+          rule is that a `:' by itself on a line represents a field that is
+          as large as the user entering the data desires.
+
+          The actual form that is transmitted, in AT&T Mail parlance, is  a
+          ``SIMPLE''  forms handler message (as opposed to the ``ADVANCED''
+          handler).  This means that it contains three sections;
+               _T_h_e _M_e_s_s_a_g_e _H_e_a_d_e_r
+               [[OOPPTTIIOONNSS--SSEECCTTIIOONN]]
+               ******
+               [[FFOORRMMSS--IIMMAAGGEE]]
+               ******
+               [[RRUULLEESS--SSEECCTTIIOONN]]
+          EEllmm generates form messages with the ``options''  section  filled
+          out,  but ignores it when receiving mail.  The filled out section
+          is:
+               WWIIDDTTHH==8800
+               TTYYPPEE==SSIIMMPPLLEE
+               OOUUTTPPUUTT==TTEEXXTT
+          The FORMS-IMAGE section is  that  described  above.   The  RULES-
+          SECTION  can  contain explicit rules about the possible values of
+          each field, but this is currently ignored by EEllmm, being a  ``SIM-
+          PLE'' forms mode mail system.
+
+          Forms also have the header ``Content-Type: mailform'' to indicate
+          to the mail system (either EEllmm or AT&T Mail) that a form is being
+          sent.
+
+          EEllmm  further indicates that a form has been received by having an
+          ``F'' as the status character in the header display section  (in-
+          stead of ``N'' for new, etc).
+
+          CCoommppoossiinngg aanndd SSeennddiinngg aa FFoorrmm
+
+          The  first  step to enable sending forms is to change the setting
+          of the variable _f_o_r_m_s in your _._e_l_m_/_e_l_m_r_c file to ``ON''.  E.g.:
+               forms = ON
+          The next step is to send the message to  someone  using  the  `m'
+          (_m_a_i_l) command.  This then will drop you into an editor.  Type in
+
+
+          May 1, 1990                   Page 3
+
+
+
+
+
+          Forms Mode Guide                                      Version 2.3
+
+
+
+          the form as indicated above, with  appropriate  colons  and  com-
+          ments, and end the entry by leaving the editor.
+
+          The prompt is now;
+         CChhoooossee:: EE))ddiitt mmssgg,, eeddiitt HH))eeaaddeerrss,, MM))aakkee ffoorrmm,, SS))eenndd oorr FF))oorrggeett :: @@
+          so  we  choose  `m'  --  _M_a_k_e _f_o_r_m.  The program then will either
+          rewrite the prompt without the M)ake form option, indicating that
+          the form has been accepted, or will indicate the problem and give
+          you a chance to correct it.
+
+          Once it has been accepted, simple use the `s' -- _s_e_n_d  _m_e_s_s_a_g_e  -
+          command and it's off!
+
+          _N_o_t_e _t_h_a_t _y_o_u _c_a_n_n_o_t _r_e_p_l_y _t_o _a _m_e_s_s_a_g_e _w_i_t_h _a _F_o_r_m_.
+
+          RReeppllyyiinngg ttoo aa FFoorrmm
+
+          Let's  reply  to  the  form message we generated now.  The header
+          page of the EEllmm mail system will indicate that the message  is  a
+          form by having an `F' next to it.  So we use `r' to reply and the
+          screen is immediately cleared and we're prompted, field by field,
+          for  the data requested.  Each field has underscores in the input
+          area to indicate the size field that is expected.
+
+          After answering all the questions we'll have a screen that  looks
+          like;
+
+
+
+                                Defect Reporting Form
+
+           Program:  TThhee EEllmm MMaaiill SSyysstteemm___________
+           Version:  11..55___________________________
+           Operating System:  HHPP--UUXX_________________________
+           Version:  55..114411 CC_______________________
+
+           (Valid Defect Types are: user-error, doc-error, fatal, other)
+           Defect Type:  ffaattaall_____________________________________________
+
+           Date Found:  1100//99//8866_______________________
+           By Whom:  DDaavvee TTaayylloorr___________________
+           Date Reported:  1100//99//8866_______________________
+           Phone:  ((441155)) 885577--66888877________________
+
+           Description
+           (Enter as many lines as needed, ending with a `.' by itself on a line)
+             WWhheenn rruunnnniinngg iitt oonn aa CCPPMM ssyysstteemm II ccaannnnoott ccoommppiillee ssuucccceessssffuullllyy..
+             ..
+           Thank you for filling in this form.
+               Choose: E)dit form, edit H)eaders, S)end or F)orget : @
+          __________________________________________________________________
+
+          Quite  simple.   Notice,  however, that the order of prompting is
+          left to right on each line, so the fields that on  the  form  are
+
+
+          May 1, 1990                   Page 4
+
+
+
+
+
+          Forms Mode Guide                                      Version 2.3
+
+
+
+          placed  in  what  seems  like  a  logical place, ``By Whom:'' and
+          ``Phone:'' turn out to be confusing when filling  in  the  actual
+          form  since it isn't clear what ``Phone:'' is being asked for be-
+          cause of the intervention of the ``Date Reported:'' field.
+
+          The message that will actually be sent out from  this  will  have
+          the fields in a more acceptable format;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          May 1, 1990                   Page 5
+
+
+
+
+
+          Forms Mode Guide                                      Version 2.3
+
+
+
+           WWIIDDTTHH==8800
+           TTYYPPEE==SSIIMMPPLLEE
+           OOUUTTPPUUTT==TTEEXXTT
+                                DDeeffeecctt RReeppoorrttiinngg FFoorrmm
+           ******
+
+           PPrrooggrraamm:: TThhee EEllmm MMaaiill SSyysstteemm                     VVeerrssiioonn:: 11..55
+           OOppeerraattiinngg SSyysstteemm:: HHPP--UUXX                          VVeerrssiioonn:: 55..114411 CC
+
+           ((VVaalliidd DDeeffeecctt TTyyppeess aarree:: uusseerr--eerrrroorr,, ddoocc--eerrrroorr,, ffaattaall,, ootthheerr))
+           DDeeffeecctt TTyyppee:: ffaattaall
+
+           DDaattee FFoouunndd:: 1100//99//8866                      BByy WWhhoomm:: DDaavvee TTaayylloorr
+           DDaattee RReeppoorrtteedd:: 1100//99//8866                   PPhhoonnee:: ((441155)) 885577--66888877
+
+           DDeessccrriippttiioonn
+
+              WWhheenn  rruunnnniinngg iitt oonn aa CCPPMM ssyysstteemm II ccaannnnoott ccoommppiillee ssuucccceessssffuull--
+          llyy..
+
+           TThhaannkk yyoouu ffoorr ffiilllliinngg iinn tthhiiss ffoorrmm..
+           ******
+          ____________________________________________________________________________________________________________________________________
+
+
+          CCoommmmeennttss oonn FFoorrmmss MMooddee
+
+          As was said at the beginning, this way  of  sending  about  forms
+          could  prove  to  be very helpful and useful in a variety of con-
+          texts.  On the other hand, until a more sophisticated forms  lan-
+          guage  is used for the forms, this should be sufficient to embody
+          the power of the idea.
+
+          I welcome any comments and thoughts on this system and also  wel-
+          come possible enhancements.
+
+          I  also gratefully thank Dale DeJager of AT&T Information Systems
+          for sending me more information on AT&T Mail than I could  possi-
+          bly digest in any finite amount of time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          May 1, 1990                   Page 6
+
+
+

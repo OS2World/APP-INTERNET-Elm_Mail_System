@@ -1,0 +1,1980 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                               TThhee EEllmm RReeffeerreennccee GGuuiiddee
+
+
+
+                        _A _c_o_m_p_r_e_h_e_n_s_i_v_e _l_i_s_t _o_f _a_l_l _c_o_m_m_a_n_d_s_,
+                       _o_p_t_i_o_n_s _a_n_d _s_u_c_h _t_o _t_h_e EEllmm _m_a_i_l _s_y_s_t_e_m
+
+
+                                     Dave Taylor
+
+                            Hewlett-Packard Laboratories
+                                 1501 Page Mill Road
+                                    Palo Alto CA
+                                        94304
+
+
+
+                    email: taylor@hplabs.HP.COM or hplabs!taylor
+
+
+
+          >>> Elm is now in the public trust. Bug reports, comments, etc. to: <<<
+
+                                    Syd Weinstein
+                               Datacomp Systems, Inc.
+                                   3837 Byron Road
+                          Huntingdon Valley, PA 19006-2320
+
+                          email: elm@DSI.COM  or  dsinc!elm
+
+
+
+                       ((CC)) Copyright 1986, 1987 by Dave Taylor
+            ((CC)) Copyright 1988, 1989, 1990 by The USENET Community Trust
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                               TThhee EEllmm RReeffeerreennccee GGuuiiddee
+
+                                    (Version 2.3)
+
+
+                                     Dave Taylor
+                            Hewlett-Packard Laboratories
+                                 1501 Page Mill Road
+                                    Palo Alto CA
+                                        94304
+
+                    email: taylor@hplabs.HP.COM or hplabs!taylor
+
+
+          >>>  Elm  is now in the public trust. Bug reports, comments, etc.
+                                       to: <<<
+
+                                    Syd Weinstein
+                               Datacomp Systems, Inc.
+                                   3837 Byron Road
+                          Huntingdon Valley, PA 19006-2320
+
+                          email: elm@DSI.COM  or  dsinc!elm
+
+
+                                     May 1, 1990
+
+
+
+
+
+
+          11..  IInnttrroodduuccttiioonn
+
+          There are many parts to a complex software  system  and  TThhee  EEllmm
+          MMaaiill  SSyysstteemm  is no different.  This document describes fully all
+          the options available in the mailer, including the  command  line
+          options,  the  commands  (in considerably more detail than in _T_h_e
+          _E_l_m _U_s_e_r_s _G_u_i_d_e) and the _._e_l_m_/_e_l_m_r_c file.
+
+          To be more explicit, this document covers: a  discussion  of  the
+          _._e_l_m_/_e_l_m_r_c  file, command line options of _e_l_m, outgoing mail pro-
+          cessing, responses of various commands, mail archive folders, the
+          Alias  system, system aliases etc, more on the EEllmm utilities, and
+          a section for expert mail users.
+
+          Without any further ado, then, let's get this show on the  road!!
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+          22..  TThhee ..eellmm//eellmmrrcc FFiillee
+
+          Elm,  like  lots  of other software on the UnixTM system, has the
+          ability to automatically read in a configuration file at each in-
+          vocation.   The  file must be called _e_l_m_r_c and reside in the _._e_l_m
+          directory located in your home directory.  It can have any of the
+          entries  below, in any order.  If you are missing any entries, or
+          if you don't have an _._e_l_m_/_e_l_m_r_c file, the default values  (listed
+          below for each option) will be used.  Note that those options be-
+          low designated with * can be altered using elm via  the  o)ptions
+          screen.   Also  note that when you save a new _._e_l_m_/_e_l_m_r_c file via
+          the `>' command of the options screen, it will be (re)created in-
+          cluding even those options that have default values.
+
+
+          SSttrriinngg VVaarriiaabblleess
+
+
+          alternatives
+                    This  is  a list of other machine/username combinations
+                    that you receive mail from (forwarded).  This  is  used
+                    when  the _g_r_o_u_p _r_e_p_l_y feature is invoked to ensure that
+                    you don't send yourself a copy of the outbound message.
+                    (The default is a list of no alternatives.)
+
+
+          calendar* This  is  used in conjunction with the `<' _s_c_a_n _m_e_s_s_a_g_e
+                    _f_o_r _c_a_l_e_n_d_a_r _e_n_t_r_i_e_s command, as the file to append any
+                    found calendar entries to.  (The default is _c_a_l_e_n_d_a_r in
+                    your home directory.)
+
+
+          editor*   The editor to use when typing in new mail.  If you  se-
+                    lect ``none'' or ``builtin'' you'll get a Berkeley Mail
+                    style interface for all mail that doesn't already  have
+                    text  in the buffer (e.g. a reply, mail with a ``signa-
+                    ture'', etc).  (The default is to use the value of $ED-
+                    ITOR  in  your  current environment, and if not set, an
+                    editor selected by the person who  configured  _e_l_m  for
+                    your system.)
+
+
+          escape    The  character  used  with  the ``builtin'' editor (see
+                    above) to escape from text entry to  input  a  command.
+                    When  a line begins with this character, the editor in-
+                    terprets it as a command rather than as  text  to  add.
+                    (The default is ``~''.)
+
+
+          fullname* This  is  the  name the mailer will use in messages you
+                    send.  It is highly recommended that you use your  full
+                    name and nothing strange or unusual, as that can appear
+                    extremely rude to people receiving your mail.  (The de-
+                    fault is to use the ``gcos'' field from the _/_e_t_c_/_p_a_s_s_w_d
+
+
+          May 1, 1990                   Page 2
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+                    file on systems that  use  this  field  to  store  full
+                    names,  and  to  use  the contents of _._f_u_l_l_n_a_m_e in your
+                    home directory on other systems.)
+
+
+          maildir*  This is your folder  directory.   When  you  specify  a
+                    folder name beginning with the `='  metacharacter1,  it
+                    stands for this directory name.  That is, if you save a
+                    message to folder _=_s_t_u_f_f the `=' will  be  expanded  to
+                    the  current value of _m_a_i_l_d_i_r.  (The default is the di-
+                    rectory _M_a_i_l in your home directory.)
+
+
+          tmpdir*   Use this if you want to define your own  directory  for
+                    the  temporary file Elm creates while running.  This is
+                    only necessary if using the system temporary  directory
+                    could  cause problems, such as when not all NFS clients
+                    mount the common temporary directory, or when the  tem-
+                    porary  directory is prone to being cleared periodical-
+                    ly.  The default entry of the system temporary directo-
+                    ry is normally ok.
+
+
+          pager     This  is  the  program  to be used to display messages.
+                    You can specify ``builtin'' or the name of any standard
+                    pager.   If  you  use  ``builtin+'', each screenfull of
+                    displayed message is ``paged'' from  the  top  of  your
+                    screen  with  a  title  line,  while ``builtin'' simply
+                    ``scrolls  up''  subsequent  screenfulls  once  it  has
+                    ``paged'' the first screenfull.  (The default is to use
+                    the value of $PAGER in your current environment, and if
+                    not  set, a pager selected by the person who configured
+                    _e_l_m for your system, quite likely ``builtin+''.)
+
+
+          attribution
+                    When you _f_o_r_w_a_r_d a message or _r_e_p_l_y to it, you can  op-
+                    tionally  attribute the quoted text to its original au-
+                    thor.  Defining the attribution string here allows  you
+                    to  indicate the form that the attribution should take.
+                    The sequence `%s' in the attribution will  be  replaced
+                    by the name of the original author.  Examples are:
+                              aattttrriibbuuttiioonn == AAccccoorrddiinngg ttoo %%ss::
+                              aattttrriibbuuttiioonn == %%ss wwrriitteess::
+
+
+          prefix    When you _r_e_p_l_y to a message or _f_o_r_w_a_r_d a message to an-
+                    other person, you can optionally include  the  original
+                    message.   Defining the prefix value here allows you to
+                    indicate what the prefix of each included  line  should
+
+          __________
+          1.  Note  that  `%'  and  `+'  are  synonymous with `='
+          throughout _e_l_m
+
+
+          May 1, 1990                   Page 3
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+                    be.  (The default is ``> '' and is standard in the Unix
+                    community.)
+
+
+          print*    This is the command used for printing messages.   There
+                    are  two possible formats for it, either a command that
+                    can have a filename affixed to (as a suffix) before be-
+                    ing  executed,  or  a  string  that  contains the meta-
+                    sequence `%s' which will be replaced by the name of the
+                    file before being executed.  Examples of each are:
+                              pprriinntt == pprriinntt --ffoorrmmffeeeedd
+                              pprriinntt == pprr %%ss || llpprr
+                    (The  default  is  set by the person who configured _e_l_m
+                    for your system.)
+
+
+          receivedmail
+                    This is the folder to which incoming mail is saved  af-
+                    ter  you've  read  it.  When you answer _n_o (`n') to the
+                    ``keep unread  messages  in  your  incoming  mailbox?''
+                    prompt  or  _y_e_s  (`y')  to the ``store read messages in
+                    your "received" folder?'', this is where  the  messages
+                    go.   (The  default  is  "=received", that is, a folder
+                    called _r_e_c_e_i_v_e_d in your _m_a_i_l_d_i_r directory).
+
+
+          sentmail* This is the folder to which a copy of outgoing mail  is
+                    automatically  saved.   This  will  only be done if the
+                    _c_o_p_y flag is turned on (see below).  Also note that  if
+                    the  _s_a_v_e_n_a_m_e  feature (see below) is enabled then this
+                    folder may be ignored since the program may save  to  a
+                    folder  that has the same name as the login of the per-
+                    son you're sending to.  Whether or not a copy is saved,
+                    and  to what folder, can be changed just prior to send-
+                    ing a message, see below.   (The  default  is  "=sent",
+                    that  is, a folder called _s_e_n_t in your _m_a_i_l_d_i_r directo-
+                    ry).
+
+
+          shell     This defines the shell to use when doing ``!''  escapes
+                    and  such.   (The default is to use the value of $SHELL
+                    in your current environment, and if not  set,  a  shell
+                    selected by the person who configured _e_l_m for your sys-
+                    tem.)
+
+
+          signature This file, if defined, will be  automatically  appended
+                    to  all  outbound  mail  before  the editor is invoked.
+                    Furthermore, if you'd like a  different  ``.signature''
+                    file  for  _l_o_c_a_l mail and _r_e_m_o_t_e mail (remote being via
+                    other hosts), you can alternatively  define  two  vari-
+                    ables,  _l_o_c_a_l_s_i_g_n_a_t_u_r_e and _r_e_m_o_t_e_s_i_g_n_a_t_u_r_e, to have the
+                    same functionality.  (The default  is  "localsignature"
+                    and "remotesignature" in your home directory.)
+
+
+          May 1, 1990                   Page 4
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+          sortby*   You can have your folder sorted by any of the following
+                    ways:
+
+                    from      This will sort according to whom each message
+                    is _f_r_o_m.
+
+                    lines     This  will  sort  _s_h_o_r_t_e_s_t to _l_o_n_g_e_s_t by mes-
+                    sage.
+
+                    mailbox   This will leave the  messages  in  the  order
+                    found in the folder.
+
+                    received  This  will  sort  _l_e_a_s_t  _r_e_c_e_n_t_l_y _r_e_c_e_i_v_e_d to
+                    _m_o_s_t _r_e_c_e_n_t_l_y _r_e_c_e_i_v_e_d.
+
+                    sent      This will sort _l_e_a_s_t _r_e_c_e_n_t_l_y  _s_e_n_t  to  _m_o_s_t
+                    _r_e_c_e_n_t_l_y _s_e_n_t.
+
+                    status    This  will  sort  by  priority,  action, new,
+                    tagged, then deleted.
+
+                    subject   This will sort according to  the  _s_u_b_j_e_c_t  of
+                    each message.
+
+                    Each  of  these fields can also optionally be prepended
+                    with the sequence ``reverse-'' to reverse the order  of
+                    the  sort.  This doesn't imply anything about the order
+                    of the message in the folder itself  and  affects  only
+                    their order on the index screen.  (The default is _m_a_i_l_-
+                    _b_o_x order.)
+
+
+          weedout   When specifying this option, you can list headers  that
+                    you  _d_o_n_'_t  want  to see when you are displaying a mes-
+                    sage.  This list can continue for as many lines as  de-
+                    sired,  as long as the continued lines all have leading
+                    indentation.  (The default is  ``Received:''  and  oth-
+                    ers.)
+
+          NNuummeerriicc VVaarriiaabblleess
+
+
+          bounceback
+                    This  is  a hop count threshold value and allows you to
+                    set up the mailer so that when you send mail more  than
+                    _n  machines away, it'll automatically include a ``Cc:''
+                    to you through the remote machine.   In  practice  this
+                    should  be  very  rarely  used.  (Note: this refuses to
+                    bounce mail off an Internet address.  The default is to
+                    have it set to zero, which disables the function)
+
+
+          timeout   On  more  advanced  systems,  it's nice to start up the
+                    mailer in a window and let it sit in background  unless
+
+
+          May 1, 1990                   Page 5
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+                    new mail arrives (see _w_n_e_w_m_a_i_l for another window based
+                    program) at which point it can be  brought  up  to  the
+                    forefront  of  the  system  and read.  In this case, it
+                    would be quite convenient to have the mailer internally
+                    resynchronize  every  so  often.  This option specifies
+                    the number of seconds that this occurs.
+
+                    This is also useful for normal terminals,  for  example
+                    you  can  leave _e_l_m running at night (I usually do) and
+                    when you come in in the morning it'll be all  ready  to
+                    read your mail!
+
+                    (The  default  is a 300 second (5 minute) timeout peri-
+                    od).
+
+
+          userlevel*
+                    This is what the program uses to determine the relative
+                    level of sophistication of the user -- the values are 0
+                    for a new user (the default), 1  for  someone  familiar
+                    with  _e_l_m  user, and 2 for experts.  Some advanced fea-
+                    tures are hidden from novice users, while  experts  get
+                    less verbose prompt messages.
+
+          BBoooolleeaann VVaarriiaabblleess
+
+
+          alwaysdelete
+                    When set, this changes the default answer of the prompt
+                    ``Delete messages?'' to the indicated value.  (The  de-
+                    fault  is to have the answer be _N_o (i.e. alwaysdelete =
+                    OFF).)
+
+
+          alwaysstore
+                    This sets the default answer on the ``store  read  mail
+                    in  "received"  folder'' prompt to the value indicated.
+                    (The default is to have the default answer be _N_o (i.e.,
+                    alwaysstore = OFF).)
+
+
+          alwayskeep
+                    This  sets the default answer on the ``keep unread mail
+                    in incoming mailbox'' However, if you  answered  _N_o  to
+                    the ``store read mail in "received" folder'' it is pre-
+                    sumed that you'd also want to keep your unread mail  in
+                    the  incoming mailbox, too, and the value of alwayskeep
+                    is ignored.  (The default is to have the default answer
+                    be _Y_e_s (i.e., alwayskeep = ON).)
+
+
+          arrow*    Sometimes  you  are  forced  to use a slow, or ``dumb''
+                    terminal.  In this case, you can force the current mes-
+                    sage  pointer to be the ``->'' sequence rather than the
+
+
+          May 1, 1990                   Page 6
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+                    inverse bar.  (Note that this is overridden by the sim-
+                    ilar  `-a'  command  line option, see below.)  (The de-
+                    fault is OFF.)
+
+
+          ask       This allows you to  tell  the  _e_l_m  system  that  you'd
+                    rather not be asked ``Delete Mail?'' and such each time
+                    you quit, resynchronize a folder or change folders, and
+                    instead  it  should  just  use  the values of ``always-
+                    delete'', ``alwaysstore'',  and  ``awayskeep''  without
+                    prompting.   (Note  that  when you quit _e_l_m, if you use
+                    `Q' instead of `q', you will never be  questioned,  re-
+                    gardless of how you have _a_s_k set.)  (The default is ON,
+                    i.e. to ask the questions.)
+
+
+          askcc     If turned off, this will allow you to send mail without
+                    being presented the ``Copies to:'' prompt for each mes-
+                    sage. This still allows you to explicitly  include  ad-
+                    dresses  in  the  ``cc''  list via either ``~c'' in the
+                    builtin editor, or via using the header  editor.   (The
+                    default is ON, i.e. to ask about copies.)
+
+
+          autocopy  If  turned on, this will automatically copy the text of
+                    each message being replied to  into  the  edit  buffer.
+                    Otherwise  you  will be prompted as to whether you want
+                    the message included in yours. (See the  _p_r_e_f_i_x  option
+                    above.)  (The default is OFF.)
+
+
+          copy      This, in combination with the _s_e_n_t_m_a_i_l folder, will al-
+                    low you to have silent copies of all outgoing mail made
+                    on  the  outbound step.  Whether a copy is saved and to
+                    which folder can be set prior to sending a message, see
+                    below.  (The default is OFF.)
+
+
+          forcename This,  in combination with the _s_a_v_e_n_a_m_e option, governs
+                    how a copy of an outgoing message will be saved.   (See
+                    _s_a_v_e_n_a_m_e below for details.)  (The default is OFF.)
+
+
+          keep      The  mail  system  has a habit of deleting folders when
+                    you've removed everything from them.  With this  option
+                    turned  on,  it will instead preserve them as zero-byte
+                    files.  This option does not  apply  to  your  incoming
+                    mailbox.  (The default is OFF.)
+
+
+          keypad    If  on, this tells _e_l_m that you have an HP terminal and
+                    enables the <NEXT>,  <PREV>,  <HOME>  and  <SHIFT-HOME>
+                    keys.  (The default is OFF.)
+
+
+
+          May 1, 1990                   Page 7
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+          menu*     If  turned  off,  this will inhibit the Menu display on
+                    all of the screen  displays  within  the  _e_l_m  program.
+                    (Note  that this is overridden by the similar `-m' com-
+                    mand line option, see below.)  (The default is ON.)
+
+
+          names*    If turned off, the primary recipients' address is  dis-
+                    played  on  your  screen with their full names when you
+                    send a message.  Otherwise, only  the  full  names  are
+                    given.  (The default is ON.)
+
+
+          movepage  If  this is enabled then commands that move through the
+                    folder by  pages  (the  `+',  `-',  <right-arrow>,  and
+                    <left-arrow>  keys)  will also move the current message
+                    pointer to the top of that page of messages.   If  this
+                    is turned off then moving through the pages doesn't al-
+                    ter the current message pointer location.  (The default
+                    is OFF.)
+
+
+          noheader  This  boolean  flag tells the mailer not to include the
+                    headers of messages when copying a message into a  file
+                    buffer  for replying to or forwarding.  (The default is
+                    ON.)
+
+
+          promptafter
+                    If this flag is ON and you use an external pager,  when
+                    the  pager  exits,  you  will be prompted for a command
+                    rather than returned directly to the index screen.   If
+                    the  external pager you are using exits when it reaches
+                    end of file (i.e. end of the message), you should  have
+                    this  flag  ON,  otherwise  the last screen of the dis-
+                    played message will not be held but instead be  immedi-
+                    ately  replaced  by  the index screen.  If the external
+                    pager you are using does not exit until you command  it
+                    to exit, you have a choice.  If you usually want to see
+                    the index screen before issuing a command,  having  the
+                    flag  OFF  will cut down out the extra keystroke needed
+                    to return to the index screen.  If  you  usually  don't
+                    need to see the index screen to before issuing the next
+                    command, having the flag ON will allow you  to  proceed
+                    with  your  next command without having to wait for the
+                    redrawing of the index screen.  (The default is ON.)
+
+
+          pointnew  If this is turned on, the mailer will be  automatically
+                    pointing  to  the first new message in your folder when
+                    started, instead of at message #1.  This will  only  be
+                    effective  for the incoming mailbox since other folders
+                    are not expected to have `new' mail.  (The  default  is
+                    ON.)
+
+
+
+          May 1, 1990                   Page 8
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+          resolve   This  is  a  boolean flag that defines the behaviour of
+                    the program for such actions as deletion, saving a mes-
+                    sage  and  so  on.   Specifically, with this option en-
+                    abled, as soon as mail  is  `dealt  with'  the  program
+                    moves you to the next message in the folder, with dele-
+                    tion, undeletion, saving a  message  and  forwarding  a
+                    message all being treated as dealing with email in this
+                    manner.  (The default is ON.)
+
+
+          savename  One of the problems with  electronic  mail  systems  is
+                    that  one  tends  to  get  very  large, one-dimensional
+                    (flat) files that contain lots of completely  unrelated
+                    mail.  If this option is turned on, _e_l_m will use a more
+                    intelligent algorithm -- on  incoming  mail,  when  you
+                    _s_a_v_e  or  _c_o_p_y  it,  the  default  mailbox  to  save to
+                    (changeable by pressing anything other than <return> of
+                    course)  is a folder that is the _l_o_g_i_n _n_a_m_e of the per-
+                    son who sent you the message.  Similarly, when  sending
+                    mail  out,  instead  of  just  blindly saving it to the
+                    _s_e_n_t_m_a_i_l folder, _e_l_m will save it to a folder  that  is
+                    the  login  name  of  the  person who is to receive the
+                    mail2.
+
+                    If _f_o_r_c_e_n_a_m_e is off (see above), the copy will be saved
+                    to that folder only if the folder already  exists.   In
+                    practice,  this  means  that  important people that you
+                    communicate with (those that  you  tend  to  save  mail
+                    from)  have folders that are actually _a _r_e_c_o_r_d_e_d _l_o_g _o_f
+                    _t_h_e _d_i_s_c_u_s_s_i_o_n _i_n  _b_o_t_h  _d_i_r_e_c_t_i_o_n_s  and  those  others
+                    (random mailings) are all stuffed in the _s_e_n_t_m_a_i_l fold-
+                    er for easy perusal and removal.
+
+                    Otherwise, if you always want to save copies of  outgo-
+                    ing  messages  in  separate  folders by recipient login
+                    name, you'll want to set _f_o_r_c_e_n_a_m_e to on.  (The default
+                    for _s_a_v_e_n_a_m_e is ON.)
+
+
+          sigdashes If  on, this tells _e_l_m that you wish to follow the con-
+                    vention of prefixing your signature with  newline  dash
+                    dash  blank  newline.  This will be placed in your mes-
+                    sage before your signature file.  If off, the signature
+                    file  is  placed  at the end of the message without any
+                    prefix.
+
+
+          softkeys  If on, this tells _e_l_m that you have an HP terminal with
+                    the  HP  2622 function key protocol and that you'd like
+                    to have them available  while  in  the  program.   (The
+
+          __________
+          2. When sending to a group, it's  saved  to  the  first
+          person in the list only.
+
+
+          May 1, 1990                   Page 9
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+                    default is OFF.)
+
+
+          titles    This  flag  allows you to have the first line of a mes-
+                    sage titled with:
+
+                     MMeessssaaggee _N_/_M ffrroomm _u_s_e_r_n_a_m_e           _d_a_t_e aatt _t_i_m_e
+
+                    where all the information has been previously extracted
+                    from  the  message.   This  is especially useful if you
+                    weed out all the headers of each message with  a  large
+                    `weedout' list...  (The default is ON.)
+
+
+          warnings  The  mailer  likes  to warn you when you send mail to a
+                    machine that cannot be directly accessed.  In some sit-
+                    uations,  however, the system is set up so that mail is
+                    automatically forwarded to another machine  that  might
+                    then have better connections.  Setting this flag to OFF
+                    will allow you to effectively shut off all the  warning
+                    messages.  Use of this flag requires support of the uu-
+                    name command on your system.  Without this command, the
+                    flag will be cleared to OFF automatically. (The default
+                    is ON.)
+
+
+          weed      This is a boolean flag that, in  combination  with  the
+                    ``weedout''  list,  allows you to custom define the set
+                    of headers you would like to not have  displayed  while
+                    reading messages.  (The default is ON.)
+
+          One more thing: the format for each of the lines is:
+               vvaarriiaabbllee == vvaalluuee
+          and for boolean variables, _v_a_l_u_e can be `ON' or `OFF' only.
+
+          For  a  better  idea  of how this all works, here's my _._e_l_m_/_e_l_m_r_c
+          file.  While looking through it, notice that you can have lots of
+          comments  and  blank  lines for readability and that you can also
+          use `shell variables' and the `~' metacharacter for your home di-
+          rectory,  and  they  are expanded accordingly when read in by the
+          mailer.  (Note that this was automatically saved by the _e_l_m  pro-
+          gram on the fly from the o)ptions screen)
+            ##
+            ## ..eellmm//eellmmrrcc -- ooppttiioonnss ffiillee ffoorr tthhee EELLMM mmaaiill ssyysstteemm
+            ##
+            ## SSaavveedd aauuttoommaattiiccaallllyy bbyy EELLMM 22..22 ffoorr DDaavvee TTaayylloorr
+            ##
+
+            ## FFoorr yyeess//nnoo sseettttiinnggss wwiitthh ??,, OONN mmeeaannss yyeess,, OOFFFF mmeeaannss nnoo
+
+            ## wwhheerree ttoo ssaavvee ccaalleennddaarr eennttrriieess
+            ccaalleennddaarr == ~~//..AAggeennddaa
+
+            ## wwhhaatt eeddiittoorr ttoo uussee ((""nnoonnee"" mmeeaannss ssiimmuullaattee BBeerrkkeelleeyy MMaaiill))
+
+
+          May 1, 1990                  Page 10
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+            eeddiittoorr == nnoonnee
+
+            ## tthhee cchhaarraacctteerr ttoo uussee iinn tthhee bbuuiillttiinn eeddiittoorr ffoorr eenntteerriinngg ccoommmmaannddss
+            eessccaappee == ~~
+
+            ## tthhee ffuullll uusseerr nnaammee ffoorr oouuttbboouunndd mmaaiill
+            ffuullllnnaammee == DDaavvee TTaayylloorr
+
+            ## wwhheerree ttoo ssaavvee rreecceeiivveedd mmeessssaaggeess ttoo,, ddeeffaauulltt ffiillee iiss ""==rreecceeiivveedd""
+            rreecceeiivveeddmmaaiill == $$HHOOMMEE//MMaaiill//rreecceeiivveedd
+
+            ## wwhheerree ttoo ssaavvee mmyy mmaaiill ttoo,, ddeeffaauulltt ddiirreeccttoorryy iiss ""MMaaiill""
+            mmaaiillddiirr == //uusseerrss//ttaayylloorr//MMaaiill
+
+            ## pprrooggrraamm ttoo uussee ffoorr ddiissppllaayyiinngg mmeessssaaggeess ((''bbuuiillttiinn'' iiss rreeccoommmmeennddeedd))
+            ppaaggeerr == bbuuiillttiinn
+
+            ## pprreeffiixx sseeqquueennccee ffoorr iinnddeennttiinngg iinncclluuddeedd mmeessssaaggee tteexxtt iinn oouuttggooiinngg mmeessssaaggeess......
+            pprreeffiixx == >>__
+
+            ## hhooww ttoo pprriinntt aa mmeessssaaggee ((''%%ss'' iiss tthhee ffiilleennaammee))
+            pprriinntt == llpprr --PPllww22 %%ss
+
+            ## wwhheerree ttoo ssaavvee ccooppiieess ooff oouuttggooiinngg mmaaiill ttoo,, ddeeffaauulltt ffiillee iiss ""==sseenntt""
+            sseennttmmaaiill == //uusseerrss//ttaayylloorr//MMaaiill//mmaaiill..sseenntt
+
+            ## tthhee sshheellll ttoo uussee ffoorr sshheellll eessccaappeess
+            sshheellll == //bbiinn//ccsshh
+
+            ## llooccaall ""..ssiiggnnaattuurree"" ffiillee ttoo aappppeenndd ttoo aapppprroopprriiaattee mmeessssaaggeess......
+            llooccaallssiiggnnaattuurree == llooccaallssiigg
+
+            ## rreemmoottee ""..ssiiggnnaattuurree"" ffiillee ttoo aappppeenndd ttoo aapppprroopprriiaattee mmeessssaaggeess......
+            rreemmootteessiiggnnaattuurree ==  rreemmootteessiigg
+
+            ## ddoo wwee wwaanntt ddaasshheess aabboovvee ssiiggnnaattuurreess?? ((NNeewwss 22..1111 ccoommppaattiibbiilliittyy aanndd ccoonnvveennttiioonn))
+            ssiiggddaasshheess == OONN
+
+            ## hhooww ttoo ssoorrtt ffoollddeerrss,, ""MMaaiillbbooxx"" bbyy ddeeffaauulltt
+            ssoorrttbbyy == RReevveerrssee--RReecceeiivveedd
+
+            ## sshhoouulldd tthhee ddeeffaauulltt bbee ttoo ddeelleettee mmeessssaaggeess wwee''vvee mmaarrkkeedd ffoorr ddeelleettiioonn??
+            aallwwaayyssddeelleettee == OONN
+
+            ## sshhoouulldd tthhee ddeeffaauulltt bbee ttoo ssttoorree rreeaadd mmeessssaaggeess ttoo tthhee ""rreecceeiivveedd"" ffoollddeerr??
+            aallwwaayyssssttoorree == OONN
+
+            ## sshhoouulldd tthhee ddeeffaauulltt bbee ttoo kkeeeepp uunnrreeaadd mmeessssaaggeess iinn tthhee iinnccoommiinngg mmaaiillbbooxx??
+            aallwwaayysskkeeeepp == OONN
+
+            ## sshhoouulldd wwee uussee tthhee ""-->>"" rraatthheerr tthhaann tthhee iinnvveerrssee vviiddeeoo bbaarr??
+            aarrrrooww == OOFFFF
+
+            ## sshhoouulldd tthhee mmeessssaaggee ddiissppoossiittiioonn qquueessttiioonnss bbee ddiissppllaayyeedd((OONN)) oorr
+
+
+          May 1, 1990                  Page 11
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+            ## aauuttoo--aannsswweerreedd((OOFFFF)) wwiitthh tthhee ddeeffaauulltt aannsswweerrss wwhheenn wwee rreessyynncc oorr cchhaannggee ffoollddeerrss??
+            aasskk == OONN
+
+            ## wwoouulldd yyoouu lliikkee ttoo bbee aasskkeedd ffoorr CCaarrbboonn--CCooppiieess iinnffoorrmmaattiioonn eeaacchh mmssgg??
+            aasskkcccc == OONN
+
+            ## aauuttoommaattiiccaallllyy ccooppyy mmeessssaaggee bbeeiinngg rreepplliieedd ttoo iinnttoo bbuuffffeerr??
+            aauuttooccooppyy == OOFFFF
+
+            ## tthhrreesshhoolldd ffoorr bboouunncciinngg ccooppiieess ooff rreemmoottee uuuuccpp mmeessssaaggeess......
+            ## zzeerroo == ddiissaabbllee ffuunnccttiioonn..
+            bboouunncceebbaacckk == 00
+
+            ## ssaavvee aa ccooppyy ooff aallll oouuttbboouunndd mmeessssaaggeess??
+            ccooppyy == OONN
+
+            ## ddoo wwee wwaanntt ttoo bbee aabbllee ttoo mmaaiill oouutt AATT&&TT MMaaiill FFoorrmmss??
+            ffoorrmmss == OOFFFF
+
+            ## sshhoouulldd wwee kkeeeepp ffoollddeerrss ffrroomm wwhhiicchh aallll mmeessssaaggeess aarree ddeelleetteedd??
+            kkeeeeppeemmppttyy == OOFFFF
+
+            ## wwee''rree rruunnnniinngg oonn aann HHPP tteerrmmiinnaall aanndd wwaanntt HHOOMMEE,, PPRREEVV,, NNEEXXTT,, eettcc......
+            kkeeyyppaadd == OOFFFF
+
+            ## sshhoouulldd wwee ddiissppllaayy tthhee tthhrreeee--lliinnee ''mmiinnii'' mmeennuu??
+            mmeennuu == OONN
+
+            ## wwhheenn uussiinngg tthhee ppaaggee ccoommmmaannddss ((++ -- <<NNEEXXTT>> <<PPRREEVV>>)) cchhaannggee tthhee ccuurrrreenntt
+            ## mmeessssaaggee ppooiinntteerr......??
+            mmoovveeppaaggee == OONN
+
+            ## jjuusstt sshhooww tthhee nnaammeess wwhheenn eexxppaannddiinngg aalliiaasseess??
+            nnaammeess == OONN
+
+            ## wwhheenn mmeessssaaggeess aarree ccooppiieedd iinnttoo tthhee oouuttbboouunndd bbuuffffeerr,, ddoonn''tt iinncclluuddee hheeaaddeerrss??
+            nnoohheeaaddeerr == OONN
+
+            ## ssttaarrtt uupp bbyy ppooiinnttiinngg ttoo tthhee ffiirrsstt nneeww mmeessssaaggee rreecceeiivveedd,, iiff ppoossssiibbllee??
+            ppooiinnttnneeww == OONN
+
+            ## pprroommpptt ffoorr aa ccoommmmaanndd aafftteerr tthhee eexxtteerrnnaall ppaaggeerr eexxiittss??
+            pprroommppttaafftteerr == OONN
+
+            ## eemmuullaattee tthhee mmaaiillxx mmeessssaaggee iinnccrreemmeenntt mmooddee ((oonnllyy iinnccrreemmeenntt aafftteerr ssoommeetthhiinngg
+            ## hhaass bbeeeenn ''ddoonnee'' ttoo aa mmeessssaaggee,, eeiitthheerr ssaavveedd oorr ddeelleetteedd,, aass ooppppoosseedd ttoo
+            ## ssiimmppllyy eeaacchh ttiimmee ssoommeetthhiinngg iiss ttoouucchheedd))??
+            rreessoollvvee == OONN
+
+            ## ssaavvee mmeessssaaggeess,, iinnccoommiinngg aanndd oouuttbboouunndd,, bbyy llooggiinn nnaammee ooff sseennddeerr//rreecciippiieenntt??
+            ssaavveennaammee == OONN
+
+            ## ssaavvee oouuttbboouunndd mmeessssaaggeess bbyy llooggiinn nnaammee ooff sseennddeerr//rreecciippiieenntt eevveenn iiff tthhee
+            ## aassssoocciiaatteedd ffoollddeerr ddooeessnn''tt aallrreeaaddyy eexxiisstt??
+
+
+          May 1, 1990                  Page 12
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+            ffoorrcceennaammee == OOFFFF
+
+            ## aarree wwee rruunnnniinngg oonn aann HHPP tteerrmmiinnaall aanndd wwaanntt HHOOMMEE,, PPRREEVV,, NNEEXXTT,, eettcc......??
+            ## ((tthhiiss iimmpplliieess ""kkeeyyppaadd==OONN"" ttoooo))
+            ssooffttkkeeyyss == OOFFFF
+
+            ## sseett tthhee mmaaiinn pprroommpptt ttiimmeeoouutt ffoorr rreessyynncchhiinngg......
+            ttiimmeeoouutt == 6600
+
+            ## ddiissppllaayy mmeessssaaggee ttiittllee wwhheenn ddiissppllaayyiinngg ppaaggeess ooff mmeessssaaggee??
+            ttiittlleess == OONN
+
+            ## aarree wwee ggoooodd aatt iitt??  00==bbeeggiinnnneerr,, 11==iinntteerrmmeeddiiaattee,, 22++ == eexxppeerrtt!!
+            uusseerrlleevveell == 22
+
+            ## tteellll uuss aabboouutt aaddddrreesssseess ttoo mmaacchhiinneess wwee ccaann''tt ddiirreeccttllyy ggeett ttoo??
+            wwaarrnniinnggss == OOFFFF
+
+            ## eennaabbllee tthhee wweeeeddoouutt lliisstt ttoo bbee rreeaadd??
+            wweeeedd == OONN
+
+            ## wwhhaatt hheeaaddeerrss II DDOONN''TT wwaanntt ttoo sseeee,, eevveerr..
+            wweeeeddoouutt == ""PPaatthh::"" ""VViiaa::"" ""SSeenntt::"" ""DDaattee"" ""SSttaattuuss::"" ""OOrriiggiinnaall"" ""PPhhaassee""
+                      ""SSuubbjjeecctt::"" ""FFrruuiitt"" ""SSuunn"" ""LLaatt"" ""BBuuzzzzwwoorrdd"" ""RReettuurrnn"" ""PPoosstteedd""
+                      ""TTeelleepphhoonnee"" ""PPoossttaall--AAddddrreessss"" ""OOrriiggiinn"" ""XX--SSeenntt--BByy--NNmmaaiill--VV"" ""RReesseenntt""
+                      ""XX--LLooccaattiioonn"" ""SSoouurrccee"" ""MMoooodd"" ""NNeeuurroonn"" ""LLiibbiiddoo"" ""TToo::"" ""XX--MMaaiilleerr::""
+                      ""FFuullll--NNaammee::"" ""XX--HHPPMMAAIILL"" ""CCcc::"" ""cccc::"" ""MMmmddff"" ""NNeettwwoorrkk--"" ""RReeaallllyy--""
+                      ""SSeennddeerr::"" ""PPoosstt"" ""MMeessssaaggee--"" ""RReellaayy--"" ""AArrttiiccllee--"" ""LLiinneess::""
+                      ""AApppprroovveedd::"" ""XXrreeff::"" ""OOrrggaanniizzaattiioonn::"" ""**eenndd--ooff--uusseerr--hheeaaddeerrss**""
+
+            ## aalltteerrnnaattiivvee aaddddrreesssseess tthhaatt II ccoouulldd rreecceeiivvee mmaaiill ffrroomm ((uussuuaallllyy aa
+            ## ffoorrwwaarrddiinngg mmaaiillbbooxx)) aanndd ddoonn''tt wwaanntt ttoo hhaavvee lliisstteedd......
+            aalltteerrnnaattiivveess == hhppllaabbss!!ttaayylloorr  hhppllddaatt!!ttaayylloorr  ttaayylloorr@@hhppllaabbss  ttaayylloorr%%hhppllddaatt
+
+
+          33..  TThhee CCoommmmaanndd LLiinnee OOppttiioonnss
+
+          There  are  a  number of command line options to the _e_l_m program,
+          with only one that needs to be remembered:  ``-?''or  ``-h''  for
+          help.
+
+          The flags are:
+
+
+             -a    Arrow.  This allows you to have the ``->'' arrow pointer
+                   rather than the inverse bar.  This can also  be  set  in
+                   the  _._e_l_m_/_e_l_m_r_c  file  -- check the boolean variable _a_r_-
+                   _r_o_w).
+
+
+             -c    Check only.  This is useful for expanding aliases  with-
+                   out  sending any mail.  The invocation is similar to in-
+                   voking _e_l_m in send-only mode: eellmm --cc  _l_i_s_t_-_o_f_-_a_l_i_a_s_e_s
+
+
+
+          May 1, 1990                  Page 13
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+             -d _n  Set debug level to _n.  Useful for debugging the _e_l_m pro-
+                   gram, this option will create a file in your home direc-
+                   tory called _E_L_M_:_d_e_b_u_g_._i_n_f_o, then output a running log of
+                   what  is  going  on  with the program.  Level _n can be 1
+                   through 11, where the higher numbers generate more  out-
+                   put.   This  option  might be disabled by the the person
+                   who configured _e_l_m for your system.
+
+
+             -f _f_o_l_d_e_r
+                   Folder.  Read specified folder rather than  the  default
+                   incoming  mailbox.   Note  that  you  can  use  the same
+                   metacharacters (e.g. `=') as  when  you  _c_h_a_n_g_e  _f_o_l_d_e_r_s
+                   from  within the program.  You can also use the same ab-
+                   breviatory symbols (`!', `>' and `<'), but  remember  to
+                   ``single  quote'' them in case they have special meaning
+                   in the shell you use.
+
+
+             -h or -?
+                   Help.  Gives a short list of all these options  and  ex-
+                   its.
+
+
+             -k    Keypad  --  This option, when used, lets the _e_l_m program
+                   know that you're on an HP terminal, and it can then  in-
+                   terpret  the  <PREV>,  <NEXT>  and <HOME>/<SHIFT>-<HOME>
+                   keys accordingly.  If you are not on an HP terminal,  it
+                   is recommended that you do NOT use this option. (See the
+                   _k_e_y_p_a_d option in the _._e_l_m_/_e_l_m_r_c section.)
+
+
+             -K    Keypad + softkeys.  The _e_l_m mailer can use the HP  soft-
+                   keys  as  an  alternative form of input.  If you specify
+                   this option be sure that you're on an HP  terminal  that
+                   can  accept the standard 2622 terminal escape sequences!
+                   (See the _s_o_f_t_k_e_y_s option in the _._e_l_m_/_e_l_m_r_c  section  for
+                   more information.)
+
+
+             -m    Inhibit  display of the 3-line menu when using the mail-
+                   er.  This, of course, gives you three more message head-
+                   ers  per page instead.  (See also the mmeennuu option in the
+                   _._e_l_m_/_e_l_m_r_c section.)
+
+
+             -s _s_u_b_j_e_c_t
+                   In send-only and batch mode, this is how to indicate the
+                   subject  of  the resulting message.  Please see the sec-
+                   tion on ``Non-Interactive Uses of Elm'' in _T_h_e _E_l_m _U_s_e_r_s
+                   _G_u_i_d_e for more information.
+
+
+
+
+
+          May 1, 1990                  Page 14
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+             -z    Zero.   This  causes the mailer not to be started if you
+                   don't have any mail.   This emulates  the  behaviour  of
+                   programs like _B_e_r_k_e_l_e_y _M_a_i_l.
+
+          All  the  above  flags default to reasonable options, so there is
+          usually no need to use them.  Furthermore, the  most  used  flags
+          are available through the _._e_l_m_/_e_l_m_r_c file.  See above.
+
+
+          44..  SSppeecciiaall OOuuttggooiinngg MMaaiill PPrroocceessssiinngg
+
+          There are a few extra features that the mailer offers on outgoing
+          mail that are worthy of mention:
+
+          The first, and probably the most exciting feature3, is the abili-
+          ty to send _e_n_c_r_y_p_t_e_d mail! To do this is extremely  simple:   You
+          need  merely  to  have  two key lines [[eennccooddee]] and [[cclleeaarr]] in the
+          message body.
+
+          Consider the following outgoing message:
+               JJooee,,
+               RReemmeemmbbeerr tthhaatt ttaallkk wwee hhaadd aabboouutt AAmmyy??  WWeellll,, II ttaallkkeedd ttoo mmyy mmaannaaggeerr
+               aabboouutt iitt aanndd hhee ssaaiidd......
+               uuhhhh......bbeetttteerr eennccrryypptt tthhiiss......tthhee uussuuaall ``kkeeyy''......
+               [[eennccooddee]]
+               HHee ssaaiidd tthhaatt AAmmyy wwaass hhaavviinngg ffaammiillyy pprroobblleemmss aanndd tthhaatt iitt hhaadd bbeeeenn
+               aaffffeeccttiinngg hheerr wwoorrkk..
+               GGiivveenn tthhiiss,, II wweenntt aanndd ttaallkkeedd ttoo hheerr,, aanndd ttoolldd hheerr II wwaass ssoorrrryy ffoorr
+               ggeettttiinngg aannggrryy..  SShhee ssaaiidd tthhaatt sshhee uunnddeerrssttoooodd..
+               WWee''rree ffrriieennddss aaggaaiinn!!!!
+               [[cclleeaarr]]
+               EExxcciittiinngg ssttuuffff,, eehh??
+                                             MMiikkee
+          While this is obviously quite readable while being typed into the
+          editor,  as  soon  as  the  message is confirmed as wanting to be
+          sent, the _e_l_m mailer prompts with:
+               EEnntteerr eennccrryyppttiioonn kkeeyy:: @@
+          and accepts a key (a series of  8  or  less  characters)  without
+          echoing  them  to  the  screen.  After entry, it will ask for the
+          same key again to confirm it, then *poof*  it  will  encrypt  and
+          send the mail.
+
+          If  you  have the _c_o_p_y option enabled, the program will save your
+          copy of the message encrypted too.  (This is to ensure the priva-
+          cy and security of your mail archive, too.)
+
+          If  the  mailer  doesn't ask for the encryption key, it's because
+          you don't have the [[eennccooddee]] entered as the first 8 characters  of
+
+          __________
+          3. Unfortunately, at  many  non-US  sites,  it's  quite
+          probable  that  you  won't  be able to use this feature
+          since you won't have the _c_r_y_p_t_(_) library available  due
+          to licensing restrictions.
+
+
+          May 1, 1990                  Page 15
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+          the line.  It MUST be so for this to work!!
+
+          On the other end, a person receiving this mail (they must also be
+          using _e_l_m to receive it, since this mailer has a  unique  encryp-
+          tion  program)  will  be reading the message and then suddenly be
+          prompted:
+               EEnntteerr ddeeccrryyppttiioonn kkeeyy:: @@
+          and will again be asked to re-enter it to confirm.   The  program
+          will then on-the-fly decrypt the mail and display each line as it
+          is decoded.  The [[cclleeaarr]] line signifies that the block to encrypt
+          is done.
+
+          Note that it is not possible currently to _p_i_p_e or _p_r_i_n_t encrypted
+          mail.
+
+
+          The other option on outgoing mail is the ability to specify  what
+          section  of  the message you want to have archived (assuming _c_o_p_y
+          is enabled) and what section you don't.  This is most useful  for
+          sending out source file listings and so on.
+
+          To  indicate  the  end of the section that should be saved in the
+          archive, you need merely to have the line
+               [[nnoossaavvee]]
+          or
+               [[nnoo ssaavvee]]
+          appear by itself on a line.  This will be removed from the outgo-
+          ing  mail,  and will indicate the last line of the message in the
+          saved mail.  Other than this, the saved mail is identical to  the
+          outgoing mail.
+
+
+          55..  CCuussttoommiizzeedd hheeaaddeerr lliinneess
+
+          The  mailer  provides  a facility for including customized header
+          lines in the messages you send.  If you have  an  _._e_l_m_/_e_l_m_h_e_a_d_e_r_s
+          file,  the mailer will include its contents immediately after the
+          regular headers of all outbound  mail.  The mailer  supports  use
+          of  the  backquote  convention  in  this  file.  Here's a typical
+          _._e_l_m_/_e_l_m_h_e_a_d_e_r_s file.
+            OOrrggaanniizzaattiioonn:: HHeewwlleetttt--PPaacckkaarrdd LLaabboorraattoorriieess
+            PPhhoonnee:: ((441155))--555555--11223344
+            OOppeerraattiinngg SSyysstteemm:: ``uunnaammee --ssrrvv``
+          These lines will appear after all other header lines in the  mes-
+          sage.
+
+
+          66..  CCoommmmaannddss
+
+
+          This section will discuss each command in the _e_l_m program in more
+          detail than above, including the prompts the user can expect upon
+          executing the command, the meaning of different options, etc.
+
+
+
+          May 1, 1990                  Page 16
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+             ?     Help.  This command used once puts you in the _h_e_l_p mode,
+                   where any key you press will result in  a  one-line  de-
+                   scription  of the key.  Pressed again at this point will
+                   produce a two page summary listing each  command  avail-
+                   able.   <escape> or `.' will leave the help mode and re-
+                   turn you to the main menu level.
+
+
+             <space>
+                   Display the current  message.   <space>  is  useful  for
+                   reading through a mail folder.  When issued from the in-
+                   dex screen, it will display the first screen of the cur-
+                   rent  message; and then when issued while in the builtin
+                   pager, it will page through the message to the end;  and
+                   then  when  issued  at the end of a message (with either
+                   the builtin pager or an external pager), it will display
+                   the  first  screen  of  the  next message not marked for
+                   deletion.
+
+
+             <return>
+                   Display the current message.  <return> behaves  somewhat
+                   differently  from  <space>.   When  issued  while in the
+                   builtin pager, it will scroll the current  message  for-
+                   ward one line, and then when issued at the end of a mes-
+                   sage (with either  the  builtin  pager  or  an  external
+                   pager),  it  will  redisplay the first screen of the the
+                   _c_u_r_r_e_n_t message.  The latter is useful in case you  have
+                   issued  a  non-pager  command while in the builtin pager
+                   and want to restart the display of the current  message.
+
+
+             !     Shell.   This  allows you to send a command to the shell
+                   without leaving the program.
+
+
+             |     Pipe.  This command allows you to pipe the current  mes-
+                   sage or the set of _t_a_g_g_e_d messages through other filters
+                   as you desire.  The shell used for  the  entire  command
+                   will  be  either  the  one  specified in your _._e_l_m_/_e_l_m_r_c
+                   file, or the default shell (see above).
+
+
+                   Pattern match.  This command, on the top  level,  allows
+                   the  user  to  search  through  all the _f_r_o_m and _s_u_b_j_e_c_t
+                   lines of the current folder starting at the current mes-
+                   sage and continuing through the end.  If the first char-
+                   acter of the pattern is a `/', then the program will try
+                   to  match  the specified pattern against _a_n_y line in the
+                   folder.  Again, this works from one  after  the  current
+                   message  through the end.  Both searches are case insen-
+                   sitive.
+
+
+
+
+          May 1, 1990                  Page 17
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+             - or <left>
+                   Display the next page of the message index.
+
+
+             + or <right>
+                   Display the previous page of the message index.
+
+
+             <number><return>
+                   Specify new current message.  When you type in any digit
+                   key _e_l_m will prompt ``Set current to : n'', where `n' is
+                   the digit entered.  Enter the full number and  terminate
+                   with  <return>.   Note that changing the current message
+                   to a message not on the current page of headers will re-
+                   sult in a new page being displayed.
+
+
+             <     Scan  message for calendar entries.  A rather novel fea-
+                   ture of the _e_l_m mailer is the ability  to  automatically
+                   incorporate calendar/agenda information from a mail mes-
+                   sage into the users calendar file.  This is  done  quite
+                   simply; any line that has the pattern
+
+                        -> _c_a_l_e_n_d_a_r _e_n_t_r_y
+
+                   will  be  automatically added to the users _c_a_l_e_n_d_a_r file
+                   (see the _c_a_l_e_n_d_a_r option of the _._e_l_m_/_e_l_m_r_c file) if  the
+                   `<' command is used.
+
+                   For example, let's say we had a message with the text:
+
+                        RReeggaarrddlleessss  ooff  tthhaatt  mmeeeettiinngg,,  hheerree''ss  tthhee sseemmiinnaarr
+                   ssttuuffff::
+                        -->> 88//0033 33::0000ppmm:: AAII SSeemmiinnaarr wwiitthh IIrraa GGoollddsstteeiinn ooff HHPP
+                   LLaabbss
+
+                   then using the `<' command would add the line:
+
+                        88//0033  33::0000ppmm::  AAII  SSeemmiinnaarr wwiitthh IIrraa GGoollddsstteeiinn ooff HHPP
+                   LLaabbss
+
+                   to the users _c_a_l_e_n_d_a_r file.
+
+
+             a     Alias.  The alias system is a way by which more  complex
+                   mail  addresses can be shortened for the mail user.  For
+                   example:
+                        jjooee,, bblleeuu   ==  JJooee BBlleeuu  ==   jjooee@@hhppffccllaa..SSSSOO..HHPP..CCOOMM
+                   which allows mail to `joe' or `bleu' with the system ex-
+                   panding  the  address properly.  As is obvious, this not
+                   only saves remembering complex addresses, it also allows
+                   the  address  to  be optimized to go through the minimum
+                   number of machines without anyone having to be  informed
+                   of  the change.  A more detailed discussion can be found
+
+
+          May 1, 1990                  Page 18
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+                   in either the section entitled _T_h_e _A_l_i_a_s _S_y_s_t_e_m in  this
+                   document or _T_h_e _E_l_m _A_l_i_a_s _S_y_s_t_e_m _U_s_e_r_s _G_u_i_d_e.
+
+
+             b     Bounce  mail.   This ``remails'' mail to someone else in
+                   such a way as to make the return  address  the  original
+                   sender  rather  than you.  (The _f_o_r_w_a_r_d command is simi-
+                   lar, but it makes the return address _y_o_u rather than the
+                   original sender.)
+
+
+             C     Copy to folder.  This command copies the current message
+                   or set of tagged messages to a folder.  If there is any-
+                   thing  in  the  folder currently the message or messages
+                   are appended to the end, otherwise the folder is created
+                   containing  only  the  newly copied message.  The prompt
+                   for this command is `Copy to folder: '.  A  response  of
+                   <return> cancels the command and returns the user to the
+                   system prompt.  The usual  filename  metacharacters  are
+                   available, too.  That is, this command expands filenames
+                   with `~' being your home directory and  `='  being  your
+                   _m_a_i_l_d_i_r directory, if defined.  This command also allows
+                   you to use `>' for your _r_e_c_e_i_v_e_d_m_a_i_l folder and `<'  for
+                   your  _s_e_n_t_m_a_i_l  folder.   You  can also enter `?' at the
+                   prompt to list the names of your folders.
+
+
+             c     Change folder.  Specifying this command allows the  user
+                   to change the folder that is currently being read.  This
+                   is intended for perusal and reply to previously archived
+                   messages.   The prompt is `Name of new folder: ' and en-
+                   tering <return> cancels the operation, while entering  a
+                   filename causes the program to read that file as the new
+                   folder, if possible.   This  command  expands  filenames
+                   with  `~'  being  your home directory and `=' being your
+                   _m_a_i_l_d_i_r directory, if defined.  This command also allows
+                   you to use `!' as an abbreviation for you incoming mail-
+                   box, `>' for your _r_e_c_e_i_v_e_d_m_a_i_l folder, and `<' for  your
+                   _s_e_n_t_m_a_i_l  folder.   You can also enter `?' at the prompt
+                   to list the names of your folders.
+
+
+             d, u  Delete and Undelete.  Neither of these two commands have
+                   any prompts and indicate their action by either adding a
+                   `D' to the current message index entry (indicating dele-
+                   tion  pending)  or removing the `D' (indicating that the
+                   message isn't set for deletion).
+
+
+             <control>-D
+                   This command allows you to easily mark for deletion  all
+                   messages  that  have  a  specific  pattern.  After <con-
+                   trol>-D is pressed, the  program  will  prompt  for  the
+                   string  to  match  (currently it only matches either the
+
+
+          May 1, 1990                  Page 19
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+                   _f_r_o_m or _s_u_b_j_e_c_t lines of the message).
+
+
+             <control>-U
+                   This is the direct opposite command to the  previous  --
+                   all  messages  that match the specified pattern can have
+                   any mark for deletion removed by using this command.
+
+
+             e     Edit mailbox.  This allows you  to  modify  the  current
+                   mail  file at a single keystroke.  This is mostly useful
+                   for editing down messages before saving them.  Modifying
+                   headers  should  be  done  with extreme caution, as they
+                   contain routing information and other  vital  stuff  for
+                   full functionality.
+
+
+             f     Forward.  Allows the user to forward the current message
+                   to another user.  This copies the message into the  edit
+                   buffer and allows the user to add their own message too.
+                   The prompt is `Forward to:' and will expand an alias  if
+                   entered.  (See also _b_o_u_n_c_e, above.)
+
+                   Elm  will ask you if you want to edit the message before
+                   sending it.  If you answer `yes', Elm will prepend  your
+                   prefix  string  to each line of the message, and let you
+                   edit the result.  If you do not want the  prefix  string
+                   on  each line, answer `no'; you will have another chance
+                   to edit the message when you get  to  the  `send'  menu.
+                   (See also the `elmrc' section, under _p_r_e_f_i_x.)
+
+
+             g     Group  reply.  Identical to _r_e_p_l_y below, except that the
+                   response is mailed to _a_l_l  _r_e_c_i_p_i_e_n_t_s  of  the  original
+                   message  (except yourself -- see the _a_l_t_e_r_n_a_t_i_v_e_s option
+                   for your _._e_l_m_/_e_l_m_r_c file above).
+
+
+             h     Display the current message  with  all  headers  intact.
+                   When  you display a message with other commands, certain
+                   header lines are formatted and others discarded (accord-
+                   ing  to the _w_e_e_d_l_i_s_t parameter in your _._e_l_m_/_e_l_m_r_c file).
+
+
+             i     Return to the index screen, when issued in  the  builtin
+                   pager  or  at  the  end  of  a  message (with either the
+                   builtin pager or an external pager).
+
+
+             j or <down>, k or <up>
+                   These four keys work similarly to what they would do  in
+                   _v_i  or  any  of the other (precious few) screen oriented
+                   programs.  The `j' and <down> keys move the current mes-
+                   sage  pointer down to the next message skipping over any
+
+
+          May 1, 1990                  Page 20
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+                   marked deleted (going to the next page  if  needed)  and
+                   the  `k'  and <up> keys move the current message pointer
+                   back to the previous message skipping  over  any  marked
+                   deleted (also changing pages if needed)
+
+
+             J,  K  These two keys work similarly to their lower case coun-
+                   terparts, except that they don't skip over deleted  mes-
+                   sages.
+
+
+             l     Limit.   This  feature allows you to specify a subset of
+                   the existing messages to be dealt  with.   For  example,
+                   let's  say we had a folder with four hundred messages in
+                   it, about four or five  different  subjects.   We  could
+                   then  limit  what  we're dealing with by using the _l_i_m_i_t
+                   command.  Pressing `l' would result in the prompt:
+                        CCrriitteerriiaa::
+                   to which we could answer ssuubbjjeecctt _s_t_r_i_n_g, ffrroomm _s_t_r_i_n_g  or
+                   ttoo  _s_t_r_i_n_g.   In  our example, we could use ssuubbjjeecctt pprroo--
+                   ggrraammmmiinngg as a criteria for selection.  Once we've limit-
+                   ed  our  selections  down,  the screen will be rewritten
+                   with just the selected messages and the  top  line  will
+                   change to have a message like:
+                    FFoollddeerr iiss ""==eellmm"" wwiitthh 9922 sshhoowwnn oouutt ooff 112244 [[EEllmm 22..22]]
+                   We can further limit selections by entering further cri-
+                   teria, each time using the _l_i_m_i_t option again.
+
+                   To clear all the criteria and get back to the  `regular'
+                   display,  simply enter _a_l_l as the limiting criteria.  It
+                   should be noted that the selection based on ``to'' isn't
+                   fully implemented for this version, so it is recommended
+                   that users stay with ``subject'' and ``from'' as the ba-
+                   sis for their criteria.
+
+
+             m     Mail.   Send  mail to a specified user.  The prompt that
+                   is associated with this command is  `Send  mail  to  :'.
+                   Entering an alias name results in the full address being
+                   rewritten in parenthesis immediately.   This  prompt  is
+                   followed  by  `Subject:'  which allows the user to title
+                   their note.  The final field is `Copies to: ', which al-
+                   lows  other  people specified to receive "carbon copies"
+                   of the message.  (See the _a_s_k_c_c option of the _._e_l_m_/_e_l_m_r_c
+                   file  above.)   Upon entering all three items the editor
+                   is invoked and the message can be composed.
+
+
+             n     Next message that is not marked deleted: useful for dis-
+                   playing  successive  messages  in a folder.  When issued
+                   from the index screen, it displays the current  message,
+                   and  then  when  issued while in the builtin pager or at
+                   the end of a message (with either the builtin  pager  or
+                   an  external pager), it will display the first screen of
+
+
+          May 1, 1990                  Page 21
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+                   the next message not marked for deletion.
+
+
+             o     Options.  This full-screen display allows you  to  alter
+                   the  settings  of  a number of parameters, including the
+                   current sorting method, the method  of  printing  files,
+                   the calendar file, the save file, and so on.  It's self-
+                   documenting (where have you heard _t_h_a_t before?) so isn't
+                   explained in too much detail here.
+
+
+             p     Print.  This allows you to print out the current message
+                   or the tagged messages to a previously defined  printer.
+                   (See  the section on the _._e_l_m_/_e_l_m_r_c discussing the _p_r_i_n_t
+                   variable.)
+
+
+             q     Quit.  If you in the pager, you are returned to the  in-
+                   dex  screen.  If  you are on the index screen, _e_l_m quits
+                   altogether.  However, if you have the  option  _a_s_k  set,
+                   _e_l_m  first  prompts  you for the disposition of the mes-
+                   sages in the current folder.  If any messages are marked
+                   for  deletion, it will ask if you want them deleted.  If
+                   the current folder is your incoming  mailbox,  you  will
+                   also  be asked if read messages should be stored in your
+                   _r_e_c_e_i_v_e_d_m_a_i_l folder, and if unread  messages  should  be
+                   kept  in  the  incoming mailbox.  The default answers to
+                   these questions are set by the  _._e_l_m_/_e_l_m_r_c  options  _a_l_-
+                   _w_a_y_s_d_e_l_e_t_e,  _a_l_w_a_y_s_s_t_o_r_e,  and  _a_l_w_a_y_s_k_e_e_p.  However, if
+                   you elect to not store your  read  messages  (i.e.  keep
+                   them)  it  is presumed you want to keep your unread mes-
+                   sages, too.
+
+
+             Q     Quick quit.  This behaves similar to the `q' command ex-
+                   cept that you are never prompted for answers to the mes-
+                   sage disposition questions.  _E_l_m will  dispose  of  mes-
+                   sages  according  to the values you have set for _a_l_w_a_y_s_-
+                   _d_e_l_e_t_e, _a_l_w_a_y_s_s_t_o_r_e, and _a_l_w_a_y_s_k_e_e_p in  your  _._e_l_m_/_e_l_m_r_c
+                   file.
+
+
+             r     Reply.   Reply to the sender of the current message.  If
+                   the _a_u_t_o_c_o_p_y flag is OFF in your  _._e_l_m_/_e_l_m_r_c  file,  the
+                   program will prompt ``Copy message? (y/n)'' to which the
+                   user can specify whether a copy of the source message is
+                   to  be  copied  into the edit buffer, or not.  If copied
+                   in, all lines from the message are  prepended  with  the
+                   _p_r_e_f_i_x  character  sequence specified in your _._e_l_m_/_e_l_m_r_c
+                   file.
+
+
+             s     Save to folder.  This command is like  the  `copy'  com-
+                   mand,  except  that  the  saved  messages are marked for
+
+
+          May 1, 1990                  Page 22
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+                   deletion, and that if you are saving  just  the  current
+                   message,  the current message pointer is incremented af-
+                   terwards (see the _r_e_s_o_l_v_e option in the _._e_l_m_/_e_l_m_r_c  file
+                   above).   This command expands folder names with `~' be-
+                   ing your home directory and `=' being your  _m_a_i_l_d_i_r  di-
+                   rectory,  if  defined.   This command also allows you to
+                   use `>' for your _r_e_c_e_i_v_e_d_m_a_i_l folder and  `<'  for  your
+                   _s_e_n_t_m_a_i_l folder.
+
+
+             t     Tag.  Tag the current message for a later operation4.
+
+
+             <control>-T
+                   Tag  all  messages  containing  the  specified  pattern.
+                   Since _t_a_g_g_i_n_g messages can occur on screens  other  than
+                   the one being viewed, the _e_l_m system will first check to
+                   see if any messages are currently _t_a_g_g_e_d and ask you  if
+                   you'd  like  to remove those tags.  After that, it will,
+                   similar to the _<_c_o_n_t_r_o_l_>_-_D function, prompt for  a  pat-
+                   tern  to  match  and then mark for deletion all messages
+                   that contain the (case insensitive)  pattern  in  either
+                   the _f_r_o_m or _s_u_b_j_e_c_t lines.
+
+
+             x     Exit.   This  leaves  _e_l_m  discarding any changes to the
+                   mailbox.  If  changes  are  pending  (such  as  messages
+                   marked  for  deletion)  a prompt is made to confirm dis-
+                   carding the changes.   If  confirmed,  no  messages  are
+                   deleted  and  the  statuses  of  messages are unchanged.
+                   That is, any messages that were new will remain new  in-
+                   stead  of being noted as old, and any messages that were
+                   read for the first time will be again noted as unread.
+
+
+             X     Exit immediately.  This leaves _e_l_m in the quickest  pos-
+                   sible manner without even prompting about discarding the
+                   changes to the mailbox.  No messages are deleted and the
+                   statuses  of  messages are unchanged.  That is, any mes-
+                   sages that were new will remain  new  instead  of  being
+                   noted  as  old,  and any messages that were read for the
+                   first time will be again noted as unread.
+
+
+          When you are about to send of a message under the _f_o_r_w_a_r_d,  _m_a_i_l,
+          or  _r_e_p_l_y commands (see above), a small menu of the following op-
+          tions appears:
+
+
+             c     Specify folder for saving a copy to.  This allows you to
+                   override  the  _c_o_p_y,  _f_o_r_c_e_n_a_m_e  and _s_a_v_e_n_a_m_e options of
+
+          __________
+          4. Currently only _p_i_p_e, _p_r_i_n_t, and _s_a_v_e support this.
+
+
+          May 1, 1990                  Page 23
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+                   your _._e_l_m_/_e_l_m_r_c file.  It prompts you for  the  name  of
+                   the folder where a copy of the outgoing message is to be
+                   saved.  The default displayed is taken from those  three
+                   _._e_l_m_/_e_l_m_r_c options and can be changed.  This command al-
+                   so allows you to use `>' for  your  _r_e_c_e_i_v_e_d_m_a_i_l  folder
+                   and  `<'  for  your  _s_e_n_t_m_a_i_l  folder,  and `=?' to mean
+                   ``conditionally save by name'' and `=' to mean  ``uncon-
+                   ditionally  save  by  name''.  (See  the _s_a_v_e_n_a_m_e option
+                   above for details on saving by name.)  (Since you  could
+                   next  enter  the _e_d_i_t _h_e_a_d_e_r_s command and change the re-
+                   cipients of your message, the name of the  folder  under
+                   the  two ``save by name'' options is not established un-
+                   til you enter the _s_e_n_d command.)  You can also enter `?'
+                   at the prompt to list the names of your folders.
+
+
+             f     Forget.   This  gets  you  out  of sending a message you
+                   started. If you are in send-only mode,  the  message  is
+                   saved to the file _C_a_n_c_e_l_l_e_d_._m_a_i_l in your home directory.
+                   Otherwise it can be restored at the next _f_o_r_w_a_r_d,  _m_a_i_l,
+                   or  _r_e_p_l_y command during the current session of _e_l_m. Af-
+                   ter issuing one of those commands you will  be  prompted
+                   with ``Recall last kept message?''
+
+
+             e     Edit  message (or form).  Entering this command will al-
+                   low you to edit the text of your message or form.
+
+
+             h     Edit headers.  This puts you  into  the  _h_e_a_d_e_r  _e_d_i_t_i_n_g
+                   _m_o_d_e, whereby you can edit to any of the various headers
+                   of your message.  Like the options  screen,  it's  self-
+                   documenting,  so  it  isn't explained in too much detail
+                   here.
+
+
+             m     Make form.  This converts the message  you  have  edited
+                   into a form.  (See _T_h_e _E_l_m _F_o_r_m_s _M_o_d_e _G_u_i_d_e for more de-
+                   tails.)
+
+
+             s     Send.  This sends the message as is without any  further
+                   ado.
+
+
+          77..  UUssiinngg EEllmm wwiitthh ````eeddiittoorr == nnoonnee''''
+
+          The _E_l_m program also supports a builtin editor for simple message
+          composition that is very (very) similar to the simple line editor
+          available from the _B_e_r_k_e_l_e_y _M_a_i_l system.
+
+          To  access it, you need merely to specify ``_e_d_i_t_o_r_=_n_o_n_e'' in your
+          _._e_l_m_/_e_l_m_r_c file.  With that, any messages  to  be  composed  that
+          don't  already  have  text  in the buffer (e.g. no reply with the
+
+
+          May 1, 1990                  Page 24
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+          text included, etc), will use this editor.
+
+          From the builtin editor, the following options are available  for
+          use.   Each command here is prefixed with a `~'.  You can specify
+          a different ``escape'' character in your _._e_l_m_/_e_l_m_r_c file, if  you
+          desire (see above).
+
+
+
+            ~? Print a brief help menu.
+
+
+            ~b Change the Blind-Carbon-Copy list.
+
+
+            ~c Change the Carbon-Copy list.
+
+
+            ~e Invoke the Emacs editor on the message, if possible.
+
+
+            ~f Add the specified message or current message.
+
+
+            ~h Change all the available headers (To, Cc, Bcc, and Subject).
+
+
+            ~m Same as `~f', but with the current `prefix'.
+
+
+            ~o Invoke a user specified editor on the message.
+
+
+            ~p Print out the message as typed in so far.
+
+
+            ~r Include (read in) the contents of the specified file.
+
+
+            ~s Change the Subject line.
+
+
+            ~t Change the To list.
+
+
+            ~v Invoke the Vi visual editor on the message.
+
+
+            ~< Execute the specified unix command, entering the  output  of
+               the  command  into  the editor buffer upon completion.  (For
+               example ``~< who'' will include the output of the  _w_h_o  com-
+               mand in your message.)
+
+
+
+
+          May 1, 1990                  Page 25
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+            ~! Execute  a  unix command if one is given (as in ``~!ls'') or
+               give the user a shell (either from their  shell  setting  in
+               their _._e_l_m_/_e_l_m_r_c file or the default).
+
+
+            ~~ Add a line prefixed by a single `~' character.
+
+          A  useful  note  is  that  the  `~f' and `~m' commands invoke the
+          _r_e_a_d_m_s_g command, so you can pass parameters along too.  For exam-
+          ple,  if  we  wanted  to  include a message from Joe, without any
+          headers, prefixed, we could use:
+               ~m -n Joe
+          to accomplish the task.
+
+          To learn more about how they work, try 'em!
+
+
+          88..  TThhee AAlliiaass SSyysstteemm
+
+          As mentioned previously, there exists in the _e_l_m system a set  of
+          aliases that associate an arbitrary word (such as a persons name)
+          to a complex address or group.  The advantages are readily appar-
+          ent; rather than remembering an address of the form:
+               hhoosstt11!!hhoosstt22!! ...... !!hhoossttNN!!uusseerr
+          the user merely has to remember a single word.
+
+          Two alias tables are available for a each user within _e_l_m, namely
+          the system alias file and the  user's  alias  file.   The  system
+          alias  file  is created and maintained (by the system administra-
+          tor) by editing the file _S_Y_S_T_E_M___A_L_I_A_S_E_S as defined in  the  `sys-
+          defs.h'  file  (see _T_h_e _E_l_m _C_o_n_f_i_g_u_r_a_t_i_o_n _G_u_i_d_e) and as described
+          in the documentation with the _n_e_w_a_l_i_a_s command, then running  the
+          _n_e_w_a_l_i_a_s program.
+
+          An  individual  user  can  also have an alias file which works in
+          conjunction with the system aliases.  To do this, they need mere-
+          ly  to peruse the documentation for the _n_e_w_a_l_i_a_s command and cre-
+          ate a file as indicated therein.  After  executing  the  program,
+          the aliases will be available for using from within _e_l_m.
+
+          Please  refer to _T_h_e _E_l_m _A_l_i_a_s _U_s_e_r_s _G_u_i_d_e for more helpful hints
+          and so on.
+
+
+          Within _e_l_m, however, the alias system acts as an entirely differ-
+          ent  program, with it's own commands and own mini-menu.  The menu
+          replaces the standard mini-menu with:
+
+
+
+
+
+
+
+
+
+          May 1, 1990                  Page 26
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+               ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                        AAlliiaass ccoommmmaannddss
+
+               aa))lliiaass ccuurrrreenntt mmeessssaaggee,, dd))eelleettee aann aalliiaass,, cchheecckk aa pp))eerrssoonn oorr ss))yysstteemm,,
+                      ll))iisstt eexxiissttiinngg aalliiaasseess,, mm))aakkee nneeww aalliiaass oorr rr))eettuurrnn
+
+
+               AAlliiaass:: @@
+               ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+          The commands are:
+
+
+            a  Alias current message.  This allows the user  to  create  an
+               alias  that has the return address of the current message as
+               the address field of the alias.  It  prompts  for  a  unique
+               alias  name.    Important note: when you alias an address in
+               this fashion, the mailer will try to minimize the amount  it
+               needs to store by iteratively comparing machine names in the
+               path with the machines in the pathalias database.   Once  it
+               finds  an  entry  the  address  will be saved at that point.
+               For further information, please see  _T_h_e  _E_l_m  _A_l_i_a_s  _S_y_s_t_e_m
+               _U_s_e_r_s _G_u_i_d_e.
+
+
+            d  Delete an existing alias.  This allows the user to delete an
+               alias the user has previously  made.   It  prompts  for  the
+               alias  name,  and  displays the alias information, if found,
+               and then prompts for confirmation to delete.
+
+
+            l  List all existing aliases.  This simply lists all the alias-
+               es you have previously made.
+
+
+            m  Make  user  alias.  This will prompt for a unique alias name
+               and then for an address.  The information provided  will  be
+               added     to     your     individual    aliases.text    file
+               (_$_H_O_M_E_/_._e_l_m_/_a_l_i_a_s_e_s_._t_e_x_t) and then added to the database.
+
+
+            p  Check personal alias.  This is a simple way of checking what
+               is  in  the  alias database -- it prompts for an alias name,
+               and returns the address associated with that name or the er-
+               ror message `alias not found' as appropriate.
+
+
+            r  Return.  Return to the main level of the _e_l_m program.
+
+
+            s  Check  system  alias.   If you're not sure that your machine
+               can talk to another machine, you can  use  this  command  to
+
+
+          May 1, 1990                  Page 27
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+               either  find  the appropriate route or find that you're cor-
+               rect in your suspicions and it is indeed unknown!
+
+
+          99..  WWhhiillee WWee''rree TTaallkkiinngg AAlliiaasseess......
+
+          Another feature worthy of discussion,  since  it's  been  getting
+          lots  of veiled references throughout this document, is the host-
+          path  file.   This  is  implemented  using  the  uucp   pathalias
+          database, with a file containing lines with the format:
+               _h_o_s_t_n_a_m_e        _a_d_d_r_e_s_s!!%%ss
+            or
+               _h_o_s_t_n_a_m_e        %%ss@@_h_o_s_t_n_a_m_e
+          The  actual  details  of the file are located in _T_h_e _A_l_i_a_s _S_y_s_t_e_m
+          _U_s_e_r_s _G_u_i_d_e.
+
+          Anyway, to use them is quite simple...when specifying the address
+          of  someone, you can either have an alias for them already, reply
+          to their message, or use the system alias feature!
+
+          Enough hype, right?  Okay...to use this feature, you  specify  an
+          address  by either "machine!person" ignoring if your specific ma-
+          chine can talk directly to the machine specified, or, if you pre-
+          fer  the  Internet addressing scheme, "person@machine".  When you
+          enter the address as specified, the mailer  will  quickly  search
+          through  the pathalias database file and expand the specified ad-
+          dress to be a legitimate routing address.
+
+          What's really nice about this is that the address that we're  go-
+          ing to send to can be either on ARPA, CSNET, BITNET, uucp, or any
+          other network.  The method of specifying the basic address is the
+          same regardless!
+
+          For  example,  mail to me could be sent as either "hplabs!taylor"
+          or "taylor@hplabs".  _e_l_m will expand them both in the same manner
+          and include a ``route'' to the machine _h_p_l_a_b_s, if needed.
+
+          For those sites with the domains database installed, you can also
+          mail to users on domain based systems by simply specifying  their
+          name, the machine they receive mail on and a full domain specifi-
+          cation.
+
+          For example, say you have a friend Maurice who reads mail on JOE-
+          VAX in the Mailnet world.  You could mail to him by using the ad-
+          dress "Maurice@JOEVAX.MAILNET" and your system  will  expand  the
+          address correctly.
+
+
+          1100..  EExxppeerrtt MMaaiill UUsseerrss aanndd DDeebbuuggggiinngg tthhee MMaaiilleerr
+
+          There  are some additional facilities available in the _e_l_m mailer
+          for those people who are knowledgeable about mail  protocols,  or
+          trying to debug/track down a problem.
+
+
+
+          May 1, 1990                  Page 28
+
+
+
+
+
+          Elm Reference Guide                                   Version 2.3
+
+
+
+          The `h' _h_e_a_d_e_r_s command at the outermost level of the mailer will
+          display the current message ignoring the current setting  of  the
+          `weed'  option.   This  is most useful for answering questions of
+          the form "I wonder what this guy put in his  header?"  and  such.
+          This  command  does  not  show  up on the mini-menu because it is
+          somewhat esoteric, but it does appear on the `?' help screen (can
+          you find it there, though?).
+
+          The  `@' command at the outermost level of the mailer will output
+          a screen of debugging information, including the number of  lines
+          and offsets of each of the messages in the current mailbox.
+
+          The `#' command at the outermost level of the mailer will display
+          the entire stored `record structure' for the current message.
+
+          The `%' command will display the full computed return address  of
+          the current message.
+
+          Starting  up  _e_l_m  with  the "-d" debug option will create a file
+          called _E_L_M_:_d_e_b_u_g_._i_n_f_o in your home directory and contain a wealth
+          of  useful information (to me, at least!) to aid in tracking down
+          what errors are occurring and why.
+
+
+          If there are any problems with the mailer,  please try to  recre-
+          ate  the error with the debug option enabled and set to the high-
+          est level (11) before sending defect reports my way.
+
+
+
+          One final note: all error names reported by the program are docu-
+          mented in the AT&T System V Interface Definition Reference Manual
+          in _e_r_r_n_o(2).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          May 1, 1990                  Page 29
+
+
+

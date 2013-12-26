@@ -1,0 +1,69 @@
+NAME
+     newalias - install new elm aliases for user and/or system
+
+SYNOPSIS
+     newalias [-g]
+
+DESCRIPTION
+     Newalias creates new hash and data  files  from  a  text  file.   If  the
+     program  is  invoked  with  the -g (global) flag, the program updates the
+     system alias files.  Otherwise, the  program  looks  for  a  file  called
+     $HOME/.elm/aliases.text    and,    upon   finding   it,   creates   files
+     $HOME/.elm/aliases.hash and $HOME/.elm/aliases.data for the elm program.
+
+     The format that the program expects is;
+
+          alias, alias, .. = comment = address
+     or
+          alias, alias, .. = comment = alias, alias, ...
+
+     The first form is for an individual user such as;
+
+          dave, taylor = Dave Taylor = veeger!hpcnou!dat
+
+     and the second is for defining a group alias such as;
+
+          gurus = Unix Gurus = alan, john, dave, mike, richard,
+                           larry, t_richardson
+
+
+     Note that lines can be  continued  at  will,  blank  lines  are  accepted
+     without  error,  and  that  any  line  starting  with '#' is considered a
+     comment and is not processed.
+
+     Aliases are case insensitive so dave and Dave are both the same alias.
+
+     Finally, aliases can contain other aliases, and/or groups;
+
+          unix = Unix people = gurus, taylor, jonboy
+     ' onto the next page, if you please
+
+
+
+
+FILES
+     $HOME/.elm/aliases.text         alias source for user
+     $HOME/.elm/aliases.hash         alias hash table for user
+     $HOME/.elm/aliases.data         alias data file for user
+     /usr/local/lib/aliases.text     alias source for system
+     /usr/local/lib/aliases.hash     alias hash table for system
+     /usr/local/lib/aliases.data     alias data file for system
+
+AUTHOR
+     Dave Taylor, Hewlett-Packard Laboratories.
+
+SEE ALSO
+     elm(1L), checkalias(1L), mail(1), mailx(1)
+
+DIAGNOSTICS
+     Newalias has a couple of descriptive error messages which don't  need  to
+     be  detailed  here.   It  is,  however,  worth noting that the checkalias
+     program can be used to ensure that the aliases are in  the  proper  order
+     and are available for the elm system.
+
+BUG REPORTS TO
+     Syd Weinstein elm@DSI.COM (dsinc!elm)
+
+COPYRIGHTS
+     (c) Copyright 1986, 1987 by Dave Taylor
+     (c) Copyright 1988, 1989, 1990 by The USENET Community Trust

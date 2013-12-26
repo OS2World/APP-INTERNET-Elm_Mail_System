@@ -1,0 +1,5 @@
+set close on
+unset env TERMCAP
+set env TERM=window
+# set env UUPCSYSRC=d:/tcpip/etc/elm.rc
+# set env UUPCUSRRC=d:/tcpip/etc/elm.rc

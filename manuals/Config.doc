@@ -1,0 +1,462 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                               EEllmm CCoonnffiigguurraattiioonn GGuuiiddee
+
+
+
+
+                  _H_o_w _t_o _i_n_s_t_a_l_l _a_n_d _c_u_s_t_o_m_i_z_e _t_h_e _E_l_m _m_a_i_l _s_y_s_t_e_m
+
+
+                                     Dave Taylor
+
+                            Hewlett-Packard Laboratories
+                                 1501 Page Mill Road
+                                    Palo Alto CA
+                                        94304
+
+
+
+                   email: taylor@hplabs.HP.COM  or  hplabs!taylor
+
+
+
+          >>> Elm is now in the public trust. Bug reports, comments, etc. to: <<<
+
+                                    Syd Weinstein
+                               Datacomp Systems, Inc.
+                                   3837 Byron Road
+                          Huntingdon Valley, PA 19006-2320
+
+                          email: elm@DSI.COM  or  dsinc!elm
+
+
+
+                       ((CC)) Copyright 1986,1987 by Dave Taylor
+            ((CC)) Copyright 1988, 1989, 1990 by The USENET Community Trust
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                               EEllmm CCoonnffiigguurraattiioonn GGuuiiddee
+
+                                    (Version 2.3)
+
+
+                                     Dave Taylor
+
+                            Hewlett-Packard Laboratories
+                                 1501 Page Mill Road
+                                    Palo Alto CA
+                                        94304
+
+                   email: taylor@hplabs.HP.COM  or  hplabs!taylor
+
+
+          >>>  Elm  is now in the public trust. Bug reports, comments, etc.
+                                       to: <<<
+
+
+                                    Syd Weinstein
+                               Datacomp Systems, Inc.
+                                   3837 Byron Road
+                          Huntingdon Valley, PA 19006-2320
+
+                          email: elm@DSI.COM  or  dsinc!elm
+
+
+                                     May 1, 1990
+
+
+
+
+
+
+               This document is intended as a supplement to the  _E_l_m  _U_s_e_r_s
+          _G_u_i_d_e and _E_l_m _R_e_f_e_r_e_n_c_e _G_u_i_d_e and should be of interest mainly to
+          people at a site either installing or maintaining the source code
+          to the EEllmm mail system, or modifying the code.
+
+          It  is  _r_e_q_u_i_r_e_d that installation be done by using the _C_o_n_f_i_g_u_r_e
+          script supplied with the system.  Please see  the  file  _I_n_s_t_r_u_c_t
+          for further information on running _C_o_n_f_i_g_u_r_e.
+
+          The remainder of this document will discuss the various questions
+          asked by the _C_o_n_f_i_g_u_r_e script and the options available  via  di-
+          rect  editing  of  various  files  and  parameters.  As indicated
+          above, almost all of the sites that install EEllmm should  find  the
+          _C_o_n_f_i_g_u_r_e script more than sufficient.
+
+
+
+          Elm Configuration Guide                               Version 2.3
+
+
+
+
+
+          Elm Configuration Guide                               Version 2.3
+
+
+
+          UUssiinngg CCoonnffiigguurree
+
+               _C_o_n_f_i_g_u_r_e  is  a shell script that will automatically deter-
+          mine the type of system it is running on and tune the  parameters
+          of  Elm  to  fit  that system and its environment.  Where the in-
+          staller has a choice, it asks questions of the  installer.   _C_o_n_-
+          _f_i_g_u_r_e  provides  its  own instructions when run, so they are not
+          repeated here.  However, when the installer is presented  with  a
+          choice, this next section explains some of the options available.
+          Not all the questions or  options  to  those  questions  are  ex-
+          plained.
+
+
+
+               Enable calendar feature?
+
+          Elm has a feature to take specially marked lines within mail mes-
+          sages and add them to a file for use by the system calendar  pro-
+          gram.   The  command to do this extraction needs to be enabled to
+          work.  There is also a follow on question regarding the  name  of
+          the calendar file:
+
+               Default calendar file?
+
+          which is usually calendar on most systems.  This file will reside
+          in the users home directory, not their .elm directory.
+
+               Does your /etc/passwd file keep full  names  in  Berkeley/V7
+          format (name first thing after ':' in GCOS field)?
+
+          Elm uses the full name from the password file if it is available.
+          There are two major ways this name is stored.   Berkeley/V7  sys-
+          tems  place  the name as the entire GCOS field string, that is it
+          starts directly after the ':'  that  delimits  the  fields.   USG
+          (UNIX(R) Systems Group, or AT&T) systems put the users name after
+          a department number and separate it from that number  by  a  '-'.
+          The  end  of the users full name in these systems is a '('.  Look
+          at your /etc/password file and if either version applies,  answer
+          yes  to  that  version.   If neither applies, answer no.  Elm can
+          still get the users name from the ".fullname" file in their  home
+          directory.
+
+               Every  now  and then someone has a (gethostname, uname) that
+          lies about the hostname but can't be fixed for political or  eco-
+          nomic  reasons.   Would  you like to pretend (gethostname, uname)
+          isn't there and maybe compile in the hostname?
+
+          Elm needs to know the correct name of the host on which it is ex-
+          ecuting  to be able to create the proper headers for the outbound
+          mail.  Some systems use one name for uucp and  another  name  for
+          the  system  and  others just don't reply to the subroutines with
+
+          __________
+          (R)UNIX is a registered trademark of AT&T.
+
+
+          May 1, 1990                   Page 2
+
+
+
+
+
+          Elm Configuration Guide                               Version 2.3
+
+
+
+          the proper name.  In this case it will be necessary to compile in
+          the  name.   In all other cases this should not be needed.  It is
+          provided just in case there is a problem with your system.
+
+               Does your mailer understand INTERNET addresses?
+
+          Elm will work with systems that can process the `@' character  of
+          INTERNET format addresses or with the `!' format of uucp address-
+          es.  If your mail delivery agent understands the `@'  format  ad-
+          dresses,  they  should be used and this question is answered yes.
+          If when you send mail with the  `@'  format  addresses  (such  as
+          elm@dsi.com), they bounce, then answer this question no.
+
+               Am I going to be running as a setgid program?
+
+          On USG type systems and many other types, access to the mailboxes
+          and the mailbox directory is via the group permissions.  The mail
+          user  agents,  such as Elm, need write access into this directory
+          to be able to move the mailbox around due to internal editing and
+          to  create lock files.  If the permissions on your mailbox direc-
+          tory are drwxrwxr-x, then Elm needs to be a setgid program.
+
+               What is the default editor on your system?
+
+          If no editor is specified in the users _._e_l_m_/_e_l_m_r_c _f_i_l_e_,  this  is
+          which editor to use.  The editor is used to compose outbound mail
+          messages.
+
+               What pager do you prefer to use with Elm?
+
+          This is the standard pager to use for reading messages.   Besides
+          the usual system pagers, two Elm specific internal options exist:
+          builtin and builtin+.  The built-in pager is  faster  to  execute
+          but  much  less  flexible than the system provided pagers.  The +
+          version just clears the page before  displaying  the  next  page.
+          Otherwise the two versions are identical.
+
+          OOtthheerr CCoonnffiigguurraabbllee PPaarraammeetteerrss
+
+               The  following parameters rarely need to be changed, but are
+          provided if you need them.  _C_o_n_f_i_g_u_r_e does not prompt  for  their
+          values.   To  change  them, edit the _h_d_r_s_/_s_y_s_d_e_f_s_._h file directly
+          after running Configure.
+
+          FIND_DELTA
+                    This is  the  delta  that  the  binary  search  of  the
+                    pathalias  database  will  use  to  determine when it's
+                    slicing up a single line, rather than  a  multitude  of
+                    lines.    Ideally,  this  should  be set to 1 byte less
+                    than the shortest line in the file...the default is  10
+                    bytes.
+
+          MAX_IN_WEEDLIST
+                    The  maximum number of headers that can be specified in
+
+
+          May 1, 1990                   Page 3
+
+
+
+
+
+          Elm Configuration Guide                               Version 2.3
+
+
+
+                    the weedout list of the _._e_l_m_/_e_l_m_r_c file.   A  suggested
+                    alternative  approach if this number is too small is to
+                    specify initial substrings in the file rather than  in-
+                    creasing  the  number.   For  example,  say you want to
+                    weedout the headers  ``Latitude:''  and  ``Latitudinal-
+                    Coords:'',  you  could  simply specify ``Latitud''" and
+                    match them both!  Furthermore you  could  also  specify
+                    headers  like  ``X-''  and  remove all the user defined
+                    headers!
+
+          MAX_HOPS  When replying to a G)roup, this is the  maximum  number
+                    of hops that a message can have taken.  This is used to
+                    try to optimize the return address (remove cyclic loops
+                    and so on) and regular use should show that the default
+                    of 35 is plenty more than you'll ever need!
+
+          system_text_file
+                    This is the source  text  file  for  the  system  level
+                    aliases.   See either the _n_e_w_a_l_i_a_s_(_1_L_) man page, or _T_h_e
+                    _E_l_m _A_l_i_a_s _S_y_s_t_e_m _U_s_e_r_s _G_u_i_d_e for further details.
+
+          system_hash_file
+                    This is the file that contains the  hashed  version  of
+                    the system aliases.
+
+          system_data_file
+                    This is the other file the _n_e_w_a_l_i_a_s command installs in
+                    the system alias area and contains the actual addresses
+                    for  each  of  the aliases contained in the hashed data
+                    file.
+
+          ALIAS_TEXT
+                    This is where the  individual  users  alias  text  file
+                    lives.
+
+          ALIAS_HASH
+                    Where the hashed aliases are stored,
+
+          ALIAS_DATA
+                    and where the alias address data itself is kept.
+
+          DEBUGFILE The name of the file to put in the users home directory
+                    if they choose to use the `-d' debug option.
+
+          OLDEBUG   The name of the file to save the previous debug  output
+                    as.  (this feature was added to ensure that users want-
+                    ing to mail bug reports  wouldn't  automatically  over-
+                    write the debug log of the session in question)
+
+          temp_lock_dir
+                    Directory for lock files for XENIX.
+
+          temp_file Temporary file for sending outbound messages.
+
+
+
+          May 1, 1990                   Page 4
+
+
+
+
+
+          Elm Configuration Guide                               Version 2.3
+
+
+
+          temp_form_file
+                    A place to store temporary forms (for Forms Mode) while
+                    answering them.
+
+          temp_mbox Place to keep copy of incoming mailbox to avoid  colli-
+                    sions with newer mail.
+
+          temp_print
+                    File to use when creating a printout of a message.
+
+          temp_edit File to use when editing the mailbox file on XENIX.
+
+          temp_uuname
+                    Where to redirect output of the _u_u_n_a_m_e_(_1_M_) command.
+
+          mailtime_file
+                    File to compare date to to determine if a given message
+                    is New since the last time the mail was read or not.
+
+          readmsg_file
+                    File to use when communicating with the _r_e_a_d_m_s_g program
+                    (see that program for more information)
+
+          smflags   Defines  the  flags to hand to _s_e_n_d_m_a_i_l if and when the
+                    program chooses to use it.
+
+          smflagsv  Defines the flags to hand to _s_e_n_d_m_a_i_l in verbose voyuer
+                    mode.
+
+          mailer    If  you don't have _s_e_n_d_m_a_i_l, this is the mailer that'll
+                    be used.
+
+          helpfile  The help file name prefix.
+
+          ELMRC_INFO
+                    The file containing textual  messages  associated  with
+                    each  EEllmm  variable setting in the users _`_`_._e_l_m_/_e_l_m_r_c_'_'
+                    file.  This is used when the user chooses to  auto-save
+                    the options from within the main program.
+
+          elmrcfile The  name of the automatic control file within the _._e_l_m
+                    directory. (currently _e_l_m_r_c)
+
+          old_elmrcfile
+                    When a new elmrc file is saved, the  old  one  is  also
+                    saved, being renamed to whatever this identifier is set
+                    to.
+
+          mailheaders
+                    The name of the optional file that users may have  that
+                    will  be  included in the headers of each outbound mes-
+                    sage.
+
+
+
+
+          May 1, 1990                   Page 5
+
+
+
+
+
+          Elm Configuration Guide                               Version 2.3
+
+
+
+          dead_letter
+                    If the user decides not to send a message it  will  in-
+                    stead  be saved to this filename in their home directo-
+                    ry.
+
+          unedited_mail
+                    In the strange case when the mailer suddenly finds  all
+                    the  directories  it  uses shut off (like _/_u_s_r_/_m_a_i_l and
+                    _/_t_m_p) then it'll put the current mailbox into this file
+                    in the users home directory.
+
+          newalias  How  to  install  new aliases..(note: you MUST have the
+                    '-q' flag!)
+
+          readmsg   What the _r_e_a_d_m_s_g_(_1_L_) program is installed as.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          May 1, 1990                   Page 6
+
+
+

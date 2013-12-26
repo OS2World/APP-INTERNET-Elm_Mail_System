@@ -1,0 +1,114 @@
+NAME
+     readmsg - read messages from incoming mail
+
+SYNOPSIS
+     readmsg [-p] [-n] [-f filename] [-h]
+     readmsg [-p] [-n] [-f filename] [-h] number [number ...]
+     readmsg [-p] [-n] [-f filename] [-h] pattern
+
+DESCRIPTION
+     Readmsg is a program that gives the elm user  the  functionality  of  the
+     mailx  "~r"  command  from  the  editor of their choice.  There are three
+     different ways of using the program;
+
+     First off, if you're actually creating a reply to a message  from  within
+     the  elm system then readmsg without any arguments will include a summary
+     of the headers and the body of the message  being  replied  to.   If  you
+     aren't currently editing a message the program will return an error.
+
+     Secondly, if you want to include certain messages, you can  specify  them
+     by  listing  their  ordinal  locations  in  the mail file (that is, their
+     "message numbers") up to 25 at a time.  The meta-number '$' is understood
+     to  mean  the last message in the mailfile.  Similarly, '*' is understood
+     to represent every message in the file (that is, 1-$)
+
+     Finally, you can also specify  a  pattern  that  occurs  in  one  of  the
+     messages as a way of including it.  This pattern can be typed in directly
+     (no quotes) if the words are separated by a single space  in  the  actual
+     message.   The pattern matching is case sensitive, so "Hello" and "hello"
+     are NOT the same thing!!
+
+
+     The -f flag indicates that you'd rather use the file  specified  for  the
+     operations specified rather than the default mailbox.
+
+     The -h flag instructs the program to include the  entire  header  of  the
+     matched  message  or messages when displaying their text.  (default is to
+     display the From: Date: and Subject: lines only)
+
+     The -n flag instructs the program to exclude all headers.  This  is  used
+     mostly for extracting files mailed and such.
+
+     Finally, the -p flag indicates that the  program  should  put  form-feeds
+     (control-L) between message headers.
+
+
+EXAMPLES
+     First off, to use this from within vi to include the text of the  current
+     message, you could use the command:
+
+          :r !readmsg
+
+     (as you hit the ':' the editor will put you at the bottom of  the  screen
+     with the ':' prompt).  The space following ':r' is required.
+
+
+     Let's look at something more interesting, however;
+
+     Suppose you have the mailfile;
+
+        From joe Jun 3 1986 4:45:30 MST
+        Subject: hello
+
+        Hey Guy!  Wanta go out and have a milk this evening?
+
+        Joe
+
+        From john Jun 3 1986 4:48:20 MST
+        Subject: Dinner at Eight
+        From: John Dinley <xyz!john>
+
+        Remember you should show up about eight, okay?
+
+                 - John D -
+
+        From xxzyz!cron Jun 3 1986 5:02:43 MST
+
+        Cannot connect to server: blob
+        Job 43243 deleted from queue.
+
+     The following commands will result in;
+
+       $ readmsg 2
+       [ display the second message, from John ]
+
+       $ readmsg
+       [ an error, unless we're calling from elm ]
+
+       $ readmsg BLOB
+       [ no match - case sensitive! ]
+
+       $ readmsg -h connect to server
+       [ displays third message, including headers ]
+
+
+FILES
+     /usr/mail/<username> The incoming mail
+     $HOME/.readmsg The temp file from elm
+
+AUTHOR
+     Dave Taylor, Hewlett-Packard Laboratories
+
+SEE ALSO
+     newmail(1L), elm(1L)
+
+BUGS
+     The '*' metacharacter doesn't always work as expected!
+     Perhaps the pattern matching should be case insensitive?
+
+BUG REPORTS TO
+     Syd Weinstein elm@DSI.COM (dsinc!elm)
+
+COPYRIGHTS
+     (c) Copyright 1986, 1987 by Dave Taylor
+     (c) Copyright 1988, 1989, 1990 by The USENET Community Trust

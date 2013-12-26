@@ -1,0 +1,60 @@
+.\" @(#)$Id: Elm.cover,v 4.1 90/04/28 22:41:01 syd Exp $
+.\"
+.\"  Cover sheet for the ELM mail system...
+.\"  format with
+.\"	troff tmac.n Elm.cover > Coversheet.fmtd'
+.\"
+.\"  Elm is now in the public trust. Bug reports, comments, suggestions, flames
+.\"  etc. should go to:
+.\"	Syd Weinstein		elm@DSI.COM (dsinc!elm)
+.\"
+.\"  (C) Copyright 1986, 1987 Dave Taylor
+.\"  (C) Copyright 1988, 1989, 1990 Usenet Community Trust
+.\"
+.\"  $Log:	Elm.cover,v $
+.\" Revision 4.1  90/04/28  22:41:01  syd
+.\" checkin of Elm 2.3 as of Release PL0
+.\"
+.\"
+.po 1i
+.ds h0
+.ds h1
+.ds h2
+.ds f0
+.ds f1
+.ds f2
+.nr Hy 1
+.nr Pt 1
+.nr Pi 8
+.lg 0
+.nf
+.na
+.rs
+.za
+.sv |3.0i
+.ce 99
+.ps 25
+\fBThe \s26Elm\s25 Mail System\fR
+.sp 2
+.ps 14
+.ss 16
+.vs 16
+\fIA Replacement Mailer for All Unix Systems\fR
+.sp 3
+Dave Taylor
+.sp
+Hewlett-Packard Laboratories
+1501 Page Mill Road
+Palo Alto CA
+94304
+.sp
+email: taylor\s12@\s14hplabs \ or \ hplabs!taylor
+.sp 4
+>>> Elm is now in the public trust. Bug reports, comments, etc. to: <<<
+.sp
+Syd Weinstein
+Datacomp Systems, Inc.
+3837 Byron Road
+Huntingdon Valley, PA 19006-2320
+.sp
+email: elm\s-1@\s+1DSI.COM  or  dsinc\s-1!\s+1elm

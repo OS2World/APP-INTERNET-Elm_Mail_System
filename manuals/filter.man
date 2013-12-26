@@ -1,0 +1,98 @@
+NAME
+     filter - filter incoming messages before adding to mailbox
+
+SYNOPSIS
+     filter [-v] [-o output]
+     filter [-n]
+     filter [-r] [-o output]
+     filter [-c] [-s] [-o output]
+     filter [-c] [-S] [-o output]
+
+DESCRIPTION
+     Filter is a  sophisticated  program  that  allows  incoming  mail  to  be
+     filtered  against  a  wide  set  of  criteria.  The format for the rules,
+     located in $HOME/.elm/filter-rules, is;
+
+             rule  ::=  if  (expression)  then  action
+
+     where expression is:
+
+             expression  ::=  {  not  }  condition  expr2
+
+             expr2  ::=  NULL  |  and  condition  expr2
+
+             condition  ::=  field  relationship  value
+                        ::=  lines  relop  numvalue
+     or                 ::=  always
+
+     These further break down as:
+
+             field  ::=  from  |  subject  |  to  |  lines
+
+             relationship  ::=  =  |  !=
+
+             relop  ::=  =  |  !=  |  <  |  >  |  <=  |  >=
+
+             value  ::=  any  quoted  string
+
+             numvalue  ::=  any  integer  value
+
+     Action can be any of:
+
+             delete
+             save  foldername
+             savecopy foldername
+             execute  command
+             forward  address
+             leave
+
+     For further information about the rules  language,  please  see  The  Elm
+     Filter Guide.
+
+     The flags the filter program understands are;
+
+     -c          Clear logs.  If this flag is used,  the  log  files  will  be
+                 removed  after  being  summarized by either "-s" or "-S" (see
+                 below).
+
+     -n          Not really.  Output what would happen if given  message  from
+                 standard input, but don't actually do anything with it.
+
+     -o file     Redirect all log messages to the specified  file  or  device.
+                 (This  is  added  to more gracefully deal with changes in the
+                 file system (since sendmail is quite  picky  about  modes  of
+                 files being redirected into.))
+
+     -r          Rules.  List the rules currently being used.
+
+     -s          Summarize.  List a summary of the message filtered log.
+
+     -S          This is the same  as  `-s'  but  includes  message-by-message
+                 information additionally.
+
+     -v          Verbose.  Give  output  on  standard  out  for  each  message
+                 filtered.   Useful to have redirected to ``/dev/console'' and
+                 such.  (see -o too).
+
+AUTHOR
+     Dave Taylor, Hewlett-Packard Laboratories.
+
+FILES
+     $HOME/.elm/filter-rules     The ruleset for the users filter
+     $HOME/.elm/filterlog        A log of what has been done
+     $HOME/.elm/filtersum        A summary of what has been done
+     /etc/passwd             Used to get users home directory
+
+SEE ALSO
+     The Elm Filter Guide, by Dave Taylor.
+     readmsg(1L), elm(1L), mail(1), mailx(1), sendmail(1,8)
+
+COMMENTS
+     Not real smart about pattern matching.
+
+BUG REPORTS TO
+     Syd Weinstein elm@DSI.COM (dsinc!elm)
+
+COPYRIGHTS
+     (c) Copyright 1986, 1987 by Dave Taylor
+     (c) Copyright 1988, 1989, 1990 by The USENET Community Trust

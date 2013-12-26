@@ -1,0 +1,53 @@
+NAME
+     answer - phone message transcription system
+
+SYNOPSIS
+     answer
+
+DESCRIPTION
+     Answer is a part of the Elm mail system and is designed  for  secretaries
+     and  the  like  to  allow  them  to  answer phones and|or listen to phone
+     message machines and quickly and  easily  transcribe  the  messages  into
+     electronic mail.
+
+     The program uses its own alias  set  (usually  a  subset  of  the  system
+     aliases,  with  more  fields per user (ie unique first names, unique last
+     names, first-initial lastname, and so on)).  Note  this  means  that  you
+     must  create and then install, using newalias, a separate alias table for
+     the account this program is to be run from.
+
+     Interface-wise, the program is a breeze to use - type 'answer'  to  start
+     it up and then merely type a user name at the
+
+          Message to:
+
+     prompt, and then enter the message, ending with a blank line.  Names  can
+     be entered as 'Firstname Lastname' and the system will try to find a mail
+     alias based on the first letter of the first name  plus  the  last  name.
+     For  example, 'Dave Taylor' will cause the program to search for an alias
+     'd_taylor' in the file (note the transliteration into lower case).    The
+     program will loop until killed or quit.
+
+     Answer can be easily exited by typing any of 'quit',  'exit'  'done',  or
+     'bye' at the 'Message to:' prompt.
+
+AUTHOR
+     Dave Taylor, Hewlett-Packard Laboratories
+
+SEE ALSO
+     The Elm Alias System Users Guide , by Dave Taylor
+
+     newalias(1L), checkalias(1L), mail(1), mailx(1), from(1L), printmail(1L)
+
+FILES
+     $HOME/.elm/aliases.text       individual alias source
+     $HOME/.elm/aliases.hash       individual alias hash table
+     $HOME/.elm/aliases.data       individual alias data table
+     /tmp/snd.$$                   edit buffer for outgoing mail
+
+BUG REPORTS TO
+     Syd Weinstein elm@DSI.COM (dsinc!elm)
+
+COPYRIGHTS
+     (c) Copyright 1986, 1987 by Dave Taylor
+     (c) Copyright 1988, 1989, 1990 by The USENET Community Trust

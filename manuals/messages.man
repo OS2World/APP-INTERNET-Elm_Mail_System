@@ -1,0 +1,28 @@
+NAME
+     messages - quick count of messages in mailbox or folder
+
+SYNOPSIS
+     messages
+     messages folder-name
+
+DESCRIPTION
+     Messages counts the  occurances  of  "^From\  "  in  either  the  current
+     incoming mailbox or the specified folder.
+
+     This is, in fact, a simple little shell script!!
+
+AUTHOR
+     Dave Taylor, Hewlett-Packard Laboratories
+
+SEE ALSO
+     from(1L), elm(1L)
+
+BUGS
+     Don't be foolish...
+
+BUG REPORTS TO
+     Syd Weinstein elm@DSI.COM (dsinc!elm)
+
+COPYRIGHTS
+     (c) Copyright 1986, 1987 by Dave Taylor
+     (c) Copyright 1988, 1989, 1990 by The USENET Community Trust

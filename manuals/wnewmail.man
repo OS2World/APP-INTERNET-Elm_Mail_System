@@ -1,0 +1,48 @@
+NAME
+     wnewmail - daemon to asynchronously notify of new mail
+
+SYNOPSIS
+     wnewmail
+     wnewmail filename
+
+DESCRIPTION
+     Wnewmail is a daemon designed to run in a window on  a  windowing  system
+     (such  as an HP or Sun system) and check every 10 seconds to see if there
+     is any new mail for the user that started it up.
+
+     If there is new mail, the program will "beep", and write  to  the  window
+     for each of the new messages;
+
+        Mail from <name> -- <subject>
+
+     where <name> is either the name of the person sending  it,  if  available
+     (the ARPA 'From:' line) or machine!login where machine is the machine the
+     mail was sent from.  If there is no subject, the message  "<no  subject>"
+     will appear on the screen.
+
+     If the message is a priority message (that is, the header contains a line
+     "Priority:"),  then  the  line  output  will  be "PRIORITY mail from ..."
+     rather than just "Mail from".
+
+     This program will run forever, and can internally reset itself if mail is
+     deleted from the incoming mailbox while trying to monitor it.
+
+     If wnewmail is started up with a filename, it will  perform  exactly  the
+     same,  but  with  the  specified file as the one to check rather than the
+     default users mailbox.
+
+AUTHOR
+     Dave Taylor, Hewlett-Packard Laboratories.
+
+SEE ALSO
+     notify in sh(1) or csh(1), newmail(1L)
+
+NOTE
+     This is almost identical to the program newmail...
+
+BUG REPORTS TO
+     Syd Weinstein elm@DSI.COM (dsinc!elm)
+
+COPYRIGHTS
+     (c) Copyright 1986, 1987 by Dave Taylor
+     (c) Copyright 1988, 1989, 1990 by The USENET Community Trust

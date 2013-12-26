@@ -1,0 +1,83 @@
+# key bindings for less
+#
+# source for less.ini (compile with "lesskey -o lesselm.ini lesselm.rc")
+#
+# add any env varaibles that conflict in config.sys after "#env"
+# this file binds most standard PC keys, some emacs style keys, 
+# and some from previous versions of OS/2 or Dos less.
+# for rest of the standard less key bindings see lesskey.man.
+#
+# to use with Elm, use "less -k<path>/lesselm.ini" as the external
+# pager in Elm
+#
+# you need to use a modified version of less 321 or a newer version
+# that has this capability builtin
+#
+#command
+\340H   back-line       #up arrow
+\340P   forw-line       #down arrow
+\340I   back-screen     #page up
+\340Q   forw-screen     #page down
+\340   back-scroll     #control up arrow
+\340‘   forw-scroll     #control down arrow
+\340;   help            #F1 key
+\340G   goto-line       #Home
+\340„   goto-line       #ctrl page up
+\340O   goto-end        #End
+\340v   goto-end        #ctrl page down
+\340^V  undo-hilite     #alt u
+\340R   examine         #insert key
+\340w   prev-file       #ctrl home
+\340u   next-file       #ctrl end
+^s      forw-search     #emacs style keys
+^r      back-search     #emacs style keys
+\340^s  back-search *	#emacs like search all     Alt r
+\340^_  forw-search @*	#emacs like search all from start    Alt s
+\340s   left-scroll
+\340t   right-scroll
+r       quit    r
+|       quit    |
+>       quit    >
+<       quit    <
+C       quit    C
+d       quit    d
+f       quit    f
+h       quit    h
+i       quit    i
+J       quit    J
+j       quit    j
+\33[B   quit    j
+K       quit    K
+k       quit    k
+\33[A   quit    k
+m       quit    m
+n       quit    n
+p       quit    p
+q       quit    q
+s       quit    s
+t       quit    t
+T       quit    T
+v       quit    v
+x       quit    x
+X       quit    X
+#line-edit
+\17     back-complete   #control O
+\340^O  back-complete   #Shift Tab
+\14     expand          #control L
+\340M   right           #right arrow
+\340K   left            #left arrow
+\340t	word-left       #control left arrow
+\340s	word-right      #control right arrow
+\340R   insert          #Insert key
+\340S   delete          #Delete key
+\177    word-backspace  #control backspace
+\340“   word-delete     #control delete
+\340G   home            #Home key
+\340O   end             #End key
+\340H   up              #up arrow
+\340P   down            #down arrow
+^A      home            #emacs style keys
+^E      end             #emacs style keys
+#env
+LESS=-MicqS
+LESSCHARSET=dos

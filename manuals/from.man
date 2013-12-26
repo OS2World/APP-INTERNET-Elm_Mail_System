@@ -1,0 +1,35 @@
+NAME
+     frm - list from and subject of all messages in mailbox or file
+
+SYNOPSIS
+     frm [-n] [ folder ]
+     frm [-n] [ username ]
+
+DESCRIPTION
+     Frm outputs a line per message in the current users mailbox of the form;
+
+     <from> [subject]
+
+     If a folder is specified, the program reads that folder rather  than  the
+     default mailbox.  If the argument is a username then look for that user's
+     mailbox.
+
+     Furthermore, if the -n flag is specified, the headers  will  be  numbered
+     using   the  same  numbering  scheme  that,  for  example,  readmsg  will
+     understand.
+
+     Folder can be specified with the same notation as when invoking  the  Elm
+     mailer.
+
+AUTHOR
+     Dave Taylor, Hewlett-Packard Laboratories.
+
+SEE ALSO
+     readmsg(1L), elm(1L), mail(1), mailx(1)
+
+BUG REPORTS TO
+     Syd Weinstein elm@DSI.COM (dsinc!elm)
+
+COPYRIGHTS
+     (c) Copyright 1986, 1987 by Dave Taylor
+     (c) Copyright 1988, 1989, 1990 by The USENET Community Trust

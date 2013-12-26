@@ -1,0 +1,526 @@
+This is an OS/2 version of the Elm Mail System. It runs on OS/2 2.0
+or newer together with UUPC 1.11 (rmail transport agent) and newer
+versions or with IBM TCP/IP 1.2.1 or newer (sendmail transport).  The
+included executables require the emx runtime library, you should be
+able to find it (emxrt.zip) where you got this Elm distribution.
+
+Elm was heavily hacked to run in this environment because it was a
+*real* Unix program, with many long pathnames and Unix dependen- cies
+hardcoded. I have made it independent of pathnames and constants
+defined at compile time. All files of the Elm system are stored in the
+runtime-settable directories. Elm uses the UUPC config (.rc) file(s)
+to determine the location of all files. For TCP/IP, a dummy UUPC .rc
+file is used (see below and README.TCP for more information).
+
+No extra environment variables have to be set for Elm in additon to
+those already used by the UUPC software. It checks the UUPC system and
+user configuration files (usually uupc.rc and personal.rc) pointed to
+by the UUPCSYSRC and UUPCUSRRC environment variables for the UUPC
+location, hostname, domainname and other information.
+
+The LOGNAME environment variable, UUPC (or TCP/IP) passwd file (if
+any) and user configuration file (personal.rc) are checked for the
+user's name, full name and "home directory" which could be set in
+passwd to a subdirectory of the UUPC root directory for convenience.
+
+Make sure you include the drive specification in the home directory
+fields in the passwd file if you want to call Elm from another drive
+(don't worry about the : in the drive spec, because it is treated
+specially in the passwd lines, in which the fields are separated by :
+too).
+
+The settings required to be set in the UUPC .rc files for Elm to
+function properly are NodeName, Domain, ConfDir, MailDir, TempDir,
+Mailbox, Name, Home, Editor and Pager. Optionally you can set
+FromDomain (for UUPC site hiding) and ReplyTo. It is possible but not
+recommended to use the UUPC setting MailExt and the UUPC option
+Directory. See the UUPC documentation for an explanation of these
+settings. The sample TCP/IP .rc file (see also README.TCP) also
+contains exactly the required set of settings, for reference.
+
+Elm uses the termcap database and library to access the screen (a very
+common method for Unix programs). It uses the TERM (and possibly
+TERMCAP) environment variables and a file called termcap.dat under
+OS/2.
+
+User selection/multiple users:
+
+- Like UUPC, Elm looks for an environment variable LOGNAME which
+  should contain the name of the current user. If it is not found
+  Elm looks into the user config file (pointed to by UUPCUSRRC)
+  for the name to determine the user's incoming mailbox. The full
+  name of the user and his (her) "home directory" are read from
+  the passwd file in the UUPC configuration directory. If it
+  cannot be found (no passwd file or no matching entry in it) and
+  LOGNAME matches the name in the user config file, the full name
+  and home directory are read from the user config file. If an
+  entry in passwd is found for the user which owns the user config
+  file, the passwd entry has precedence over the user config file.
+
+- By setting the LOGNAME variable, you can easily switch to
+  another user, if more than one user use your OS/2 system for
+  e-mail. But this does only work for Elm, not for the standard
+  UUPC mailer.
+
+Restrictions:
+
+- mailbox (folder) names are restricted to 8 characters on FAT
+  file systems. If you use the save command in Elm to save a
+  message to the default folder (which has the same name as the
+  sender, =<sender>), you will get trouble if the sender's name
+  (login id in this case) exceeds 8 characters, but this is rarely
+  the case. This restriction does not apply to HPFS systems.
+
+File name changes:
+
+Because of the 8.3. restriction on FAT file systems, the following
+file names have been changed in the Elm distribution. The manuals were
+not changed. Have these name changes in mind when reading the
+manuals. Note that /uupc is assumed as a sample UUPC directory
+here, substitute your UUPC directory for it. ~ denotes your home
+directory.
+
+  EMERGENCY_MBOX               to  emergenc.mbx
+  MBOX.EMERGENCY               to  emerg.mbx
+
+  /etc/passwd                  to  /uupc/passwd
+  /usr/mail/<name>             to  /uupc/mail/<name>
+  /tmp/mbox.<name>             to  /uupc/elm/<name>.mbx
+
+  [Note that /uupc/mail may be different if you change the
+   MailDir= setting in the system config file.]
+
+  /usr/local/lib/elm-help.*    to  /uupc/elm/elm-help.*
+  /usr/local/lib/aliases.text  to  /uupc/elm/aliases.txt
+  /usr/local/lib/aliases.hash  to  /uupc/elm/aliases.hsh
+  /usr/local/lib/aliases.data  to  /uupc/elm/aliases.dat
+
+  ~/.elm/aliases.text          to  ~/elm/aliases.txt
+  ~/.elm/aliases.hash          to  ~/elm/aliases.hsh
+  ~/.elm/aliases.data          to  ~/elm/aliases.dat
+
+  ~/.elm/elmrc                 to  ~/elm/elmrc
+  ~/.elm/elmheaders            to  ~/elm/elmhdrs
+
+  ~/.elm/filter-rules          to  ~/elm/filter.rul
+  ~/.elm/filterlog             to  ~/elm/filter.log
+  ~/.elm/filtersum             to  ~/elm/filter.sum
+
+  ~/.readmsg                   to  ~/current.msg
+
+  /etc/autoreply.data          to  /uupc/elm/autorep.dat
+  /etc/autoreply.log           to  /uupc/elm/autorep.log
+
+Some other temporary and lock file names were changed as needed.
+
+Installation:
+
+- Put elm.exe and perhaps other programs of the Elm distribution into
+  the directory where mail.exe and rmail.exe (or sendmail.exe if you
+  are using TCP/IP) reside, put the emx runtime DLL's (if required) in
+  a directory in LIBPATH. Make sure you always keep the newest
+  versions of these DLL's and have only one copy in your LIBPATH.
+
+- Make a subdirectory ELM in the UUPC configuration directory
+  (ConfDir) and put there the following files from the
+  distribution:
+
+  elmrc.inf
+  elm-help.0
+  elm-help.1
+  elm-help.2
+  elm-help.3
+
+  You may also want to create a system alias file called
+  aliases.txt here with system wide aliases. Run "newalias -g" to
+  create aliases.hsh and aliases.dat in this case. See the Elm
+  manuals about the format of alias files.
+
+- In your "home directory", where UUPC keeps your signature files
+  and mail folders, create a subdirectory ELM too. Put there your
+  personal configuration files, such as elmrc (created
+  automatically when you first change options in Elm and save
+  them), your signature files (put their names into elmrc) and
+  personal alias file aliases.txt (also created and maintained
+  from within Elm). The personal ELM directory is needed for every
+  Elm user on the system. If you don't yet have such files (i.e.
+  don't have already used Elm on a Unix system and are new to
+  Elm), don't worry, the necessary files are created by Elm
+  automatically.
+
+- Make sure you have set UUPCSYSRC, UUPCUSRRC and perhaps LOGNAME
+  correctly.
+
+- Set the environment variable EDITOR to the editor you wish to use
+  for editing mail and PAGER for the program you wish to use for
+  viewing mail messages. This step is optional, because both programs
+  can be set from within the Elm options menu and are saved in the
+  Elm configuration file for each user.
+
+- If you don't yet have a termcap database file installed, copy
+  the termcap.dat file from the os2 subdirectory of the
+  distribution to a directory where you keep configuration files
+  and make sure it can be found using the PATH, DPATH or INIT
+  environment variables. Note that it is named termcap.dat, not
+  only termcap like under Unix.
+
+That's all.
+
+Elm should work now if you call it and display your mailbox. The
+format of the UUPC mailbox folders is a bit different than under
+Unix, because the messages are separated by lines containing only
+20 ASCII 001 characters. However, Elm can also read standard Unix
+mailbox folders. TCP/IP's sendmail delivers incoming mail as one
+message per file in the \tcpip\etc\mail directory. If configured for
+TCP/IP, elm.exe and the other programs know about this fact and always
+first move any new incoming mail into the user's normal mailbox file,
+also with the UUPC style separators (see also README.TCP).
+
+If you install UUPC and Elm on a LAN of OS/2 workstations, you can
+install them on a shared network drive. In this case, they serve as a
+local mailing system in the LAN too, with a bridge to the outer world
+via UUPC.
+
+Besides elm.exe, other programs are included with the distribution:
+
+- answer.exe, a program for secretaries or other people not too familiar
+  with computers, to send mail.
+- autorep.exe and arepdaem.exe, an "answering machine" for mail.
+- fastmail.exe, to send mass batch mail.
+- filter.exe, to filter your incoming mail.
+- from.exe, to show an overview of your mailbox contents.
+- listalias.exe, to list mail aliases.
+- newalias.exe, a subprogram called by Elm to maintain alias files.
+- newmail.exe, which can monitor a mailbox in the background and notify
+  you of incoming mail. It can be copied to wnewmail.exe for a different
+  behaviour, see manuals.
+- readmsg.exe, to read single messages out of mailbox folders to feed
+  them into other programs over pipes (such as filter.exe). It is called
+  from within elm.exe too.
+- sndmail.exe, a "wrapper" program to call the TCP/IP sendmail
+  program. It is only needed if you use Elm with IBM TCP/IP.  
+
+Documentation for the programs is included in the distribution in pre-
+formatted versions in the manuals subdirectory. The .PS files are
+PostScript files for the printed manuals while the .MAN files are
+preformatted online manual files.
+
+Not all of these programs make sense in a standalone setup, for which
+probably only answer.exe, and filter.exe may be useful (and
+readmsg.exe and newalias.exe, of course, called by elm.exe). The other
+programs may be useful in LAN environments, where UUPC and Elm are
+used as a local mailing system as mentioned above. If you are using
+TCP/IP (sendmail), you must install the small sndmail.exe utility
+program, in any case.
+
+The rmail.exe included with UUPC uses forward files and thus allows to
+use filter.exe like mentioned for Unix with sendmail in the filter
+manual, i.e. allows to put "|filter" in your forward file.  Put this
+line without the quotes in the forward file as specified in the UUPC
+installation manual. However, the current setting of the LOGNAME
+variable or UUPC user name will be used by filter at runtime, not
+necessarily the recipient of the filtered message, due to a deficieny
+in UUPC's rmail.exe (which doesn't set the recipient's name in LOGNAME
+before calling filter.exe). The included OS/2 version thus has a new
+option "-u user" so you can put "|filter -u yourname" into your forward
+file to work around this problem.
+
+Please read the documentation in the manuals directory carefully for
+further information.
+
+The distribution contains full source code and diffs to the original
+files for those who want to adapt Elm to other mailers. Elm uses
+rmail.exe of UUPC in RFC-822 mode.
+
+Please send bug reports (if any) to me.
+
+
+Initial release,
+March 22 1992
+
+-----------------------------------------------------------------------
+
+Bug fix release 1,
+March 29 1992
+
+Changes:
+
+- The UUPC system config file (usually uupc.rc) is checked for more
+  settings.
+- The mail directory is no longer fixed but read from MailDir in
+  uupc.rc.
+- The passwd file is now parsed correctly.
+- LOGNAME, user config file (personal.rc) and passwd usage strategy
+  cleaned up and documented in README.OS2
+- The missing termcap database file was added.
+- Mailbox file extension of UUPC is now supported.
+- A NULL pointer reference was fixed.
+- Some minor other bugs fixed.
+
+-----------------------------------------------------------------------
+
+Bug fix release 2,
+May 3 1992
+
+Changes:
+
+- Printing now works correctly.
+- The folder listing (? at the 'c' command) now works.
+- Some other minor bugs fixed.
+
+-----------------------------------------------------------------------
+
+Bug fix release 3,
+May 26 1992
+
+Changes:
+
+- Parsing of mail folders corrected/enhanced.
+- Forwarding of messages corrected.
+- Handling of (reply to) received forwarded messages corrected.
+- Support for UUPC's directory option added.
+- Folder editing fixed (close current folder before calling editor).
+
+-----------------------------------------------------------------------
+
+Bug fix release 4,
+Aug 16 1992
+
+Changes:
+
+- Keyboard timeout implemented (for mailbox check)
+- inclusion of ~/elm/elmhdrs fixed
+- uses BSD crypt routine now for encoded mail, 
+  but still doesn't work to/from Unix, no idea why
+- New -n option for "do not save outgoing mail", for batch mailing
+- New -u option for "scan UUPC mailbox more restrictive"
+
+Note to -u: without it, the UUPC message separators (20 times ^A)
+are ignored and scanning like under Unix takes place. With -u and
+if the mailbox starts with a UUPC separator (and only then), only
+messages separated this way are recognized. This treats messages
+correctly which are part of the body of another message.
+
+-----------------------------------------------------------------------
+
+Bug fix release 5,
+Oct 04 1992
+
+Changes:
+
+- can now compiled to 32-bit version too (with emx+gcc 0.8e)
+- more cursor keys supported
+- uses GNU glibc crypt (ufc) routine now for encoded mail and
+  this does now really work to/from Unix systems!
+- correct README.OS2 on rmail searching method
+- fix some path names to use / and some to use \ depending on
+  what they are used for
+
+-----------------------------------------------------------------------
+
+Bug fix release 6,
+Nov 06 1993
+
+Changes:
+
+- only compilation with emx+gcc (currently 0.8g) is really tested/supported,
+  but compilation with MS C 6.00A may still work
+- included executables are 32-bit and require emx runtime DLL's 
+  (which are included too)
+- updates to text above in README.OS2
+- fixed bug where Elm added CR/LF's incorrectly in long To: and Cc: etc.
+  lines instead of adding only LF's
+- fixed incompatibility with UUPC/rmail, which can only handle one
+  address per To:, Cc: and Bcc: line (needs continuation lines)
+- fixed incompatibility with RFC822 in In-Reply-To: fields (from Frank Behrens)
+- fixed incompatibility with RFC822 in Date: fields for non-US time zones,
+  always use numeric time zone specifications now 
+- fixed bug with timeout for new mail check (keyboard input)
+- fixed bug with "bounce" command
+- fixed bug with temp name generation in "bounce" command
+- fixed bug in folder type detection, case sensitivity (from Frank Behrens)
+- fixed bug with "forward" command, added Resent-Headers (from Frank Behrens)
+- support added for ReplyTo= in personal UUPC-RC-file (from Frank Behrens)
+- support added for FromDomain= in system UUPC-RC-file
+- support added for IBM TCP/IP sendmail transport instead of UUPC rmail,
+  see README.TCP
+- support added for encryption/decryption with PGP 2.3 and newer
+  (idea from Rodney Korte), see README.PGP
+
+-----------------------------------------------------------------------
+
+Bug fix release 7,
+Apr 22 1994
+
+Changes:
+
+- fixed calculation of numeric time zone on day borders
+- fixed path name conversion for external editor calls
+- fixed message separation for TCP/IP (movemail)
+- fixed pathname expansion for signature files
+- fixed Bcc: handling with UUPC (rmail)
+- fixed newmail to correctly move mail on every scan with TCP/IP
+- Elm can now start sendmail to run in the background, optionally
+- Filter does now have an option to explicitly specify the user, so
+  you can put "|filter -u user" into your forward file to get it working
+  correctly with UUPC.
+- Elm now correctly interprets the TERMCAP environment variable if
+  it contains the full path name to the termcap database file.
+- updated README.OS2 to reflect required settings in the UUPC .rc
+  files and differences when using TCP/IP  
+
+-----------------------------------------------------------------------
+
+Bug fix release 8,
+Apr 27 1994
+
+Changes:
+
+- fixed calculation of numeric time zone again, emx unsigned time_t trap
+- user name lookup in passwd file is now case insensitive
+- added ASCII formatted documentation files
+
+-----------------------------------------------------------------------
+
+Bug fix release 9,
+Jun 23 1994
+
+Changes:
+
+- fixed (hopefully) incoming mail transfer for TCP/IP mail transport
+- replaced messages.cmd /bin/sh script with a REXX script
+
+-----------------------------------------------------------------------
+
+Bug fix release 10,
+Jul 10 1994
+
+Changes:
+
+- fixed iritating interpretation of now obsolete UUPC Rmail= settings
+- made elm compatible with IBM's TCP/IP passwd file convention of using
+  semicolons instead of colons in path names
+
+-----------------------------------------------------------------------
+
+Bug fix release 11,
+Aug 04 1994
+
+Changes:
+
+- fixed (finally!) incoming mail transfer for TCP/IP mail transport
+
+-----------------------------------------------------------------------
+
+Bug fix release 12,
+Aug 16 1994
+
+Changes:
+
+- corrected root and doc Makefile
+- fixed mailbox file inheritance problem with TCP/IP mail transport
+- fixed host/domain name recognition
+- removed rest of debug information from executables
+
+-----------------------------------------------------------------------
+
+Bug fix release 14,
+Feb 3 1995
+
+Changes:
+
+- added 'S' command to save by recipient name instead of sender name
+  like 's' (this is not perfect yet, may guess the wrong name sometimes)
+- fixed PGP decryption for PGP 2.6 and above (use it's -o option)
+- added a user's (Scott Drumm, sdrumm@rocket.cc.umr.edu) description
+  about how to set up Elm with POP3 mail
+
+-----------------------------------------------------------------------
+
+Bug fix release 15,
+May 04 1995
+
+Changes:
+
+- internal pager now display 8-bit characters
+- enabled runtime debugging options
+- make mailer configurable via rmail= setting in the .rc files 
+  (but "sendmail" still selects TCP/IP while anything else is treated
+   like being UUPC "rmail" in terms of command line syntax)
+- let PGP decryption prompt appear on the correct line
+- let it correctly handle extremely long "From " lines such as
+  ones in saved news articles in mailbox format
+
+-----------------------------------------------------------------------
+
+Release 16b,
+August 10 1995
+
+Changes:
+
+- renamed PGP-encryption directive from [pgp] to [pgp-encrypt]
+- added signature-only directive for pgp: [pgp-sign]
+- added checking of signature-only (not encrypted) messages
+- updated README.PGP documentation for PGP support
+- fixed "execute" rules for filter.exe
+- fixed typo that caused [pgp-encrypt] to try to encrypt for a
+  key id of "encrypt"
+
+-----------------------------------------------------------------------
+
+Bug fix release 17,
+Mar 09 1996
+
+Changes:
+
+- made Elm call sendmail with less arguments but -t instead
+- again correct time zone calculation error
+
+-----------------------------------------------------------------------
+
+Bug fix release 18,
+Oct 13 1996
+
+- added logging option to sendmail wrapper sndmail.exe
+- added sendmail delivery agent rcvmail.exe, changed TCP/IP operation
+  accordingly, see README.TCP (it even supports ~/forward files)
+- fixed bouncing via sendmail (remove "From ")
+- added return key recognition from modified less external
+  pager for better integration (see lesselm.rc), from Kurt Swanson
+- fixed "From " line parsing for those with appended "remote from foobar"
+- fixed some screen output flushing bugs
+- Reply-To: field in send message header config menu now also
+  has automatic alias expansion
+- include sample sndmail/rcvmail REXX filters for MIME en/decoding
+  (sndfilt.cmd, rcvfilt.cmd)
+
+-----------------------------------------------------------------------
+
+Bug fix release 19,
+Feb 2 1997
+
+- fixed rcvmail and the sndfilt.cmd/rcvfilt.cmd filters
+- added rmailm.cmd filter for MIME and rmail transport
+  (to be used via "Rmail=rmailm" in UUPC's system .RC file)
+
+This is likely to be the last release of Elm 2.3 for OS/2. I have no
+idea if I will ever find time to port Elm 2.4 nor if it is worth doing
+that or if I will switch to Emacs, Notes or something else. Should I ever
+do Elm 2.4 for OS/2, it will probably only interface to sendmail as the MTA.
+
+-----------------------------------------------------------------------
+
+Original Elm authors:
+
+   Dave Taylor, Syd Weinstein
+
+   See the manual for regular mail and e-mail addresses.
+
+Ported to OS/2 by:
+
+   Kai Uwe Rommel
+   Germany
+
+   E-Mail: rommel@ars.de, rommel@leo.org
+   CompuServe: 100265,2651
+   Fax: +49 89 324 4524

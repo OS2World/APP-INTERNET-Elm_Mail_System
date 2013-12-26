@@ -1,0 +1,1122 @@
+
+
+
+
+
+
+                                 TThhee EEllmm UUsseerrss GGuuiiddee
+
+
+
+                     _A _p_a_i_n_l_e_s_s _i_n_t_r_o_d_u_c_t_i_o_n _t_o _e_l_e_c_t_r_o_n_i_c _m_a_i_l
+                              _u_s_i_n_g _t_h_e EEllmm _m_a_i_l _s_y_s_t_e_m
+
+
+                                     Dave Taylor
+
+                            Hewlett-Packard Laboratories
+                                 1501 Page Mill Road
+                                    Palo Alto CA
+                                        94304
+
+
+
+                    email: taylor@hplabs.HP.COM or hplabs!taylor
+
+
+
+          >>> Elm is now in the public trust. Bug reports, comments, etc. to: <<<
+
+                                    Syd Weinstein
+                               Datacomp Systems, Inc.
+                                   3837 Byron Road
+                          Huntingdon Valley, PA 19006-2320
+
+                          email: elm@DSI.COM  or  dsinc!elm
+
+
+
+
+                                      AABBSSTTRRAACCTT
+
+                    While  various  Unix  utilities have been de-
+                    signed to take advantage of  the  CRT  screen
+                    (rather than line-oriented systems) electron-
+                    ic mail systems haven't ``caught the  wave''.
+                    This  document  presents _E_l_m, a sophisticated
+                    full-screen mail system for interactive  use.
+                    _E_l_m  offers  all  the  features of _/_b_i_n_/_m_a_i_l,
+                    _B_e_r_k_e_l_e_y _M_a_i_l, _u_u_m_a_i_l,  _N_M_a_i_l  and  the  AT&T
+                    Mail family of Unix mailers (namely _P_M_X_/_T_E_R_M)
+                    in a unified and intuitive fashion.
+
+
+                       ((CC)) Copyright 1986, 1987 by Dave Taylor
+            ((CC)) Copyright 1988, 1989, 1990 by The USENET Community Trust
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   EEllmm UUsseerrss GGuuiiddee
+
+                                    (Version 2.3)
+
+
+                                     Dave Taylor
+                            Hewlett-Packard Laboratories
+                                 1501 Page Mill Road
+                                    Palo Alto CA
+                                        94304
+
+                   email:  taylor@hplabs.HP.COM  or  hplabs!taylor
+
+
+          >>> Elm is now in the public trust. Bug reports,  comments,  etc.
+                                       to: <<<
+
+                                    Syd Weinstein
+                               Datacomp Systems, Inc.
+                                   3837 Byron Road
+                          Huntingdon Valley, PA 19006-2320
+
+                          email: elm@DSI.COM  or  dsinc!elm
+
+
+                                     May 1, 1990
+
+
+
+
+
+
+          11..  IInnttrroodduuccttiioonn
+
+          The  UNIX(R)  operating  system was originally written on a small
+          PDP machine, to work with teletypewriters.  Consequently, all the
+          original  software  for  the  operating system was written with a
+          `tty' in mind; with line oriented interfaces, rather than  screen
+          oriented.
+
+          Gradually  this  began  to  change, and, with the addition of the
+          Berkeley _v_i visual shell to the _e_d line editor, the  trend  began
+          to  be  brought  to the attention of Unix systems designers.  And
+          yet, this transition has seemed too subtle for many software  en-
+          gineers, and so precious few Unix programs are available designed
+          to exploit the entire CRT screen.
+
+          __________
+          (R)UNIX is a registered trademark of AT&T.
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+          Consequently, after becoming more and more disenchanted with  the
+          existing electronic mail facilities (_b_i_n_m_a_i_l and _B_e_r_k_e_l_e_y _M_a_i_l) I
+          decided to undertake creating my own system.  Once the  ball  was
+          rolling it became quite difficult not to keep enhancing it, espe-
+          cially as I became more and more familiar with various  different
+          mail  systems, but the result, I hope, is a solid, unified inter-
+          face to electronic mail suitable for almost any environment.
+
+          One thing that sets TThhee EEllmm MMaaiill SSyysstteemm off from  other  packages
+          is  that it comes with an extensive documentation set, including;
+          _T_h_e _E_l_m _U_s_e_r_s _G_u_i_d_e, which  you're  holding,  _T_h_e  _E_l_m  _R_e_f_e_r_e_n_c_e
+          _G_u_i_d_e,  _T_h_e  _E_l_m  _A_l_i_a_s  _U_s_e_r_s _G_u_i_d_e, _T_h_e _E_l_m _F_i_l_t_e_r _S_y_s_t_e_m _U_s_e_r_s
+          _G_u_i_d_e, _T_h_e _E_l_m _F_o_r_m_s _M_o_d_e _G_u_i_d_e, and _T_h_e _E_l_m _C_o_n_f_i_g_u_r_a_t_i_o_n _G_u_i_d_e.
+          The  names of each indicate what they discuss (not unreasonably).
+
+          This particular document contains; this introduction, a  tutorial
+          session  with the mailer, a discussion of non-interactive uses of
+          EEllmm, a brief foray into the EEllmm utilities, and  finally,  credits
+          and references.
+
+          _T_h_e  _E_l_m  _R_e_f_e_r_e_n_c_e _G_u_i_d_e contains a much more indepth discussion
+          of all the possible options available within the EEllmm environment,
+          including  the  _`_`_._e_l_m_/_e_l_m_r_c_'_'  file, the available outbound mail
+          processing features, a section for expert users,  suggestions  on
+          debugging strange installations, and many other useful topics.
+
+          _T_h_e  _E_l_m  _A_l_i_a_s _U_s_e_r_s _G_u_i_d_e is the place to go to learn about the
+          format of the ``.elm/aliases.text'' file and the associated  data
+          files,  to learn how to create and use path route aliases and do-
+          main based alias routing, system aliases, and other related  top-
+          ics.
+
+          One  of  the  more  innovative  features of EEllmm is the ability to
+          transmit and receive ``forms'' (as defined by the AT&T Mail  sys-
+          tem).  To learn about how to create and reply to forms you should
+          refer to _T_h_e _E_l_m _F_o_r_m_s _M_o_d_e _G_u_i_d_e.
+
+          If you find yourself getting too  much  mail  delivered  in  your
+          mailbox,  you  might  be a good candidate for the _f_i_l_t_e_r program.
+          To learn more about what this program is and how to use it please
+          consult _T_h_e _E_l_m _F_i_l_t_e_r _S_y_s_t_e_m _U_s_e_r_s _G_u_i_d_e.
+
+          Finally,  if  you're  working with the actual source code and are
+          interested in what all the locally  configured  options  are  and
+          mean,  please  see  _T_h_e  _E_l_m _C_o_n_f_i_g_u_r_a_t_i_o_n _G_u_i_d_e.  It is strongly
+          suggested that all system administrators  and  people  installing
+          the  system  print  out  the local ``sysdefs.h'' file and have it
+          handy while reading the configuration guide.
+
+          The recommended order of learning the EEllmm system is to skim  this
+          guide  until  you  feel confident enough to start up the program.
+          Once that's reached, _u_s_e _i_t_!  Soon you'll  find  areas  that  you
+          need  to  expand into, and you can achieve that by going into the
+          _o_)_p_t_i_o_n_s  screen  within  _e_l_m  and  changing  your   user   level
+
+
+          May 1, 1990                   Page 2
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+          accordingly.  After a while, sit down again and read through this
+          guide.  You should have a couple of ``aha!''  intuitive  flashes.
+          After another period of time, you're ready to delve into the real
+          power of the system and read the reference guide.  The other man-
+          uals should be read as the need arises.
+
+          In  any case, the system should be useable without reading _a_n_y of
+          the documentation!
+
+          Any comments or problems with any of  the  documentation  or  the
+          program  itself  are welcome; if you can't get electronic mail to
+          me, please feel free instead to drop me a note via  the  overland
+          mail address in the title page.
+
+
+          22..  TThhee MMaaiinn SSyysstteemm
+
+          Upon  entry  to the program, the main screen will be displayed as
+          below;
+
+
+              MMaaiillbbooxx iiss ''//uussrr//mmaaiill//mmyymmaaiill'' wwiitthh 1155 mmeessssaaggeess  [[EEllmm 22..22]]
+           -->>   NN     11   AApprr 2244   LLaarrrryy FFeennsskkee   ((4499))    HHeelllloo tthheerree
+                NN     22   AApprr 2244   jjaadd@@hhppccnnooee     ((8844))    CChhiiccoo??  WWhhyy ggoo tthheerree??
+                EE     33   AApprr 2233   CCaarrll SSmmiitthh     ((5533))    DDiinnnneerr ttoonniigghhtt??
+                NNUU    44   AApprr 1188   DDoonn KKnnuutthh      ((335544))   YYoouurr vveerrssiioonn ooff TTeeXX......
+                NN     55   AApprr 1188   ggaammeess          ((2266))    BBuugg iinn ccrriibbbbaaggee ggaammee
+                 AA    66   AApprr 1155   kkeevviinn          ((2277))    MMoorree ssooffttwwaarree rreeqquueessttss
+                      77   AApprr 1133   JJoohhnn JJaaccoobbss    ((119944))   HHooww ccaann yyoouu hhaattee RRUUSSHH??
+                 UU    88   AApprr 88    ddeeccvvaaxx!!mmoouussee   ((6688))    RRee:: yyoouurr UUsseenneett aarrttiiccllee
+                      99   AApprr 66    rroooott           ((77))
+                OO    1100   AApprr 55    rroooott           ((1133))
+
+          YYoouu ccaann uussee aannyy ooff tthhee ffoolllloowwiinngg ccoommmmaannddss bbyy pprreessssiinngg tthhee ffiirrsstt cchhaarraacctteerr;;
+          dd))eelleettee oorr uu))nnddeelleettee mmaaiill,, mm))aaiill aa mmeessssaaggee,,  rr))eeppllyy  oorr  ff))oorrwwaarrdd
+                                     mmaaiill,, qq))uuiitt
+          TToo rreeaadd aa mmeessssaaggee,, pprreessss <<rreettuurrnn>>..  jj == mmoovvee ddoowwnn,, kk == mmoovvee uupp,, ??
+                                       == hheellpp
+           CCoommmmaanndd :: @@
+          ____________________________________________________________________________________________________________________________________
+
+          There are a number of things  to  notice  about  this,  the  main
+          screen;
+
+
+            +o
+             Most likely, on your computer the message currently ``active''
+             will be displayed in an inverse bar rather than being delimit-
+             ed  by the two character arrow as here.  It's nothing to worry
+             about; displaying inverse video is  just  quite  difficult  on
+             printable guides!
+
+
+
+
+
+          May 1, 1990                   Page 3
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+            +o
+             The  first  line on the screen always displays the name of the
+             current folder, the number of messages in the folder, and  the
+             current EEllmm version number.
+
+
+            +o
+             The  arrow  (``->'') or inverse video bar will always indicate
+             which is the current message.
+
+
+            +o
+             The first field that appears associated with each  message  is
+             the status field.  This can be blank (as with most of the ones
+             above, or can have any combination of the following:
+
+             The first character signifies temporary status:
+
+                    E      for an _e_x_p_i_r_e_d message
+                    N      for a _n_e_w message
+                    O      for an _o_l_d (i.e. not new but not read) message
+                    D      for a _d_e_l_e_t_e_d message
+
+             The second character which signifies permanent status:
+
+                    U      for _u_r_g_e_n_t mail
+                    A      for messages that have an _a_c_t_i_o_n associated with them
+                    F      for a _f_o_r_m letter
+
+             The third character of the status field can be a ``+'' to  in-
+             dicate that the message is _t_a_g_g_e_d too.
+
+
+            +o
+             Continuing  from  left to right, the next field is the message
+             number.  For the most part you can  ignore  these  unless  you
+             want  to quickly move to a specific message (as we'll see lat-
+             er).
+
+
+            +o
+             The date associated with each message is  typically  the  date
+             the person actually _s_e_n_t the message.
+
+
+            +o
+             The  next  field displayed indicates whom the message is from.
+             EEllmm will try to display the _f_u_l_l _n_a_m_e of the person  who  sent
+             the  message, rather than the their return address or computer
+             login.  Some  systems  don't  generate  the  correct  headers,
+             though,  hence messages like numbers 2 and 8, where it's their
+             return address.
+
+
+
+
+          May 1, 1990                   Page 4
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+            +o
+             The number in parentheses is the total number of lines in  the
+             message.
+
+
+            +o
+             The  final  field  is the subject of the message.  Notice that
+             messages might not have any subject, as  in  messages  #9  and
+             #10.
+
+
+            +o
+             A maximum of ten messages are displayed at one time1.  Further
+             into  the  document we'll learn how to change ``pages'' in the
+             folder.
+
+
+            +o
+             The three line Menu display will always indicate the  relevant
+             commands.   There  are actually two possible menus that can be
+             displayed, based on the _u_s_e_r _l_e_v_e_l  as  set  from  either  the
+             o)ptions  screen  or the _._e_l_m_/_e_l_m_r_c file.  The alternate menu,
+             for more advanced users, lists more options;
+
+             ||==ppiippee,, !!==sshheellll,, ??==hheellpp,, <<nn>>==sseett ccuurrrreenntt ttoo nn,, //==sseeaarrcchh ppaatttteerrnn
+             aa))lliiaass,, CC))ccooppyy,,  cc))hhaannggee  ffoollddeerr,,  dd))eelleettee,,  ee))ddiitt,,  ff))oorrwwaarrdd,,
+                                  gg))rroouupp rreeppllyy,, mm))aaiill,,
+             nn))eexxtt,,   oo))ppttiioonnss,,   pp))rriinntt,,   rr))eeppllyy,,   ss))aavvee,,  tt))aagg,,  qq))uuiitt,,
+                                  uu))nnddeelleettee,, oorr ee((xx))iitt
+
+
+            +o
+             Finally, the '@' character indicates where  the  cursor  would
+             be, awaiting your input.
+
+
+          The  typical  action  at this point is to use the _<_r_e_t_u_r_n_> key to
+          read the current message, which will clear the screen and display
+          the current message:
+
+
+
+
+
+
+
+
+
+
+          __________
+          1. On screens with greater than 25 lines, more messages
+          will  be  displayed  automatically.   Further,  if  you
+          choose  to  turn  off the Menu display, you can have an
+          even greater number displayed.
+
+
+          May 1, 1990                   Page 5
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+           MMeessssaaggee 11//1155 ffrroomm LLaarrrryy FFeennsskkee             AApprr 2244 ''8877 aatt 88::4455 ppmm
+                                     HHeelllloo tthheerree
+           DDaavvee,,
+                JJuusstt wwaanntteedd ttoo ddrroopp yyoouu aa bbrriieeff nnoottee ttoo sseeee wwhhaatt wwaass ggooiinngg oonn wwiitthh
+           yyoouu tthhiiss aafftteerrnnoooonn..  LLiiffee hheerree hhaass bbeeeenn tthhee uussuuaall ffuunn aanndd ggaammeess......
+                  AAhh wweellll,, ooffff ttoo tthhee ggrreeaatt wwiillddss bbeeyyoonndd tthhee ddeesskk!!
+             LLaarrrryy
+          __CC__oo__mm__mm__aa__nn__dd____((__''__ii__''____tt__oo____rr__ee__tt__uu__rr__nn____tt__oo____ii__nn__dd__ee__xx__))__::____@@______________________________________________________________
+
+          Before we go further with our example, however, let's very quick-
+          ly look at all the functions available from the main screen:
+
+            CCoommmmaanndd   AAccttiioonn
+
+
+            <return> or <space>
+                      Read current message.
+
+            |         Pipe current message or tagged messages to  specified
+                      system command.
+
+            !         Shell escape.
+
+            $         Resynchronize folder.
+
+            ?         Help mode -- any key pressed will be explained.
+
+            + or <right>
+                      Display next page of headers.
+
+            - or <left>
+                      Display previous page of headers.
+
+            =         Set current message to 1.
+
+            *         Set current to last message.
+
+            <number><return>
+                      Set current message to number _n_u_m_b_e_r.
+
+            /         Search for pattern in subject/from lines.
+
+            //        Search for pattern in entire folder.
+
+            <         Scan message for calendar entries.2
+
+            >         A synonym for `s' -- _s_a_v_e message or messages.
+
+
+
+
+          __________
+          2.  Some  sites might opt not to have the calendar fea-
+          ture available.
+
+
+          May 1, 1990                   Page 6
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+            a         Alias, change to ``alias'' mode.
+
+            b         Bounce -- remail message [see _f _-_- _f_o_r_w_a_r_d too].
+
+            C         Copy current message or tagged messages to folder.
+
+            c         Change to another folder.
+
+            d         Delete current message.
+
+            <control>-D
+                      Delete all messages matching specified pattern.
+
+            e         Edit current folder, resyncing upon reentry.3
+
+            f         Forward message to specified user.4
+
+            g         Group reply -- reply to  everyone  who  received  the
+                      current message.
+
+            h         Display message with headers.
+
+            J         Set current to next message.
+
+            j or <down>
+                      Set current to next message not marked deleted.
+
+            K         Set current to previous message.
+
+            k or <up> Set current to previous message not marked deleted.
+
+            l         Limit  displayed messages based on the specified cri-
+                      teria.
+
+            <control>-L
+                      Rewrite screen.
+
+            m         Mail to arbitrary user(s).
+
+            n         Read current message, then increment to next  message
+                      not marked deleted.
+
+            o         Alter current system options.
+
+            p         Print current message or tagged messages.
+
+
+          __________
+          3. Some sites might opt not to  have  the  edit  folder
+          feature available.
+          4.  The difference between _F_o_r_w_a_r_d and _B_o_u_n_c_e is rather
+          subtle -- a forwarded message is ``from'' you, with the
+          original message included, whereas a bounced message is
+          still from the original sender.
+
+
+          May 1, 1990                   Page 7
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+            q         Quit  --  maybe  prompting  for  messages  to delete,
+                      store, or keep.
+
+            Q         Quick quit -- like quit but without prompting.
+
+            r         Reply to the author of current message.
+
+            s         Save current message or tagged messages to folder.
+
+            t         Tag current message.
+
+            <control>-T
+                      Tag all messages matching specified pattern.
+
+            u         Undelete current message.
+
+            <control>-U
+                      Undelete all messages matching specified pattern.
+
+            x         Exit -- prompt if mailbox changed,  don't  record  as
+                      read, don't save...
+
+            X         Exit  immediately  --  don't  record  as  read, don't
+                      save...
+          But let's go back to our example and see some of  this  at  work,
+          shall we?
+
+          We  were  reading  the  message  from Larry and the screen looked
+          like:
+
+           MMeessssaaggee 11//1155 ffrroomm LLaarrrryy FFeennsskkee             AApprr 2244 ''8877 aatt 88::4455 ppmm
+                                     HHeelllloo tthheerree
+           DDaavvee,,
+                JJuusstt wwaanntteedd ttoo ddrroopp yyoouu aa bbrriieeff nnoottee ttoo sseeee wwhhaatt wwaass ggooiinngg oonn wwiitthh
+           yyoouu tthhiiss aafftteerrnnoooonn..  LLiiffee hheerree hhaass bbeeeenn tthhee uussuuaall ffuunn aanndd ggaammeess......
+                            AAhh wweellll,, ooffff ttoo tthhee ggrreeaatt wwiillddss bbeeyyoonndd tthhee ddeesskk!!
+                      LLaarrrryy
+          __CC__oo__mm__mm__aa__nn__dd____((__''__ii__''____tt__oo____rr__ee__tt__uu__rr__nn____tt__oo____ii__nn__dd__ee__xx__))__::____@@______________________________________________________________
+
+          From this point let's go ahead and reply to the message.   To  do
+          this,  we can use the _r_e_p_l_y command...  To do this, we type ``r''
+          and the last few lines change to something like:
+
+          --------------------------------------------------------------------------------------------------------------------------------------------------------------
+          CCoommmmaanndd:: RReeppllyy ttoo mmeessssaaggee                 CCooppyy mmeessssaaggee ((yy//nn)) ?? @@
+
+
+          To which we decide that we don't need the text of this message in
+          our  new one, so we reply _n_o by pressing the ``n'' key.  The bot-
+          tom part of the window then changes to:
+
+          --------------------------------------------------------------------------------------------------------------------------------------------------------------
+          CCoommmmaanndd:: RReeppllyy ttoo mmeessssaaggee                       TToo:: LLaarrrryy FFeennsskkee
+          SSuubbjjeecctt:: RRee:: HHeelllloo tthheerree@@
+
+
+          May 1, 1990                   Page 8
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+          at this point we can either decide to enter a  new  subject  (you
+          could  use  either _b_a_c_k_u_p _w_o_r_d (<control>-W) or _b_a_c_k_u_p _l_i_n_e (this
+          is the same as your `line kill' character, <control>-X  or  <con-
+          trol>-U  usually))  or  go  with  this  one by pressing _<_r_e_t_u_r_n_>.
+          We'll just leave it as it is and  press  _<_r_e_t_u_r_n_>,  changing  the
+          screen to:
+
+          --------------------------------------------------------------------------------------------------------------------------------------------------------------
+          CCoommmmaanndd:: rreeppllyy ttoo mmeessssaaggee                       TToo:: LLaarrrryy FFeennsskkee
+          SSuubbjjeecctt:: RRee:: HHeelllloo tthheerree
+          CCooppiieess ttoo:: @@
+
+          There's no one we want to have receive copies of this message, so
+          we'll just press _<_r_e_t_u_r_n_> again to indicate this.
+
+          Once you've answered these questions the program will put you in-
+          to  your  favorite  editor  and let you compose a response.  When
+          you're done it then asks:
+
+   --------------------------------------------------------------------------------------------------------------------------------------------------------------
+          PPlleeaassee cchhoooossee oonnee ooff tthhee ffoolllloowwiinngg ooppttiioonnss bbyy ppaarreenntthheessiizzeedd lleetttteerr:: @@
+                ee))ddiitt mmeessssaaggee,, eeddiitt hh))eeaaddeerrss,, ss))eenndd iitt,, oorr ff))oorrggeett iitt..
+
+          Since we're just interested in sending  the  message  out,  we'll
+          choose  the  _s_e_n_d option and press ``s''.  The program then sends
+          the message, indicating that by the line below saying:
+
+              SSeennddiinngg mmaaiill......
+
+          then putting at the bottom of the screen ``Mail sent!'' and  giv-
+          ing us the prompt:
+
+   --------------------------------------------------------------------------------------------------------------------------------------------------------------
+          CCoommmmaanndd::                            ((UUssee ''ii'' ttoo rreettuurrnn ttoo iinnddeexx..))
+
+          Pretty  easy, isn't it?  Let's continue by going back to the main
+          screen by requesting _i_n_d_e_x: pressing the ``i'' key.   The  screen
+          is then:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          May 1, 1990                   Page 9
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+              MMaaiillbbooxx iiss ''//uussrr//mmaaiill//mmyymmaaiill'' wwiitthh 1155 mmeessssaaggeess  [[EEllmm 22..22]]
+           -->>         11   AApprr 2244   LLaarrrryy FFeennsskkee   ((4499))    HHeelllloo tthheerree
+                NN     22   AApprr 2244   jjaadd@@hhppccnnooee     ((8844))    CChhiiccoo??  WWhhyy ggoo tthheerree??
+                EE     33   AApprr 2233   CCaarrll SSmmiitthh     ((5533))    DDiinnnneerr ttoonniigghhtt??
+                NNUU    44   AApprr 1188   DDoonn KKnnuutthh      ((335544))   YYoouurr vveerrssiioonn ooff TTeeXX......
+                NN     55   AApprr 1188   ggaammeess          ((2266))    BBuugg iinn ccrriibbbbaaggee ggaammee
+                 AA    66   AApprr 1155   kkeevviinn          ((2277))    MMoorree ssooffttwwaarree rreeqquueessttss
+                      77   AApprr 1133   JJoohhnn JJaaccoobbss    ((119944))   HHooww ccaann yyoouu hhaattee RRUUSSHH??
+                 UU    88   AApprr 88    ddeeccvvaaxx!!mmoouussee   ((6688))    RRee:: yyoouurr UUsseenneett aarrttiiccllee
+                      99   AApprr 66    rroooott           ((77))
+                OO    1100   AApprr 55    rroooott           ((1133))
+
+          YYoouu ccaann uussee aannyy ooff tthhee ffoolllloowwiinngg ccoommmmaannddss bbyy pprreessssiinngg tthhee ffiirrsstt cchhaarraacctteerr;;
+          dd))eelleettee  oorr  uu))nnddeelleettee  mmaaiill,, mm))aaiill aa mmeessssaaggee,, rr))eeppllyy oorr ff))oorrwwaarrdd
+                                     mmaaiill,, qq))uuiitt
+          TToo rreeaadd aa mmeessssaaggee,, pprreessss <<rreettuurrnn>>..  jj == mmoovvee ddoowwnn,, kk == mmoovvee uupp,, ??
+                                       == hheellpp
+           CCoommmmaanndd :: @@
+          ____________________________________________________________________________________________________________________________________
+
+          Notice  that  the  first message is no longer marked as _n_e_w since
+          we've now read it.
+
+          Let's go ahead and read the message from kevin (message #6) since
+          it  has  some  sort  of  _a_c_t_i_o_n associated with it anyway.  To do
+          this, we simply press the ``6'' key, which will change the bottom
+          of the screen to:
+
+          CCoommmmaanndd:: NNeeww CCuurrrreenntt MMeessssaaggee          SSeett ccuurrrreenntt mmeessssaaggee ttoo :: 66@@
+
+          We'll just press _<_r_e_t_u_r_n_> to move the active message pointer (the
+          arrow).
+
+          Now we're pointing at the new message, so let's go ahead and read
+          it by pressing _<_r_e_t_u_r_n_> again, giving us:
+
+           MMeessssaaggee 66//1155 ffrroomm kkeevviinn                   AApprr 1155 ''8877 aatt 1111::3366 aamm
+                                MMoorree ssooffttwwaarree rreeqquueessttss
+           AAccttiioonn:: pplleeaassee aacckknnoowwlleeddggee rreecceeiipptt
+           II  ddoonn''tt  ssuuppppoossee yyoouu hhaavvee aa nniiffttyy nneettnneewwss rreeaaddeerr aarroouunndd ttoooo,, ddoo
+          yyoouu????
+           ----
+           kkeevviinn
+          __CC__oo__mm__mm__aa__nn__dd____((__''__ii__''____tt__oo____rr__ee__tt__uu__rr__nn____tt__oo____ii__nn__dd__ee__xx__))__::____@@______________________________________________________________
+
+
+          Well, it turns out that we don't, but a friend of ours  does,  so
+          let's _f_o_r_w_a_r_d the message to them by pressing ``f'':
+
+          --------------------------------------------------------------------------------------------------------------------------------------------------------------
+          CCoommmmaanndd:: FFoorrwwaarrdd mmeessssaaggee         EEddiitt oouuttggooiinngg mmeessssaaggee ((yy//nn)) ?? @@
+
+
+          No need to edit it, so let's answer _n_o with ``n'':
+
+
+          May 1, 1990                  Page 10
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+          --------------------------------------------------------------------------------------------------------------------------------------------------------------
+          CCoommmmaanndd:: FFoorrwwaarrdd mmeessssaaggee        EEddiitt oouuttggooiinngg mmeessssaaggee ((yy//nn)) ?? NNoo
+          TToo:: @@
+
+          We type in the address of the person we're forwarding to (in this
+          case uusseenneett) and press _<_r_e_t_u_r_n_>:
+
+          --------------------------------------------------------------------------------------------------------------------------------------------------------------
+          CCoommmmaanndd:: FFoorrwwaarrdd mmeessssaaggee                              TToo:: uusseenneett
+          SSuubbjjeecctt:: MMoorree ssooffttwwaarree rreeqquueessttss ((ffwwdd))@@
+
+          To which we again press _<_r_e_t_u_r_n_> to  take  the  default  subject.
+          EEllmm  asks for any possible copy recipients, asks us if we're sure
+          we want to send it, and shoots it off.
+
+          Enough mail for now, however, so we just  _e_x_i_t  by  pressing  the
+          ``x'' key and the program drops us back into our shell.
+
+
+          As  you can see, it's quite easy to use the EEllmm system, so rather
+          than continue with our example, let's look at some other  aspects
+          of the program.
+
+
+          33..  NNoonn--IInntteerraaccttiivvee UUsseess ooff EEllmm
+
+          Before we go ahead and discuss the EEllmm utilities, it's worth not-
+          ing that there are a couple of other ways to use  the  main  mail
+          system, namely to `send only' and to send files (batchmail).
+
+          To  send a message to someone without any of the associated over-
+          head of reading in a mail folder, you can invoke the mailer  with
+          the name(s) of the people to send to.  For example:
+            $ eellmm ddaavvee__ttaayylloorr
+          The  mailer  will  then prompt for Subject, Copies, and then drop
+          you in your editor (defined in the _._e_l_m_/_e_l_m_r_c  file)  to  compose
+          the message.   When composition is complete, the program verifies
+          transmission then terminates.
+
+          The mailer also supports batch type mailing, of files and so  on,
+          by using the following command:
+            $ eellmm ddaavvee__ttaayylloorr << hheellpp..cc
+          which  will read in the file and transmit it to the specified us-
+          er.
+
+          A subject may be specified with ``-s _s_u_b_j_e_c_t'' as  an  option  to
+          the program in either `send only' or `batch' modes, as in:
+            $ eellmm --ss ""FFiillee hheellpp..cc,, aass pprroommiisseedd"" ddaavvee__ttaayylloorr << hheellpp..cc
+
+
+          44..  TThhee EEllmm UUttiilliittiieess
+
+          The EEllmm mail system is really much more than a single program for
+          reading  and  writing  mail.   It's  a  unified  environment  for
+
+
+          May 1, 1990                  Page 11
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+          intelligently  dealing with electronic correspondence.  As a con-
+          sequence, it contains a number of other programs to  aid  in  the
+          easy processing of `email', including the following;
+
+
+           answer   An answering-machine transcription program.  Please see
+                    the manual entry for more information  on  how  to  use
+                    this program.
+
+
+           autoreply
+                    This  program,  in conjunction with the ``arepdaemon'',
+                    enables users to automatically reply to  incoming  mail
+                    when they're not directly available.
+
+
+           checkalias
+                    A script for checking aliases simply.
+
+
+           messages A script that lists the number of messages in the spec-
+                    ified folder.  Suitable for login scripts and such.
+
+
+           newmail  This program monitors a mailbox or set of mailboxes and
+                    can  output notification of new mail in one of two pos-
+                    sible formats; either:
+
+                    >>>> NNeeww mmaaiill ffrroomm JJiimmmmyy CCaarrtteerr -- UUrrggeenntt mmaatttteerrss ooff ssttaattee
+                    >>>>  NNeeww  mmaaiill ffrroomm jjooee@@uuccbbvvaaxx..aarrppaa -- DDiidd II hheeaarr ssoommeeoonnee
+                    ssaayy PPAARRTTYY????
+
+                    if running as _n_e_w_m_a_i_l or:
+
+                    JJiimmmmyy CCaarrtteerr ---- UUrrggeenntt mmaatttteerrss ooff ssttaattee jjooee@@uuccbbvvaaxx..aarrppaa
+                    ---- DDiidd II hheeaarr ssoommeeoonnee ssaayy PPAARRTTYY????
+
+                    if  running as _w_n_e_w_m_a_i_l.  BSD Users will find this is a
+                    far superior _b_i_f_f program.
+
+
+           wnewmail This is the same program as newmail, but has  different
+                    defaults if invoked this way.
+
+
+           readmsg  This  handy  little  program  can  be used in two ways.
+                    First off, it can be used to  easily  read  a  specific
+                    message  in  the incoming mailbox, specified by ordinal
+                    number, by a string that the message contains,  by  the
+                    metacharacter  `$' which represents the last message in
+                    the folder, or `*' which matches all  the  messages  in
+                    the folder.
+
+                    For example;
+
+
+          May 1, 1990                  Page 12
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+                    $ rreeaaddmmssgg 44 55 99 || llpprr
+
+                    would generate a printout, _s_a_n_s superfluous headers, of
+                    the fourth, fifth and ninth messages in your mailbox.
+
+                    $ rreeaaddmmssgg CCaarrtteerr || ppaaggee
+
+                    would be a fast way to read  what  `ole  Jimmy  has  to
+                    say...  and
+
+                    $ rreeaaddmmssgg --hh hheeaarr ssoommeeoonnee ssaayy
+
+                    would list, including all the message headers, the mes-
+                    sage containing the string ``hear someone say''.
+
+
+           frm      Similar to the Berkeley _f_r_o_m command,  this  will  give
+                    you a ``table of contents'' of either the current mail-
+                    box or a mailbox of your choice.   It's useful  to  see
+                    what  mail is pending, or what's in a mailbox.  If used
+                    with the `-n' option, it will number each message in  a
+                    way  compatible  with  the arguments _r_e_a_d_m_s_g expects to
+                    get, too!
+
+
+           newalias This is used to install new user/group aliases.  Please
+                    see  _T_h_e  _E_l_m _A_l_i_a_s _U_s_e_r_s _G_u_i_d_e for further information
+                    on this!
+
+
+           fastmail Sometimes you want to have a batchmailing  system  that
+                    works as quickly as possible, not bothering with alias-
+                    es or any of the other ``deluxe'' features of EEllmm.   An
+                    example  of  this  would be if you have a large mailing
+                    list for a newsletter, say.  This command, _f_a_s_t_m_a_i_l, is
+                    designed  just for that purpose.  It avoids the lengthy
+                    startup  time  of  EEllmm  while  still  generating  valid
+                    _R_F_C_-_8_2_25 mail.  Please see the manual  entry  for  more
+                    information on this command.
+
+
+          55..  CCrreeddiittss aanndd SSoo oonn
+
+          This  mailer  has  been evolving over the past few years with in-
+          valuable comments on the interface and general mail  issues  from
+          the  following  people; Jim Davis, Steve Wolf (or should that say
+          Steve!! Wolf!!!! perhaps?), Larry Fenske, Rob Sartin, John Dilley
+          and Carl Dierschow.
+
+          For the Berkeley implementation, lots of help came from both John
+
+          __________
+          5. If you don't know what RFC-822 is, don't worry about
+          it!
+
+
+          May 1, 1990                  Page 13
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+          Lebovitz and Ken Stone.
+
+          For the Amdahl/UTS implementation, thanks to Scott  McGregor  and
+          Stan Isaacs.
+
+          For  the  Sun problems, Dave England in Lancaster (UK) turned out
+          to be ``bloody useful'', as he would no doubt say.
+
+          The Pyramid version is due to the work of  Steve  Malone  of  the
+          University of Washington.
+
+          A  number  of other people have been amazingly disciplined at re-
+          porting problems and (usually, much to my relief) indicating  the
+          fixes needed, especially Guy Hillyer, Bruce Townsend and Eric Ne-
+          gaard.
+
+          There have been many, many others, too numerous to mention,  that
+          have  inspired  me with questions like "Why can't Elm..." or "Why
+          does it ..." or "Can we make it..." too.  A  loud  round  of  ap-
+          plause and an enthusiastic THANK YOU to you all!!
+
+          Also helpful was the ability to have my `own' machine to close up
+          the many many iterative loops that this software has gone through
+          --  since being on a big multi-user machine tends to slow it down
+          to a standstill...  For that, I  thank  Hewlett-Packard  Colorado
+          Networks Division for their initial support, and now HP Laborato-
+          ries for the wonderful working environment that I have here (more
+          than any one person is safe having, I suspect).
+
+          Mailers  that  have  influenced  the design and implementation of
+          EEllmm, for better or worse, include the following;
+
+
+           _/_b_i_n_/_m_a_i_l
+                    The most basic of mailers, this one was simply the  ex-
+                    ample  of  how _n_o_t to force the user to interact with a
+                    program.
+
+
+           _B_e_r_k_e_l_e_y _M_a_i_l
+                    A surprisingly  sophisticated  mailer,  especially  the
+                    version  with 4.3 BSD, _B_e_r_k_e_l_e_y _M_a_i_l still suffers from
+                    the tendency to force the user to know too  much  about
+                    the  system, and also lacks a friendly, non-cryptic in-
+                    terface for the large subset of the population that use
+                    Unix but aren't interested in becoming a ``hacker''.
+
+
+           _M_H       This  is another nifty mailer.  The main difference be-
+                    tween this and the other mailers about is that it is  a
+                    discrete  set  of programs rather than a single unified
+                    interface.  This is quite useful for those people  that
+                    receive _l_o_t_s of mail and are willing to spend some time
+                    learning the intricacies of the  program.   It's  quite
+
+
+          May 1, 1990                  Page 14
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+                    powerful,  but again, misses some of the basic friendly
+                    features the majority of users are interested in.
+
+
+           _d_m_a_i_l    A sort of mutated cross between _M_H and  _B_e_r_k_e_l_e_y  _M_a_i_l,
+                    it  was this program that convinced me to implement the
+                    _L_i_m_i_t functions.
+
+
+           _N_M_a_i_l    (a part of the HP AI Workstation Software Environment).
+                    This  program  hints at the power that mailers could be
+                    given to help deal with mail in a quick and intelligent
+                    fashion.   Most  of what it can do, and a lot more, are
+                    therefore part of EEllmm.  Indubitably.  And quite  faster
+                    too!
+
+
+           _P_M_X_/_T_E_R_M Part  of the AT&T Mail package, a single glance at this
+                    interface convinced me that a PC interface, with almost
+                    half  of  the  screen  taken up by a silly function key
+                    mapping, is most certainly _n_o_t the way to  do  things!!
+                    On  the  other  hand, it also shows that the _F_o_r_m_s mode
+                    can be quite nicely integrated into a more sophisticat-
+                    ed mailer.
+
+
+           _f_m_a_i_l    A  nickel addition to the _/_b_i_n_/_m_a_i_l program to add some
+                    rudimentary screen interface  stuff,  this  nonetheless
+                    interesting mailer is part of the AT&T Toolchest.
+
+
+           _L_a_u_r_e_l   A program only available within Xerox PARC, this was an
+                    interesting early attempt at  a  graphics  based  full-
+                    screen mail program.  The one, perhaps trivial, part of
+                    the interface I really like was the fact that it  would
+                    _c_r_o_s_s  _o_u_t a message that was marked for deletion.  One
+                    day when we get real graphics and the  ability  to  use
+                    them  indicated  in  a facility (not too) like _t_e_r_m_c_a_p,
+                    perhaps EEllmm will do this too!
+
+
+           _M_a_i_l_t_o_o_l Part of the Sun distribution package, this program is a
+                    really  nice  example  of what can be done by putting a
+                    smart shell on  top  of  a  dumb  program  --  it  uses
+                    _/_b_i_n_/_m_a_i_l  for  all the `dirty work'.  Other than that,
+                    it's not a particularly interesting interface or  mail-
+                    er, and it certainly doesn't add much functionality!
+
+
+           _M_e_t_a_m_a_i_l What  can I say?  This isn't even a real mailer, but is
+                    just what I dream of as an interface to mail in the fu-
+                    ture.   A  program  that  works sort of like HHAALL did in
+                    _2_0_0_1_: _A _S_p_a_c_e _O_d_y_s_s_e_y -- where it interrupts me as  ap-
+                    propriate  for important mail, and can answer inane and
+
+
+          May 1, 1990                  Page 15
+
+
+
+
+
+          Elm Users Guide                                       Version 2.3
+
+
+
+                    other queries itself according  to  what  I  teach  it.
+                    Maybe  EEllmm,  by  some  sort of groupmind metamorphosis,
+                    will change into that someday.  Maybe not.   Maybe  no-
+                    one bothers to read this far into the document!!
+
+          Finally,  it's  also  been a very useful experience overall, con-
+          firming my beliefs that iterative software design and  keeping  a
+          close  watch  on users (not to mention an open mind and mailbox!)
+          improves a product manyfold.  Comments, feedback and bug  reports
+          (and fixes!) are, of course, always welcome!
+
+
+          66..  CCrreeddiittss aanndd SSoo oonn PPaarrtt IIII -- TThhee UUsseenneett EEllmm DDeevveellooppmmeenntt GGrroouupp
+
+          As  coordinator  of  the Elm Development Group, I must add to the
+          credits.  This group of volunteers has taken the  Elm  code  from
+          Dave  Taylor  and  added  features, made it more robust, and more
+          portable.
+
+          For getting the Usenet Elm  group  going,  for  without  which  I
+          wouldn't  be writing this, thanks to Greg Hackney at Southwestern
+          Bell Telephone Co.
+
+          For the Configuration system and  its  newer  Dist  2.0  version,
+          thanks are due to Larry Wall of JPL-NASA.
+
+          For his over two hundred sets of changes to version 2.2, Elm owes
+          a lot to Rob Bernardo at Pacbell.
+
+          The ability to run Elm at all on Intel 286 machines owes a lot to
+          the insistent nudging of the coordinator by Chip Salzenberg, Chip
+          Rosenthal, and Tim Evans.
+
+          For getting us the rights to use the news macros  and  converting
+          all the documentation over to those macros, thanks to Mike Brown.
+
+          Now, before I get accused of leaving someone out,  here  are  the
+          members of the Elm Development and the Elm Testing Group:
+
+          Jonathan Bayer, Rob Bernardo, Doug Blair, Kevin Bond, Mike Brown,
+          Ed Clarke, Steven Donegan, Paul Ebersman,  Avi  Feldblum,  Steven
+          Goodman,  Greg Hackney, Mark Hahn, Mitch Hamilton, Ed Hann, David
+          Hawkins, Nate Hess, Phil Hochstetler, Bud Hovell, Kenneth Ingham,
+          Chad  Larson,  Warren  Lavallee, Howard Leadman, John A. Limpert,
+          Andy Linton, Darrell McIntosh, Datta Miruke,  Paul  M.  Moriarty,
+          Andrew  Mossberg,  Robert  B.  Nelson,  Leo C. Noordhuizen, Brian
+          O'Neill, Fairfax O'Riley,  Pete  Phillips,  Dave  Rasmussen,  Len
+          Rose,  Chip Rosenthal, Chip Salzenberg, Ray Smith, Gary Trujillo,
+          Ed Wells, Mike Whitman, Dave Yearke, Jon  Zeeff,  and  Syd  Wein-
+          stein, Elm Coordinator.
+
+
+
+
+
+
+          May 1, 1990                  Page 16
+
+
+

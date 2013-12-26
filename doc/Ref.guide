@@ -1,0 +1,1724 @@
+.\" @(#)$Id: Ref.guide,v 4.1.1.1 90/06/09 22:49:11 syd Exp $
+.\"
+.\"  Reference guide to the Elm mail system.
+.\"  format with
+.\"      troff tmac.n Ref.guide > Ref.format
+.\"
+.\"  Elm is now in the public trust. Bug reports, comments, suggestions, flames
+.\"  etc. should go to:
+.\"	Syd Weinstein		elm@DSI.COM (dsinc!elm)
+.\"
+.\"  (C) Copyright 1986, 1987 Dave Taylor
+.\"  (C) Copyright 1988, 1989, 1990 Usenet Community Trust
+.\"
+.\"  $Log:	Ref.guide,v $
+.\" Revision 4.1.1.1  90/06/09  22:49:11  syd
+.\" Droped obsolete control Q command from list
+.\" From: Joe Wasik
+.\"
+.\" Revision 4.1  90/04/28  22:41:08  syd
+.\" checkin of Elm 2.3 as of Release PL0
+.\"
+.\"
+.po 1i
+.ds h0
+.ds h1
+.ds h2
+.ds f0
+.ds f1
+.ds f2
+.nr Hy 1
+.nr Pt 1
+.nr Pi 0
+.lg 0
+.nf
+.na
+.rs
+.za
+.sv |3.0i
+.ce 99
+.ps 20
+.ss 18
+.vs 12
+\f3The Elm Reference Guide\f1
+.sp 3
+.ps 12
+.ss 14
+.vs 14
+\f2A comprehensive list of all commands,
+options and such to the \f3Elm\fP mail system\f1
+.sp 2
+Dave Taylor
+.sp
+Hewlett-Packard Laboratories
+1501 Page Mill Road
+Palo Alto CA
+94304
+.sp 3
+email: taylor@hplabs.HP.COM or hplabs!taylor
+.sp 3
+>>> Elm is now in the public trust. Bug reports, comments, etc. to: <<<
+.sp
+Syd Weinstein
+Datacomp Systems, Inc.
+3837 Byron Road
+Huntingdon Valley, PA 19006-2320
+.sp
+email: elm\s-1@\s+1DSI.COM  or  dsinc\s-1!\s+1elm
+.sp 3
+.ps 18
+\f3\(co\f1\s12 Copyright 1986, 1987 by Dave Taylor
+.ps 18
+\f3\(co\f1\s12 Copyright 1988, 1989, 1990 by The USENET Community Trust
+.ce 0
+.ps 10
+.ss 12
+.vs 12
+.fi
+.ad
+.bp 1
+.sv 5v
+.ce 99
+.ps 14
+\f3The Elm Reference Guide\f1
+.ds h0 "Elm Reference Guide
+.ds h1
+.ds h2 "Version 2.3
+.ds f0 "May 1, 1990
+.ds f1 "Page %
+.sp
+.ps 10
+(Version 2.3)
+.sp 2
+Dave Taylor
+Hewlett-Packard Laboratories
+1501 Page Mill Road
+Palo Alto CA
+94304
+.sp
+email: taylor@hplabs.HP.COM or hplabs!taylor
+.sp 2
+>>> Elm is now in the public trust. Bug reports, comments, etc. to: <<<
+.sp
+Syd Weinstein
+Datacomp Systems, Inc.
+3837 Byron Road
+Huntingdon Valley, PA 19006-2320
+.sp
+email: elm\s-1@\s+1DSI.COM  or  dsinc\s-1!\s+1elm
+.sp 2
+May 1, 1990
+.ce 0
+.sp 3
+.hn 1 Introduction
+
+There are many parts to a complex software system and \f3The Elm
+Mail System\f1
+is no different.  This document describes fully all the options
+available in the mailer, including the command line options,
+the commands (in considerably more detail than
+in \f2The Elm Users Guide\f1) and
+the \f2.elm/elmrc\f1 file.
+
+To be more explicit, this document covers:
+a discussion of
+the \f2.elm/elmrc\f1 file,
+command line options of \f2elm\f1,
+outgoing mail processing,
+responses of various commands,
+mail archive folders,
+the Alias system,
+system aliases etc,
+more on the \f3Elm\f1 utilities,
+and a section for expert mail users.
+
+Without any further ado, then, let's get this show on the road!!
+.sp
+.hn 1 "The .elm/elmrc File"
+
+Elm, like lots of other software on the
+Unix\v'-.3'\s5TM\s10\v'.3' system, has the ability to automatically read
+in a configuration file at each invocation.  The file must be
+called \f2elmrc\f1 and reside in the \f2.elm\f1 directory located
+in your home directory.  It can have any of the entries below, in any order.
+If you are missing any entries, or if you don't have an \f2.elm/elmrc\f1
+file, the default values (listed below for each option) will be used.
+Note that those options below designated with * can be altered
+using elm via the o)ptions screen.
+Also note that when you save a new \f2.elm/elmrc\f1 file via the `>' command
+of the options
+screen, it will be (re)created including even those options that
+have default values.
+.br
+.sp
+.ne 8
+.hu String Variables
+
+.lp alternatives 1.0i
+This is a list of other machine/username combinations
+that you receive mail from (forwarded).  This is used
+when the \f2group reply\f1 feature is invoked to ensure that
+you don't send yourself a copy of the outbound message.
+(The default is a list of no alternatives.)
+
+.lp calendar* 1.0i
+This is used in conjunction with the `<' \f2scan message for
+calendar entries\f1 command, as the file to append any found
+calendar entries to.  (The default is \f2calendar\f1 in your home directory.)
+
+.lp editor* 1.0i
+The editor to use when typing in new mail.  If you select
+``none'' or ``builtin'' you'll get a Berkeley Mail style
+interface for all mail that doesn't already have text
+in the buffer (e.g. a reply, mail with a ``signature'', etc).
+(The default is to use the value of $EDITOR in your
+current environment, and if not set, an editor selected by
+the person who configured \f2elm\f1 for your system.)
+
+.lp escape 1.0i
+The character used with the ``builtin'' editor (see above)
+to escape from text entry to input a command.
+When a line begins with this character, the editor interprets it
+as a command rather than as text to add.
+(The default is ``~''.)
+
+.lp fullname* 1.0i
+This is the name the mailer will use in messages
+you send.  It is highly recommended that you use your
+full name and nothing strange or unusual, as that can
+appear extremely rude to people receiving your mail.
+(The default is to use the ``gcos'' field from the \f2/etc/passwd\f1 file
+on systems that use this field to store full names, and to use the contents
+of \f2.fullname\f1 in your home directory on other systems.)
+
+.lp maildir* 1.0i
+This is your folder directory.
+When you specify a folder name beginning with the `=' metacharacter\s-2\u1\d\s0,
+.fn
+1. Note that `%' and `+' are synonymous with `=' throughout \f2elm\f1
+.ef
+it stands for this directory name.  That is,
+if you save a message to folder \f2=stuff\f1
+the `=' will be expanded to the current value of \f2maildir\f1.
+(The default is the directory \f2Mail\fP in your home directory.)
+
+.lp tmpdir* 1.0i
+Use this if you want to define your own directory for the temporary
+file Elm creates while running.  This is only necessary if using the
+system temporary directory could cause problems, such as when not all
+NFS clients mount the common temporary directory, or when the temporary
+directory is prone to being cleared periodically.  The default entry
+of the system temporary directory is normally ok.
+
+.lp pager 1.0i
+This is the program to be used to display messages.  You can
+specify ``builtin'' or the name of any standard pager.  If you
+use ``builtin+'', each screenfull of displayed message is
+``paged'' from the top of your screen with a title line,
+while ``builtin'' simply ``scrolls up'' subsequent screenfulls once
+it has ``paged'' the first screenfull.
+(The default is to use the value of $PAGER in your
+current environment, and if not set, a pager selected by
+the person who configured \f2elm\f1 for your system, quite likely ``builtin+''.)
+
+.lp attribution 1.0i
+When you \f2forward\f1 a message or \f2reply\f1 to it, you can
+optionally attribute the quoted text to its original author.
+Defining the attribution string here allows you to indicate the
+form that the attribution should take.  The sequence `%s' in the
+attribution will be replaced by the name of the original author.
+Examples are:
+.nf
+.ft CW
+.zf
+	attribution = According to %s:
+	attribution = %s writes:
+.ft 1
+.fi
+
+.lp prefix 1.0i
+When you \f2reply\f1 to a message or \f2forward\f1 a message to another person,
+you can optionally include the original message.  Defining the
+prefix value here allows you to indicate what the prefix of
+each included line should be.  (The default is ``>\ '' and is
+standard in the Unix community.)
+
+.lp print* 1.0i
+This is the command used for printing messages.  There are two
+possible formats for it, either a command that
+can have a filename affixed to (as a suffix) before being
+executed, or a string that
+contains the meta-sequence `%s' which will be replaced
+by the name of the file before being executed.  Examples of each are:
+.nf
+.ft CW
+.zf
+	print = print -formfeed
+	print = pr %s | lpr
+.br
+.ft 1
+.fi
+(The default is set by the person who configured \f2elm\f1 for your system.)
+
+.lp receivedmail 1.0i
+This is the folder to which incoming mail is saved after you've read it.
+When you answer \f2no\f1 (`n') to the ``keep unread messages in
+your incoming mailbox?'' prompt or \f2yes\f1 (`y') to the ``store read
+messages in your "received" folder?'', this is where the messages go.
+(The default is "=received", that is,
+a folder called \f2received\f1 in your \f2maildir\f1 directory).
+
+.lp sentmail* 1.0i
+This is the folder to which a copy of outgoing mail is automatically
+saved.  This will only be done if the \f2copy\f1 flag
+is turned on (see below).  Also note that if the \f2savename\f1 feature
+(see below) is enabled then this folder may be ignored since the program
+may save to a folder that has the same name as the login
+of the person you're sending to.
+Whether or not a copy is saved, and to what folder, can be changed just
+prior to sending a message, see below.
+(The default is "=sent", that is,
+a folder called \f2sent\f1 in your \f2maildir\f1 directory).
+
+.lp shell 1.0i
+This defines the shell to use when doing ``!'' escapes and
+such.  (The default is to use the value of $SHELL in your
+current environment, and if not set, a shell selected by
+the person who configured \f2elm\f1 for your system.)
+
+.lp signature 1.0i
+This file, if defined, will be automatically appended to all
+outbound mail before the editor is invoked.  Furthermore,
+if you'd like a different ``.signature'' file for \f2local\f1
+mail and \f2remote\f1 mail (remote being via other hosts),
+you can alternatively define two variables, \f2localsignature\f1
+and \f2remotesignature\f1, to have the same functionality.
+(The default is "localsignature" and "remotesignature"
+in your home directory.)
+
+.lp sortby* 1.0i
+You can have your folder sorted by any of the following ways:
+.sp
+.ta 1i
+from	This will sort according to whom each message is \f2from\f1.
+
+lines	This will sort \f2shortest\f1 to \f2longest\f1 by message.
+
+mailbox	This will leave the messages in the order found in the folder.
+
+received	This will sort \f2least recently received\f1 to
+\f2most recently received\f1.
+
+sent	This will sort \f2least recently sent\f1 to \f2most recently sent\f1.
+
+status	This will sort by priority, action, new, tagged, then deleted.
+
+subject	This will sort according to the \f2subject\f1 of each message.
+.sp
+Each of these fields can also optionally be prepended with the
+sequence ``reverse-'' to reverse the order of the sort.  This doesn't
+imply anything about the order of the message in the folder
+itself and affects only their order on the index screen.  (The
+default is \f2mailbox\f1 order.)
+
+.lp weedout 1.0i
+When specifying this option, you can list headers that
+you \f2don't\f1 want to see when you are displaying a message.
+This list can continue for as many lines as desired, as
+long as the continued lines all have leading indentation.
+(The default is ``Received:'' and others.)
+.br
+.ne 8
+.hu Numeric Variables
+
+.lp bounceback 1.0i
+This is a hop count threshold value and allows you to
+set up the mailer so that when you send mail more than
+\f2n\f1 machines away, it'll automatically include a
+``Cc:'' to you through the remote machine.  In practice
+this should be very rarely used.  (Note: this refuses to
+bounce mail off an Internet address.  The default is to
+have it set to zero, which disables the function)
+
+.lp timeout 1.0i
+On more advanced systems, it's nice to start up the
+mailer in a window and let it sit in background
+unless new mail arrives (see \f2wnewmail\f1 for
+another window based program) at which point
+it can be brought up to the forefront of the system
+and read.  In this case, it would be quite convenient
+to have the mailer internally resynchronize every
+so often.  This option specifies the number of seconds that this occurs.
+.sp
+This is also useful for normal terminals, for example you can
+leave \f2elm\f1 running at night (I usually do) and when you
+come in in the morning it'll be all ready to read your mail!
+.sp
+(The default is a 300 second (5 minute) timeout period).
+
+.lp userlevel* 1.0i
+This is what the program uses to determine the relative level of
+sophistication of the user \(em the values are 0 for a new user (the
+default), 1 for someone familiar with \f2elm\f1
+user, and 2 for experts.  Some advanced features are hidden from novice
+users, while experts get less verbose prompt messages.
+.br
+.ne 8
+.hu Boolean Variables
+
+.lp alwaysdelete 1.0i
+When set, this changes the default answer
+of the prompt ``Delete messages?'' to the indicated value.  (The default is
+to have the answer be \f2No\f1 (i.e. alwaysdelete = OFF).)
+
+.lp alwaysstore 1.0i
+This sets the default
+answer on the ``store read mail in "received" folder'' prompt
+to the value indicated.  (The default is to have the default
+answer be \f2No\f1 (i.e., alwaysstore = OFF).)
+
+.lp alwayskeep 1.0i
+This sets the default answer
+on the ``keep unread mail in incoming mailbox''
+However, if you answered \f2No\fP to the ``store read
+mail in "received" folder''
+it is presumed that you'd also want to keep your unread mail in the
+incoming mailbox, too, and the value of alwayskeep is ignored.
+(The default is to have the
+default answer be \f2Yes\f1 (i.e., alwayskeep = ON).)
+
+.lp arrow* 1.0i
+Sometimes you are forced to use a slow, or ``dumb'' terminal.  In this
+case, you can force the current message pointer to be the ``->''
+sequence rather than the inverse bar.  (Note that this is
+overridden by the similar `-a' command line option,
+see below.)  (The default is OFF.)
+
+.lp ask 1.0i
+This allows you to tell the \f2elm\f1 system that
+you'd rather not be asked ``Delete Mail?'' and such each time you
+quit, resynchronize a folder or change folders,
+and instead it should just use the values of
+``alwaysdelete'', ``alwaysstore'', and ``awayskeep'' without prompting.
+(Note that when you quit \f2elm\fP, if you use `Q' instead of `q', you will
+never be questioned, regardless of how you have \f2ask\f1 set.)
+(The default is ON, i.e. to ask the questions.)
+
+.lp askcc 1.0i
+If turned off, this will allow you to send mail without being
+presented the ``Copies to:'' prompt for each message. This
+still allows you to explicitly include addresses in the ``cc''
+list via either ``~c'' in the builtin editor, or via using the
+header editor.  (The default is ON, i.e. to ask about copies.)
+
+.lp autocopy 1.0i
+If turned on, this will automatically copy
+the text of each message being replied to into the edit
+buffer.  Otherwise you will be prompted as to whether you want
+the message included in yours. (See the \f2prefix\f1
+option above.)  (The default is OFF.)
+
+.lp copy 1.0i
+This, in combination with the \f2sentmail\f1 folder, will
+allow you to have silent copies of all outgoing mail
+made on the outbound step.
+Whether a copy is saved and to which folder can be set prior to sending
+a message, see below.
+(The default is OFF.)
+
+.lp forcename 1.0i
+This, in combination with the \f2savename\f1 option, governs
+how a copy of an outgoing message will be saved.  (See \f2savename\f1 below
+for details.)  (The default is OFF.)
+
+.lp keep 1.0i
+The mail system has a habit of deleting folders when you've
+removed everything from them.  With this option turned on, it will
+instead preserve them as zero-byte files.
+This option does not apply to your incoming mailbox.
+(The default is OFF.)
+
+.lp keypad 1.0i
+If on, this tells \f2elm\f1 that you have an HP terminal and enables
+the <NEXT>, <PREV>, <HOME> and <SHIFT-HOME> keys.  (The default is OFF.)
+
+.lp menu* 1.0i
+If turned off, this will inhibit the Menu display on all of the
+screen displays within the \f2elm\f1 program.  (Note that this is
+overridden by the similar `-m' command line option,
+see below.)  (The default is ON.)
+
+.lp names* 1.0i
+If turned off, the primary recipients' address is displayed on your
+screen with their full names when you send a message.  Otherwise,
+only the full names are given.  (The default is ON.)
+
+.lp movepage 1.0i
+If this is enabled then commands that move through the
+folder by pages (the `+', `-', <right-arrow>, and <left-arrow> keys)
+will also move the current message pointer to the
+top of that page of messages.  If this is turned off
+then moving through the pages doesn't alter the
+current message pointer location.
+(The default is OFF.)
+
+.lp noheader 1.0i
+This boolean flag tells the mailer not to include the
+headers of messages when copying a message into a file
+buffer for replying to or forwarding.
+(The default is ON.)
+
+.lp promptafter 1.0i
+If this flag is ON and you use an external pager,
+when the pager exits, you will be prompted for a command rather
+than returned directly to the index screen.
+If the external pager you are using exits when it reaches end of file
+(i.e. end of the message), you should have this flag ON,
+otherwise the last screen of the displayed message will not be held
+but instead be immediately replaced by the index screen.
+If the external pager you are using does not exit until you command it to exit,
+you have a choice.
+If you usually want to see the index screen before issuing a command,
+having the flag OFF will cut down out the extra keystroke needed to return
+to the index screen.
+If you usually don't need to see the index screen to before issuing the
+next command,
+having the flag ON will allow you to proceed with your next command without
+having to wait for the redrawing of the index screen.
+(The default is ON.)
+
+.lp pointnew 1.0i
+If this is turned on, the mailer will be automatically
+pointing to the first new message in your folder when started, instead
+of at message #1.  This will only be effective for the incoming mailbox since
+other folders are not expected to have `new' mail.  (The default is ON.)
+
+.lp resolve 1.0i
+This is a boolean flag that defines the behaviour of the
+program for such actions as deletion, saving a message
+and so on.   Specifically, with this option enabled, as
+soon as mail is `dealt with' the program moves you to the
+next message in the folder, with deletion, undeletion,
+saving a message and forwarding a message all being treated as
+dealing with email in this manner.
+(The default is ON.)
+
+.lp savename 1.0i
+One of the problems with electronic mail systems is that one
+tends to get very large, one-dimensional (flat) files that
+contain lots of completely unrelated mail.  If this option
+is turned on, \f2elm\f1 will use a more intelligent
+algorithm \(em on incoming mail, when you \f2save\f1 or \f2copy\f1 it,
+the default mailbox to save to (changeable by pressing anything other than
+<return> of course) is a folder that is the \f2login name\f1 of the
+person who sent you the message.  Similarly, when sending mail out,
+instead of just blindly saving it to the \f2sentmail\f1 folder, \f2elm\f1
+will save it to a folder that is the login name of the
+person who is to receive the mail\s-2\u2\d\s0.
+.fn
+2. When sending to a group, it's saved to the first person in the
+list only.
+.ef
+
+If \f2forcename\f1 is off (see above), the copy will be saved to
+that folder only if the folder already exists.  In practice,
+this means that important people that you communicate
+with (those that you tend to save mail from) have folders that are
+actually \f2a recorded log of the discussion in both directions\f1
+and those others (random mailings) are all stuffed in the \f2sentmail\f1
+folder for easy perusal and removal.
+
+Otherwise, if you always want to save copies of outgoing messages
+in separate folders by recipient login name,
+you'll want to set \f2forcename\f1 to on.  (The
+default for \f2savename\f1 is ON.)
+
+.lp sigdashes 1.0i
+If on, this tells \f2elm\f1 that you wish to follow the convention of prefixing
+your signature with newline dash dash blank newline.  This will be placed in
+your message before your signature file.  If off, the signature file is placed at
+the end of the message without any prefix.
+
+.lp softkeys 1.0i
+If on, this tells \f2elm\f1 that you have an HP terminal with the
+HP 2622 function key protocol and that you'd like to have them available
+while in the program.  (The default is OFF.)
+
+.lp titles 1.0i
+This flag allows you to have the first line of a message
+titled with:
+.sp
+.ft CW
+.zf
+.ps 9
+.nf
+.tl '           Message \f2N/M\fP from \f2username\fP''\f2date\fP at \f2time\f1      '
+.fi
+.ps 10
+.ft 1
+.sp
+where all the information has been previously extracted
+from the message.
+This is especially useful if you weed out all the headers of each
+message with a large `weedout' list...
+(The default is ON.)
+
+.lp warnings 1.0i
+The mailer likes to warn you when you send mail to a machine that cannot
+be directly accessed.  In some situations, however, the system is set up so
+that mail is automatically forwarded to another machine that might then
+have better connections.  Setting this flag to OFF will allow you to effectively
+shut off all the warning messages.  Use of this flag requires support of the
+uuname command on your system.  Without this command, the flag will be cleared
+to OFF automatically. (The default is ON.)
+
+.lp weed 1.0i
+This is a boolean flag that, in combination with the
+``weedout'' list, allows you to custom define the set of
+headers you would like to not have displayed while reading
+messages.
+(The default is ON.)
+.in 0
+.sp
+One more thing: the format for each of the lines is:
+.nf
+.ft CW
+.zf
+.ti .5i
+variable = value\f1
+.fi
+and for boolean variables, \f2value\f1 can be `ON' or `OFF' only.
+.sp
+For a better idea of how this all works, here's
+my \f2.elm/elmrc\f1 file.
+While looking through it, notice that you can have lots of comments
+and blank lines for readability and that you can also use `shell
+variables' and the `~' metacharacter for your home directory,
+and they are expanded accordingly when read in by the mailer.
+(Note that this was automatically saved by the \f2elm\f1 program
+on the fly from the o)ptions screen)
+.ft CW
+.zf
+.nf
+  #
+  # .elm/elmrc - options file for the ELM mail system
+  #
+  # Saved automatically by ELM 2.2 for Dave Taylor
+  #
+
+  # For yes/no settings with ?, ON means yes, OFF means no
+
+  # where to save calendar entries
+  calendar = ~/.Agenda
+
+  # what editor to use ("none" means simulate Berkeley Mail)
+  editor = none
+
+  # the character to use in the builtin editor for entering commands
+  escape = ~
+
+  # the full user name for outbound mail
+  fullname = Dave Taylor
+
+  # where to save received messages to, default file is "=received"
+  receivedmail = $HOME/Mail/received
+
+  # where to save my mail to, default directory is "Mail"
+  maildir = /users/taylor/Mail
+
+  # program to use for displaying messages ('builtin' is recommended)
+  pager = builtin
+
+  # prefix sequence for indenting included message text in outgoing messages...
+  prefix = >_
+
+  # how to print a message ('%s' is the filename)
+  print = lpr -Plw2 %s
+
+  # where to save copies of outgoing mail to, default file is "=sent"
+  sentmail = /users/taylor/Mail/mail.sent
+
+  # the shell to use for shell escapes
+  shell = /bin/csh
+
+  # local ".signature" file to append to appropriate messages...
+  localsignature = localsig
+
+  # remote ".signature" file to append to appropriate messages...
+  remotesignature =  remotesig
+
+  # do we want dashes above signatures? (News 2.11 compatibility and convention)
+  sigdashes = ON
+
+  # how to sort folders, "Mailbox" by default
+  sortby = Reverse-Received
+
+  # should the default be to delete messages we've marked for deletion?
+  alwaysdelete = ON
+
+  # should the default be to store read messages to the "received" folder?
+  alwaysstore = ON
+
+  # should the default be to keep unread messages in the incoming mailbox?
+  alwayskeep = ON
+
+  # should we use the "->" rather than the inverse video bar?
+  arrow = OFF
+
+  # should the message disposition questions be displayed(ON) or
+  # auto-answered(OFF) with the default answers when we resync or change folders?
+  ask = ON
+
+  # would you like to be asked for Carbon-Copies information each msg?
+  askcc = ON
+
+  # automatically copy message being replied to into buffer?
+  autocopy = OFF
+
+  # threshold for bouncing copies of remote uucp messages...
+  # zero = disable function.
+  bounceback = 0
+
+  # save a copy of all outbound messages?
+  copy = ON
+
+  # do we want to be able to mail out AT&T Mail Forms?
+  forms = OFF
+
+  # should we keep folders from which all messages are deleted?
+  keepempty = OFF
+
+  # we're running on an HP terminal and want HOME, PREV, NEXT, etc...
+  keypad = OFF
+
+  # should we display the three-line 'mini' menu?
+  menu = ON
+
+  # when using the page commands (+ - <NEXT> <PREV>) change the current
+  # message pointer...?
+  movepage = ON
+
+  # just show the names when expanding aliases?
+  names = ON
+
+  # when messages are copied into the outbound buffer, don't include headers?
+  noheader = ON
+
+  # start up by pointing to the first new message received, if possible?
+  pointnew = ON
+
+  # prompt for a command after the external pager exits?
+  promptafter = ON
+
+  # emulate the mailx message increment mode (only increment after something
+  # has been 'done' to a message, either saved or deleted, as opposed to
+  # simply each time something is touched)?
+  resolve = ON
+
+  # save messages, incoming and outbound, by login name of sender/recipient?
+  savename = ON
+
+  # save outbound messages by login name of sender/recipient even if the
+  # associated folder doesn't already exist?
+  forcename = OFF
+
+  # are we running on an HP terminal and want HOME, PREV, NEXT, etc...?
+  # (this implies "keypad=ON" too)
+  softkeys = OFF
+
+  # set the main prompt timeout for resynching...
+  timeout = 60
+
+  # display message title when displaying pages of message?
+  titles = ON
+
+  # are we good at it?  0=beginner, 1=intermediate, 2+ = expert!
+  userlevel = 2
+
+  # tell us about addresses to machines we can't directly get to?
+  warnings = OFF
+
+  # enable the weedout list to be read?
+  weed = ON
+
+  # what headers I DON'T want to see, ever.
+  weedout = "Path:" "Via:" "Sent:" "Date" "Status:" "Original" "Phase"
+	  "Subject:" "Fruit" "Sun" "Lat" "Buzzword" "Return" "Posted"
+	  "Telephone" "Postal-Address" "Origin" "X-Sent-By-Nmail-V" "Resent"
+	  "X-Location" "Source" "Mood" "Neuron" "Libido" "To:" "X-Mailer:"
+	  "Full-Name:" "X-HPMAIL" "Cc:" "cc:" "Mmdf" "Network-" "Really-"
+	  "Sender:" "Post" "Message-" "Relay-" "Article-" "Lines:"
+	  "Approved:" "Xref:" "Organization:" 	"*end-of-user-headers*"
+
+  # alternative addresses that I could receive mail from (usually a
+  # forwarding mailbox) and don't want to have listed...
+  alternatives = hplabs!taylor  hpldat!taylor  taylor@hplabs  taylor%hpldat
+.fi
+.br
+.ne 5
+.sp
+.hn 1 The Command Line Options
+
+There are a number of command line options to the \f2elm\f1
+program, with only one that needs to be remembered: ``-?''or ``-h'' for help.
+
+The flags are:
+
+.lp \h'24p'-a 66p
+Arrow.  This allows you to have the ``->'' arrow pointer
+rather than the inverse bar.  This can also be set in
+the \f2.elm/elmrc\f1
+file \(em check the boolean variable \f2arrow\f1).
+
+.lp \h'24p'-c 66p
+Check only.  This is useful for expanding aliases
+without sending any mail.  The invocation is similar to
+invoking \f2elm\f1 in send-only mode:
+.ft CW
+.zf
+elm -c\f2  list-of-aliases\f1
+
+.lp "\h'24p'-d \f2n\f1" 66p
+Set debug level to \f2n\f1.  Useful for debugging the \f2elm\f1
+program, this option will create a file in your home
+directory called \f2ELM:debug.info\f1, then
+output a running log of what is going on with
+the program.  Level \f2n\f1 can be 1 through 11,
+where the higher numbers generate more output.
+This option might be disabled by the the person who configured
+\f2elm\f1 for your system.
+
+.lp "\h'24p'-f \f2folder\f1" 66p
+Folder.  Read specified folder rather than the default incoming mailbox.
+Note that you can use the same metacharacters (e.g. `=') as when
+you \f2change folders\f1 from within the program.  You can also use the
+same abbreviatory symbols (`!', `>' and `<'),
+but remember to ``single quote'' them
+in case they have special meaning in the shell you use.
+
+.lp "\h'24p'-h or -?" 66p
+Help.  Gives a short list of all these options and exits.
+
+.lp \h'24p'-k 66p
+Keypad \(em This option, when used, lets the \f2elm\f1 program
+know that you're on an HP terminal, and it can then interpret
+the <PREV>, <NEXT> and <HOME>/<SHIFT>-<HOME> keys accordingly.  If you
+are not on an HP terminal, it is recommended that you do
+NOT use this option. (See the \f2keypad\f1 option in
+the \f2.elm/elmrc\f1 section.)
+
+.lp \h'24p'-K 66p
+Keypad + softkeys.  The \f2elm\f1 mailer can
+use the HP softkeys as an alternative form of
+input.  If you specify this option be sure that you're on
+an HP terminal that can accept the standard 2622 terminal
+escape sequences! (See the \f2softkeys\f1 option in
+the \f2.elm/elmrc\f1 section for more information.)
+
+.lp \h'24p'-m 66p
+Inhibit display of the 3-line menu when using the mailer.  This,
+of course, gives you three more message headers per page instead.
+(See also the
+.ft CW
+.zf
+menu\f1 option in
+the \f2.elm/elmrc\f1 section.)
+
+.lp "\h'24p'-s \f2subject\f1" 66p
+In send-only and batch mode, this is how to indicate the subject of the
+resulting message.  Please see the section on ``Non-Interactive
+Uses of Elm'' in \f2The Elm Users Guide\f1 for more information.
+
+.lp \h'24p'-z 66p
+Zero.  This causes the mailer not to be started if you don't
+have any mail.   This emulates the behaviour of programs
+like \f2Berkeley Mail\f1.
+
+.in 0
+All the above flags default to reasonable options, so there is
+usually no need to use them.  Furthermore, the most used flags
+are available through the \f2.elm/elmrc\f1 file.  See above.
+.br
+.ne 5
+.sp
+.hn 1 Special Outgoing Mail Processing
+
+There are a few extra features that the mailer offers on
+outgoing mail that are worthy of mention:
+
+The first, and probably the most exciting feature\s-2\u3\d\s0, is the
+.fn
+3. Unfortunately, at many non-US sites, it's quite probable that
+you won't be able to use this feature since you won't have
+the \f2crypt()\f1 library available due to licensing restrictions.
+.ef
+ability to send \f2encrypted\f1 mail! To do this is
+extremely simple:  You need merely to have two key lines
+.ft CW
+.zf
+[\&encode]\f1 and
+.ft CW
+.zf
+[\&clear]\f1 in the message body.
+
+Consider the following outgoing message:
+.nf
+.ps 9
+.in .5i
+.ft CW
+.zf
+Joe,
+Remember that talk we had about Amy?  Well, I talked to my manager
+about it and he said...
+uhh...better encrypt this...the usual `key'...
+[\&encode]
+He said that Amy was having family problems and that it had been
+affecting her work.
+Given this, I went and talked to her, and told her I was sorry for
+getting angry.  She said that she understood.
+We're friends again!!
+[\&clear]
+Exciting stuff, eh?
+\h'3i'Mike
+.ps 10
+.ft 1
+.in 0
+.fi
+While this is obviously quite readable while being typed into
+the editor, as soon as the message is confirmed as wanting
+to be sent, the \f2elm\f1 mailer prompts with:
+.nf
+.ft CW
+.zf
+.ps 9
+.ti .5i
+Enter encryption key: @
+.ps 10
+.ft 1
+.fi
+and accepts a key (a series of 8 or less characters) without
+echoing them to the screen.  After entry, it will ask for the
+same key again to confirm it, then *poof* it will encrypt and
+send the mail.
+
+If you have the \f2copy\f1 option enabled, the program will save
+your copy of the message encrypted too.  (This is to ensure
+the privacy and security of your mail archive, too.)
+
+If the mailer doesn't ask for the encryption key, it's because
+you don't have the
+.ft CW
+.zf
+[\&encode]\f1 entered as the first 8 characters
+of the line.  It MUST be so for this to work!!
+
+On the other end, a person receiving this mail (they must also
+be using \f2elm\f1 to receive it, since this mailer has a
+unique encryption program) will be reading the
+message and then suddenly be prompted:
+.nf
+.ft CW
+.zf
+.ps 9
+.ti .5i
+Enter decryption key: @
+.ft 1
+.ps 10
+.fi
+and will again be asked to re-enter it to confirm.
+The program will then on-the-fly decrypt the mail
+and display each line as it is decoded.  The
+.ft CW
+.zf
+[\&clear]\f1
+line signifies that the block to encrypt is done.
+
+Note that it is not possible currently to \f2pipe\f1 or \f2print\f1
+encrypted mail.
+.sp 2
+The other option on outgoing mail is the ability to
+specify what section of the message you want to have
+archived (assuming \f2copy\f1 is enabled) and what section
+you don't.  This is most useful for sending out source
+file listings and so on.
+
+To indicate the end of the section that should be
+saved in the archive, you need merely to have the
+line
+.nf
+.ft CW
+.zf
+.ti .5i
+[\&nosave]
+.ft 1
+or
+.ft CW
+.zf
+.ti .5i
+[\&no save]
+.ft 1
+.fi
+appear by itself on a line.  This will be removed from
+the outgoing mail, and will indicate the last line of
+the message in the saved mail.
+Other than this, the saved mail is identical to the outgoing mail.
+.br
+.ne 5
+.sp
+.hn 1 Customized header lines
+
+The mailer provides a facility for including customized
+header lines in the messages you send.
+If you have an \f2.elm/elmheaders\f1 file,
+the mailer will include its contents
+immediately after the regular headers of all outbound  mail.
+The mailer supports use of the backquote convention in this file.
+Here's a typical \f2.elm/elmheaders\f1 file.
+.ft CW
+.zf
+.nf
+  Organization: Hewlett-Packard Laboratories
+  Phone: (415)-555-1234
+  Operating System: `uname -srv`
+.fi
+.ft 1
+These lines will appear after all other header lines in the message.
+.br
+.ne 5
+.sp
+.hn 1 Commands
+.sp
+
+This section will discuss each command in the \f2elm\f1
+program in more detail than above, including the
+prompts the user can expect upon executing the
+command, the meaning of different options, etc.
+
+.lp \h'24p'? 66p
+Help.  This command used once puts you in the \f2help\f1
+mode, where any key you press will result in a one-line description
+of the key.  Pressed again at this point will produce a two page
+summary listing each command available.
+<escape> or `.' will leave the help mode and return you to the
+main menu level.
+
+.lp \h'24p'<space> 66p
+Display the current message.
+<space> is useful for reading through a mail folder.
+When issued from the index screen,
+it will display the first screen of the current message;
+and then when issued while in the builtin pager,
+it will page through the message to the end;
+and then when issued at the end of a message
+(with either the builtin pager or an external pager),
+it will display the first screen of the next message not marked for deletion.
+
+.lp \h'24p'<return> 66p
+Display the current message.
+<return> behaves somewhat differently from <space>.
+When issued while in the builtin pager,
+it will scroll the current message forward one line,
+and then when issued at the end of a message
+(with either the builtin pager or an external pager),
+it will redisplay the first screen of the the \f2current\fP message.
+The latter is useful in case you have issued a non-pager
+command while in the builtin pager and want to restart the display
+of the current message.
+
+.lp \h'24p'! 66p
+Shell.  This allows you to send a command to the shell without
+leaving the program.
+
+.lp \h'24p'| 66p
+Pipe.  This command allows you to pipe the current message
+or the set of \f2tagged\f1 messages
+through other filters as you desire.  The shell used for
+the entire command will be either the one specified in
+your \f2.elm/elmrc\f1 file, or the default shell (see above).
+
+.lp \h'24p'\/ 66p
+Pattern match.  This command, on the top level, allows the
+user to search through all the \f2from\f1 and \f2subject\f1 lines of
+the current folder starting at the current message and
+continuing through the end.  If the first character of the
+pattern is a `/', then the program will try to match the
+specified pattern against \f2any\f1 line in the folder.  Again,
+this works from one after the current message through the
+end.  Both searches are case insensitive.
+
+.lp "\h'24p'- or <left>" 66p
+Display the next page of the message index.
+
+.lp "\h'24p'+ or <right>" 66p
+Display the previous page of the message index.
+
+.lp \h'24p'<number><return> 66p
+Specify new current message.  When you type in any digit key \f2elm\f1 will
+prompt ``Set current to : n'', where `n' is
+the digit entered.  Enter the full number
+and terminate with <return>.  Note that changing the
+current message to a message not on the
+current page of headers will result in a new page
+being displayed.
+
+.lp \h'24p'< 66p
+Scan message for calendar entries.  A rather novel feature of
+the \f2elm\f1 mailer is the ability to automatically incorporate
+calendar/agenda information from a mail message into the users
+calendar file.  This is done quite simply; any line that has
+the pattern
+
+.ti +.5i
+-> \f2calendar entry\f1
+
+will be automatically added to the users \f2calendar\f1 file (see
+the \f2calendar\f1 option of the \f2.elm/elmrc\f1 file) if the `<'
+command is used.
+.sp
+For example, let's say we had a message with the text:
+
+.ft CW
+.zf
+.ps 9
+.ti +.5i
+Regardless of that meeting, here's the seminar stuff:
+.br
+.ti +.5i
+-> 8/03 3:00pm: AI Seminar with Ira Goldstein of HP Labs
+.ft 1
+.ps 10
+
+then using the `<' command would add the line:
+
+.ft CW
+.zf
+.ps 9
+.ti +.5i
+8/03 3:00pm: AI Seminar with Ira Goldstein of HP Labs
+.ps 10
+.ft 1
+
+to the users \f2calendar\f1 file.
+
+.lp \h'24p'a 66p
+Alias.  The alias system is a way by which more complex mail addresses
+can be shortened for the mail user.  For example:
+.nf
+.ps 9
+.ft CW
+.zf
+.ti +.5i
+joe, bleu   =  Joe Bleu  =   joe@hpfcla.SSO.HP.COM
+.ft 1
+.ps 10
+.fi
+which allows mail to `joe' or `bleu' with the system expanding
+the address properly.  As is obvious, this not only saves remembering
+complex addresses, it also allows the address to be optimized to
+go through the minimum number of machines without anyone having to
+be informed of the change.  A more detailed discussion can
+be found in either the section entitled \f2The Alias System\f1 in
+this document or \f2The Elm Alias System Users Guide\f1.
+
+.lp \h'24p'b 66p
+Bounce mail.  This ``remails'' mail to someone else in such a
+way as to make the return address the original sender rather
+than you.  (The \f2forward\f1 command is similar, but it makes
+the return address \f2you\f1 rather than the original sender.)
+
+.lp \h'24p'C 66p
+Copy to folder.  This command copies the current message or set of
+tagged messages to
+a folder.  If there is anything in the folder currently the
+message or messages are appended to the end, otherwise the folder is created
+containing only the newly copied message.  The prompt for this command
+is `Copy to folder: '.  A response of <return> cancels the command
+and returns the user to the system prompt.  The usual filename
+metacharacters are available, too.  That is, this command expands filenames
+with `~' being your home directory and `=' being your
+\f2maildir\f1 directory, if defined.  This command also allows you to
+use `>' for your \f2receivedmail\f1 folder and
+`<' for your \f2sentmail\f1 folder.  You can also enter `?' at the prompt
+to list the names of your folders.
+
+.lp \h'24p'c 66p
+Change folder.  Specifying this command allows the user to change
+the folder that is currently being read.  This is intended
+for perusal and reply to previously archived messages.
+The prompt is `Name of new folder: ' and entering <return>
+cancels the operation, while entering a filename causes the program
+to read that file as the new folder,
+if possible.  This command expands filenames
+with `~' being your home directory and `=' being your
+\f2maildir\f1 directory, if defined.  This command also allows you to
+use `!' as an abbreviation for you incoming mailbox,
+`>' for your \f2receivedmail\f1 folder, and
+`<' for your \f2sentmail\f1 folder.  You can also enter `?' at the prompt
+to list the names of your folders.
+
+.lp "\h'24p'd, u" 66p
+Delete and Undelete.  Neither of these two commands have any prompts
+and indicate their action by either adding a `D' to the current
+message index entry (indicating deletion pending) or removing
+the `D' (indicating that the message isn't set for deletion).
+
+.lp \h'24p'<control>-D 66p
+This command allows you to easily mark for deletion all messages
+that have a specific pattern.  After <control>-D is pressed,
+the program will prompt for the string to match (currently it
+only matches either the \f2from\f1 or \f2subject\f1 lines of
+the message).
+
+.lp \h'24p'<control>-U 66p
+This is the direct opposite command to the previous \(em all messages
+that match the specified pattern can have any mark for deletion
+removed by using this command.
+
+.lp \h'24p'e 66p
+Edit mailbox.  This allows you to modify the current mail file at
+a single keystroke.  This is mostly useful for editing down messages
+before saving them.  Modifying headers should be done with extreme
+caution, as they contain routing information and other vital stuff
+for full functionality.
+
+.lp \h'24p'f 66p
+Forward.  Allows the user to forward the current message to another user.
+This copies the message into the edit buffer and allows the user to add
+their own message too.  The prompt is `Forward to:' and will expand an alias
+if entered.  (See also \f2bounce\f1, above.)
+
+Elm will ask you if you want to edit the message before sending it.  If you
+answer `yes', Elm will prepend your prefix string to each line of the
+message, and let you edit the result.  If you do not want the prefix string
+on each line, answer `no'; you will have another chance to edit the message
+when you get to the `send' menu.  (See also the `elmrc' section, under
+\f2prefix\f1.)
+
+.lp \h'24p'g 66p
+Group reply.  Identical to \f2reply\f1 below, except that the
+response is mailed to \f2all recipients\f1 of the original
+message (except yourself \(em see the \f2alternatives\f1
+option for your \f2.elm/elmrc\f1 file above).
+
+.lp \h'24p'h 66p
+Display the current message with all headers intact.
+When you display a message with other commands,
+certain header lines are formatted and others discarded (according
+to the \f2weedlist\fP parameter in your \f2.elm/elmrc\f1 file).
+
+.lp \h'24p'i 66p
+Return to the index screen,
+when issued in the builtin pager or at the end of a message (with
+either the builtin pager or an external pager).
+
+.lp "\h'24p'j or <down>, k or <up>" 66p
+These four keys work similarly to what they would do in \f2vi\f1 or
+any of the other (precious few) screen oriented
+programs.  The `j' and <down> keys move
+the current message pointer down to the next message skipping
+over any marked deleted (going to
+the next page if needed) and the `k' and <up> keys move the current
+message pointer back to the previous message skipping
+over any marked deleted (also changing pages if needed)
+
+.lp "\h'24p'J, K" 66p
+These two keys work similarly to their lower case counterparts,
+except that they don't skip over deleted messages.
+
+.lp \h'24p'l 66p
+Limit.  This feature allows you to specify a subset of the existing
+messages to be dealt with.  For example, let's say we had a folder with
+four hundred messages in it, about four or five different subjects.  We
+could then limit what we're dealing with by using the \f2limit\f1
+command.  Pressing `l' would result in the prompt:
+.nf
+.ft CW
+.zf
+.ti +.5i
+Criteria:
+.ft 1
+.fi
+to which we could answer
+.ft CW
+.zf
+subject \f2string\f1,
+.ft CW
+.zf
+from \f2string\f1 or
+.ft CW
+.zf
+to \f2string\f1.  In our example, we could use
+.ft CW
+.zf
+subject programming\f1
+as a criteria for selection.  Once we've limited our selections down,
+the screen will be rewritten with just the selected messages
+and the top line will change to have a message
+like:
+.nf
+.ft CW
+.zf
+.ps 9
+.tl ''     Folder is "=elm" with 92 shown out of 124 [Elm 2.2]'
+.ps 10
+.ft 1
+.fi
+We can further limit selections by entering further criteria, each
+time using the \f2limit\f1 option again.
+
+To clear all the criteria and get back to the `regular' display, simply
+enter \f2all\f1 as the limiting criteria.  It should be noted that the
+selection based on ``to'' isn't fully implemented for this version, so
+it is recommended that users stay with ``subject'' and ``from'' as the
+basis for their criteria.
+
+.lp \h'24p'm 66p
+Mail.  Send mail to a specified user.  The prompt that is associated
+with this command is `Send mail to :'.  Entering an alias name results
+in the full address being rewritten in parenthesis immediately.  This
+prompt is followed by `Subject:' which allows the user to title their
+note.  The final field is `Copies to: ', which allows other people
+specified to receive "carbon copies" of the message.  (See the \f2askcc\f1
+option of the \f2.elm/elmrc\f1 file above.)  Upon entering all three items the
+editor is invoked and the message can be composed.
+
+.lp \h'24p'n 66p
+Next message that is not marked deleted:
+useful for displaying successive messages in a folder.
+When issued from the index screen, it displays the current message,
+and then when issued while in the builtin pager or at the end of a message
+(with either the builtin pager or an external pager),
+it will display the first screen of the next message not marked for deletion.
+
+.lp \h'24p'o 66p
+Options.  This full-screen display allows you to alter the settings
+of a number of parameters, including the current sorting method,
+the method of printing files, the calendar file, the save file, and
+so on.  It's self-documenting (where have you heard \f2that\f1
+before?) so isn't explained in too much detail here.
+
+.lp \h'24p'p 66p
+Print.  This allows you to print out the current
+message or the tagged messages to a previously defined printer.  (See
+the section on the \f2.elm/elmrc\f1 discussing the \f2print\f1 variable.)
+
+.lp \h'24p'q 66p
+Quit.  If you in the pager, you are returned to the index screen. If you are
+on the index screen, \f2elm\f1 quits altogether.  However, if you have the
+option \f2ask\fP set, \f2elm\f1 first prompts you for the disposition of the
+messages in the current folder.  If any messages are marked for deletion, it
+will ask if you want them deleted.  If the current folder is your incoming
+mailbox, you will also be asked if read messages should be stored in your
+\f2receivedmail\f1 folder,
+and if unread messages should be kept in the incoming mailbox.
+The default answers to these questions are set by the \f2.elm/elmrc\f1
+options \f2alwaysdelete\fP, \f2alwaysstore\fP, and \f2alwayskeep\fP.
+However, if you elect to not store your read messages (i.e. keep them)
+it is presumed you want to keep your unread messages, too.
+
+.lp \h'24p'Q 66p
+Quick quit.  This behaves similar to the `q' command except that
+you are never prompted for answers to the message disposition questions.
+\f2Elm\f1 will dispose of messages according to the values you
+have set for \f2alwaysdelete\f1, \f2alwaysstore\f1, and \f2alwayskeep\f1
+in your \f2.elm/elmrc\f1 file.
+
+.lp \h'24p'r 66p
+Reply.  Reply to the sender of the current message.  If
+the \f2autocopy\f1 flag is OFF in your \f2.elm/elmrc\f1 file, the program will
+prompt ``Copy message? (y/n)'' to which the user can specify
+whether a copy of the source message is to be copied into the edit
+buffer, or not.  If copied in, all lines from the message are
+prepended with the \f2prefix\f1 character sequence specified in
+your \f2.elm/elmrc\f1 file.
+
+.lp \h'24p's 66p
+Save to folder.  This command is like the `copy' command, except
+that the saved messages are marked for deletion, and that if you are
+saving just the current message, the current message pointer is
+incremented afterwards (see the \f2resolve\f1 option in the \f2.elm/elmrc\f1
+file above).  This command expands folder names
+with `~' being your home directory and `=' being your
+\f2maildir\f1 directory, if defined.  This command also allows you to
+use `>' for your \f2receivedmail\f1 folder and
+`<' for your \f2sentmail\f1 folder.
+
+.lp \h'24p't 66p
+Tag.
+.fn
+4. Currently only \f2pipe\f1, \f2print\f1, and \f2save\f1 support this.
+.ef
+Tag the current message for a later operation\s-2\u4\d\s0.
+
+.lp \h'24p'<control>-T 66p
+Tag all messages containing the specified pattern.  Since \f2tagging\f1
+messages can occur on screens other than the one being viewed, the
+\f2elm\f1 system will first check to see if any messages are currently
+\f2tagged\f1 and ask you if you'd like to remove those tags.  After
+that, it will, similar to the \f2<control>-D\f1 function, prompt for
+a pattern to match and then mark for deletion all messages that contain
+the (case insensitive) pattern in either the \f2from\f1 or \f2subject\f1
+lines.
+
+.lp \h'24p'x 66p
+Exit.  This leaves \f2elm\f1 discarding any changes to the mailbox.
+If changes are pending (such as messages marked for deletion) a prompt
+is made to confirm discarding the changes.  If confirmed, no
+messages are deleted and the statuses of messages are unchanged.  That is,
+any messages that were new will remain new instead of being noted as old,
+and any messages that were read for the first time
+will be again noted as unread.
+
+.lp \h'24p'X 66p
+Exit immediately.  This leaves \f2elm\f1 in the quickest possible manner
+without even prompting about discarding the changes to the mailbox.
+No messages are deleted and the statuses of messages are unchanged.  That is,
+any messages that were new will remain new instead of being noted as old,
+and any messages that were read for the first time
+will be again noted as unread.
+
+.in 0
+.sp
+When you are about to send of a message under the \f2forward\f1, \f2mail\f1,
+or \f2reply\f1 commands (see above), a small menu of the following
+options appears:
+
+.lp \h'24p'c 66p
+Specify folder for saving a copy to.  This allows you to override the
+\f2copy\f1, \f2forcename\f1 and \f2savename\f1 options
+of your \f2.elm/elmrc\f1 file.  It prompts you for the name
+of the folder where a copy of the outgoing message is to be saved.  The
+default displayed is taken from those three \f2.elm/elmrc\f1
+options and can be changed.  This command also allows you to
+use `>' for your \f2receivedmail\f1 folder
+and `<' for your \f2sentmail\f1 folder,
+and `=?' to mean ``conditionally save by name''
+and `=' to mean ``unconditionally save by name''. (See the \f2savename\f1
+option above for details on saving by name.)  (Since you could next enter
+the \f2edit headers\f1 command and change the recipients
+of your message, the name of the folder under the
+two ``save by name'' options is not established until you enter the \f2send\f1
+command.)  You can also enter `?' at the prompt
+to list the names of your folders.
+
+.lp \h'24p'f 66p
+Forget.  This gets you out of sending a message you started. If you are
+in send-only mode, the message is saved to the file \f2Cancelled.mail\f1
+in your home directory.  Otherwise
+it can be restored at the next \f2forward\f1, \f2mail\f1,
+or \f2reply\f1 command during the current session of \f2elm\f1. After
+issuing one of those commands you will be prompted with ``Recall last
+kept message?''
+
+.lp \h'24p'e 66p
+Edit message (or form).  Entering this command will allow you to edit
+the text of your message or form.
+
+.lp \h'24p'h 66p
+Edit headers.  This puts you into the \f2header editing mode\f1, whereby
+you can edit to any of the various headers of your message.  Like
+the options screen, it's self-documenting, so it isn't explained in too much
+detail here.
+
+.lp \h'24p'm 66p
+Make form.  This converts the message you have edited into a form.  (See
+\f2The Elm Forms Mode Guide\f1 for more details.)
+
+.lp \h'24p's 66p
+Send.  This sends the message as is without any further ado.
+.in 0
+.br
+.ne 5
+.sp
+.hn 1 "Using Elm with ``editor = none''"
+.sp
+The \f2Elm\f1 program also supports a builtin editor for simple message
+composition that is very (very) similar to the simple line
+editor available from the \f2Berkeley Mail\f1 system.
+
+To access it, you need merely to specify ``\f2editor=none\f1'' in
+your \f2.elm/elmrc\f1 file.
+With that, any messages to be composed
+that don't already have text in the buffer (e.g. no reply with
+the text included, etc), will use this editor.
+.sp
+From the builtin editor, the following options are available for use.
+Each command here is prefixed with a `~'.
+You can specify a different ``escape'' character in your \f2.elm/elmrc\f1 file,
+if you desire (see above).
+.sp
+
+.lp \h'16p'~? .5i
+Print a brief help menu.
+
+.lp \h'16p'~b .5i
+Change the Blind-Carbon-Copy list.
+
+.lp \h'16p'~c .5i
+Change the Carbon-Copy list.
+
+.lp \h'16p'~e .5i
+Invoke the Emacs editor on the message, if possible.
+
+.lp \h'16p'~f .5i
+Add the specified message or current message.
+
+.lp \h'16p'~h .5i
+Change all the available headers (To, Cc, Bcc, and Subject).
+
+.lp \h'16p'~m .5i
+Same as `~f', but with the current `prefix'.
+
+.lp \h'16p'~o .5i
+Invoke a user specified editor on the message.
+
+.lp \h'16p'~p .5i
+Print out the message as typed in so far.
+
+.lp \h'16p'~r .5i
+Include (read in) the contents of the specified file.
+
+.lp \h'16p'~s .5i
+Change the Subject line.
+
+.lp \h'16p'~t .5i
+Change the To list.
+
+.lp \h'16p'~v .5i
+Invoke the Vi visual editor on the message.
+
+.lp \h'16p'~< .5i
+Execute the specified unix command, entering the output
+of the command into the editor buffer upon completion.
+(For example ``~< who'' will include the output of
+the \f2who\f1 command in your message.)
+
+.lp \h'16p'~! .5i
+Execute a unix command if one is given (as in ``~!ls'') or
+give the user a shell (either from their shell setting in
+their \f2.elm/elmrc\f1 file or the default).
+
+.lp \h'16p'~~ .5i
+Add a line prefixed by a single `~' character.
+.in 0
+.sp
+A useful note is that the `~f' and `~m' commands invoke the \f2readmsg\f1
+command, so you can pass parameters along too.  For example, if we
+wanted to include a message from Joe, without any headers, prefixed,
+we could use:
+.nf
+.ti .5i
+~m -n Joe
+.fi
+to accomplish the task.
+
+To learn more about how they work, try 'em!
+.br
+.ne 5
+.sp
+.hn 1 The Alias System
+.sp
+As mentioned previously, there exists in the \f2elm\f1
+system a set of aliases that associate
+an arbitrary word (such as a persons name) to a complex address or group.
+The advantages are readily apparent; rather than
+remembering an address of the form:
+.nf
+.ps 9
+.ft CW
+.zf
+.ti .5i
+host1!host2! ... !hostN!user
+.ft 1
+.ps 10
+.fi
+the user merely has to remember a single word.
+
+Two alias tables are available for a each
+user within \f2elm\f1,
+namely the system alias file and the user's alias file.  The
+system alias file is created and maintained (by the system administrator)
+by editing the
+file \f2SYSTEM_ALIASES\f1 as defined in the `sysdefs.h' file
+(see \f2The Elm Configuration Guide\f1) and as described
+in the documentation with the \f2newalias\f1 command,
+then running the \f2newalias\f1 program.
+
+An individual user can also have an alias file which works
+in conjunction with the system aliases.  To do this, they
+need merely to peruse the documentation for the \f2newalias\f1
+command and create a file as indicated therein.  After
+executing the program, the aliases will be available
+for using from within \f2elm\f1.
+.sp
+Please refer to \f2The Elm Alias Users Guide\f1 for more helpful
+hints and so on.
+.sp 2
+Within \f2elm\f1,
+however, the alias system acts as an entirely different program, with
+it's own commands and own mini-menu.  The menu replaces the
+standard mini-menu with:
+.sp
+.sd
+.nf
+.ps 9
+.ft CW
+.zf
+.ce
+--------------------------------------------------------------------------------
+.sp
+.ce
+Alias commands
+.sp
+.ce 2
+a)lias current message, d)elete an alias, check a p)erson or s)ystem,
+l)ist existing aliases, m)ake new alias or r)eturn
+.sp 2
+Alias: @
+.ce
+--------------------------------------------------------------------------------
+.sp
+.ps 10
+.ft 1
+.ed
+.fi
+
+The commands are:
+
+.lp \h'16p'a .5i
+Alias current message.
+This allows the user to create an alias that has the
+return address of the current message as the address field of
+the alias.  It prompts for a unique alias name.   Important
+note: when you alias an address in this fashion, the mailer
+will try to minimize the amount it needs to store by
+iteratively comparing machine names in the path with the
+machines in the pathalias database.  Once it finds an entry
+the address will be saved at that point.   For further
+information, please see \f2The Elm Alias System Users Guide\f1.
+
+.lp \h'16p'd .5i
+Delete an existing alias.
+This allows the user to delete an alias the user has previously made.
+It prompts for the alias name, and displays the alias information, if
+found, and then prompts for confirmation to delete.
+
+.lp \h'16p'l .5i
+List all existing aliases.
+This simply lists all the aliases you have previously made.
+
+.lp \h'16p'm .5i
+Make user alias.  This will prompt for a unique alias name and
+then for an address.  The information provided will be added
+to your individual aliases.text file (\f2$HOME/.elm/aliases.text\f1) and
+then added to the database.
+
+.lp \h'16p'p .5i
+Check personal alias.  This is a simple way of checking what is in the alias
+database \(em it prompts for an alias name, and returns the address
+associated with that name or the error message `alias not found'
+as appropriate.
+
+.lp \h'16p'r .5i
+Return.  Return to the main level of the \f2elm\f1 program.
+
+.lp \h'16p's .5i
+Check system alias.  If you're not sure that your machine can talk
+to another machine, you can use this command to either find the
+appropriate route or find that you're correct in your suspicions
+and it is indeed unknown!
+.in 0
+.br
+.ne 5
+.sp
+.hn 1 While We're Talking Aliases...
+
+Another feature worthy of discussion, since it's been getting
+lots of veiled references throughout this document, is the
+host-path file.  This is implemented using the uucp pathalias
+database, with a file containing lines with the format:
+.nf
+.ti .5i
+\f2hostname\f1        \f2address\f(CW!%s\f1
+  or
+.ti .5i
+\f2hostname\f1        \f(CW%s@\f2hostname\f1
+.fi
+The actual details of the file are located in
+\f2The Alias System Users Guide\f1.
+
+Anyway, to use them is quite simple...when specifying the address
+of someone, you can either have an alias for them already, reply
+to their message, or use the system alias feature!
+
+Enough hype, right?  Okay...to use this feature, you specify an
+address by either "machine!person" ignoring if your specific
+machine can talk directly to the machine specified, or, if you
+prefer the Internet addressing scheme, "person@machine".  When
+you enter the address as specified, the mailer will quickly
+search through the pathalias database file and expand the
+specified address to be a legitimate routing address.
+
+What's really nice about this is that the address that we're
+going to send to can be either on ARPA, CSNET, BITNET, uucp,
+or any other network.  The method of specifying the basic
+address is the same regardless!
+
+For example, mail to me could be sent as either "hplabs!taylor"
+or "taylor@hplabs".  \f2elm\f1 will expand them
+both in the same manner and include a ``route'' to the
+machine \f2hplabs\f1, if needed.
+
+For those sites with the domains database installed, you can
+also mail to users on domain based systems by simply specifying
+their name, the machine they receive mail on and a full domain
+specification.
+
+For example, say you have a friend Maurice who reads mail
+on \s9JOEVAX\s10 in the Mailnet world.  You could mail to him by using
+the address "Maurice@\s9JOEVAX.MAILNET\s10" and your system will
+expand the address correctly.
+.br
+.ne 5
+.sp
+.hn 1 Expert Mail Users and Debugging the Mailer
+
+There are some additional facilities available in the \f2elm\f1
+mailer for those people who are knowledgeable about
+mail protocols, or trying to debug/track down a problem.
+
+The `h' \f2headers\f1 command at the outermost level of the mailer
+will display the current message ignoring the current
+setting of the `weed' option.  This is most useful
+for answering questions of the form "I wonder what
+this guy put in his header?" and such.  This command
+does not show up on the mini-menu because it is somewhat
+esoteric, but it does appear on the `?' help screen (can
+you find it there, though?).
+
+The `@' command at the outermost level of the mailer
+will output a screen of debugging information,
+including the number of lines and
+offsets of each of the messages in the current mailbox.
+
+The `#' command at the outermost level of the mailer
+will display the entire stored `record structure' for
+the current message.
+
+The `%' command
+will display the full computed return address of the
+current message.
+
+Starting up \f2elm\f1 with the "-d" debug option will create a file called
+\f2ELM:debug.info\f1 in your home directory and contain a wealth of useful
+information (to me, at least!) to aid in tracking down
+what errors are occurring and why.
+.sp
+
+If there are any problems with the mailer,  please try
+to recreate the error with the debug option enabled
+and set to the highest level (11) before sending defect reports my way.
+.sp 3
+One final note: all error names reported by the program
+are documented in the AT&T System V Interface Definition Reference
+Manual in \f2errno\f1(2).

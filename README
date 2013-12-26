@@ -1,0 +1,194 @@
+This is the 2.3 (USENET) version of the Elm Mail System
+
+See the NOTICE and Instruct files for further details.
+
+It is IMPERITIVE that all users rerun newalias after installing
+Elm 2.3 when upgrading from a previous version.  Elm's behavoir
+with aliases could be unpredictible if this step is not performed.
+
+Where to find more info on Elm:
+   Much discussion on Elm including interim bug fixes, work arounds
+and future plans occurs in the Usenet news group comp.mail.elm.  Also
+a monthly status report on Elm is posted there.  This status report
+lists the archive sites that have the patches to Elm as well as the
+lastest version.
+
+Patches to Elm are posted to comp.mail.elm and comp.sources.bugs as
+soon as they are released.  They are posted to comp.sources.unix shortly
+thereafter, to allow time for feedback of problems in the patches.
+Patches should be available from the archive sites, or from the
+archive server.  Mail archive-server@DSI.COM for details on how to
+use the archive server program.  Ask it for help.
+
+Limitations/Problems you might encounter in compiling and installing Elm:
+
+	On some Unix 5.3.2 systems, if only a runtime version of the
+O/S has been installed, not all the include files exist for compiling
+curses.c.  The ptem.h include file contains the window sizing structure
+on this version.  Either comment out the window sizing code, or install
+the remaining include files from the development system.
+
+	If you run a nonstandard configuration of Mail, such as Xenix
+running smail, Configure can get confused as to where to place items.
+Be sure and check the config.sh file for the correct placement before
+continuning.  If changes are necessary, rerun Configure and fix the
+file before exiting.
+
+	On SCO Xenix, if you are all mail is from user anonymous,
+this is because the mail delivery agent should be
+/usr/lib/mail/execmail instead of /usr/bin/rmail or /bin/rmail.
+
+	On Next's it is necessary to answer -bsd for the
+Any additional cc flags? question and -lsys_s for the
+Any additional libraries? question within Configure.
+
+	On some systems, especially those based on the AT&T Port to
+286's the -O flag of the compiler produces improper code causing
+segmentation violations.  If this happens, recompile the code without
+the -O flag.  This has been seen with Microport SysV/AT type systems.
+
+	The Configuration script has been known to exceed the default
+stack size in Unix 286 sh's.  If Configure does not run correctly on
+this type of machine increase the stack size and rerun it.  On
+Microport SysV/AT machines, Configure might run correctly under ksh.
+Obtain ksh from Microport (available to current version owners without
+additional charge) and rerun Configure using it.  Xenix 286 users may
+have the same problem, but they can work around it by changing the
+stack size within the shell as reported a Xenix 286 Elm user:
+> I had the same problems as everyone else is reporting on Microports *nix under
+> SCO XENIX 2.2.1.
+>
+> The solution is simple, up the stack size for /bin/sh. I used
+>
+> # mv /bin/sh /bin/sh.old
+> # cp /bin/sh.old /bin/sh
+> # fixhdr -F 8000 /bin/sh
+>
+> This may seem a bit over the top, but I put it back after!
+>
+> # mv /bin/sh /bin/sh.rm
+> # mv /bin/sh.old /bin/sh
+>
+> Then wait till nobody is using /bin/sh.rm then
+>
+> # rm /bin/sh.rm
+>
+> That way you preserve your old shell, ( ie you don't break it ), but you
+> get to use Configure without bus errors etc.
+>
+> I hope that of use
+>
+> Keith
+> --
+> UUCP ..!uunet!mcvax!ukc!slxsys!g4lzv!keith  | Keith Brazington
+> Smart mail  keith@g4lzv.co.uk		    | 5b Northgate Rochester Kent UK
+> Ampanet  [44.131.8.1] and [44.131.8.3]	    | +44 634 811594 Voice
+> Packet  G4LZV @ GB7UWS -- G4LZV USENET BB --| +44 634 401210 Data v22,v22bis
+You might have to experiment and try values from 7000 to 8800.
+
+	Also on Microport SysV/AT Machines, the C compiler produces
+improper code for one of the arithmetic calls.  To fix this problem it
+is necessary to reduce the complexity of the statement, as reported by
+one of our testers here is the symptom and his patch.  Being this is a
+compiler bug on only one system, we make the information available, but
+not incorporate it in the main release.  Note, this may effect other
+areas of Elm, and in the future, Microport may even fix this problem.
+> I finally tracked down the bug that was causing the lengthy delays when
+> the first message was displayed.  The Microport 80286 C compiler was
+> generating bad code for the computation of padding in showmsg.c.  The
+> compiler generated scratch variables in the expression were being
+> located at weird offsets in the stack segment.  This caused the program
+> to stall while the kernel attempted to grow the stack segment to a size
+> that was large enough to contain the scratch variables.  This explains
+> why it only happened the first time a message was displayed.  Here is a
+> patch that fixes the problem:
+>
+> *** showmsg.c.dist	Fri Mar 17 21:08:37 1989
+> --- showmsg.c	Sat Mar 18 06:14:04 1989
+> ***************
+> *** 280,289
+>   	           atoi(current_header->year), current_header->time);
+>
+>   	  /* truncate or pad title2 portion on the right
+> ! 	   * so that line fits exactly */
+> ! 	  padding =
+> ! 	    COLUMNS -
+> ! 	    (strlen(title1) + (buf_len=strlen(title2)) + strlen(title3));
+>
+>   	  sprintf(titlebuf, "%s%-*.*s%s\n", title1, buf_len+padding,
+>   	      buf_len+padding, title2, title3);
+>
+> --- 280,292 -----
+>   	           atoi(current_header->year), current_header->time);
+>
+>   	  /* truncate or pad title2 portion on the right
+> ! 	   * so that line fits exactly, expression has been
+> ! 	   * simplified to avoid bug in Microport 80286
+> ! 	   * C compiler */
+> ! 	  padding = COLUMNS;
+> ! 	  padding -= strlen(title1);
+> ! 	  padding -= (buf_len = strlen(title2));
+> ! 	  padding -= strlen(title3);
+>
+>   	  sprintf(titlebuf, "%s%-*.*s%s\n", title1, buf_len+padding,
+>   	      buf_len+padding, title2, title3);
+>
+> --
+> John A. Limpert
+> UUCP:	johnl@n3dmc.UUCP, johnl@n3dmc.UU.NET, uunet!n3dmc!johnl
+
+
+	Some versions of GNUmake are slightly incompatible with
+standard make.  If you plan on using GNUmake instead of standard make,
+you might need to change instances of:
+	-$(MAKEFLAGS)
+to:
+	$(MAKEFLAGS)
+in all Makefiles that contain that construct.
+
+>From pyrdc!uunet!mcvax!sauna.hut.fi!jkp Thu Jul 20 23:06:10 1989
+>From: Jyrki Kuoppala <pyrdc!uunet!mcvax!cs.hut.fi!jkp>
+>Subject: ELM diff for Altos Worknet
+>Organization: Helsinki University of Technology, Finland.
+>There's a bug in the Altos Worknet that makes it impossible to change
+>a file's access time if the file is on another system (via Worknet).
+>To make elm work if you use /usr/mail over Worknet, you need to apply
+>the following patch and define WORKNET when compiling leavembox.c.
+>
+>Note: WORKNET needs to be defined somewhere, the easiest thing is
+>to add it manually to src/Makefile.  That's how I did it.
+>
+>*** elm2.2/src/leavembox.c	Tue Jul 18 20:50:32 1989
+>--- elm2.2.altos/src/leavembox.c	Tue Jul 18 23:36:11 1989
+>***************
+>*** 557,562 ****
+>--- 557,565 ----
+>  	utime_buffer.modtime= buf.st_mtime;
+>  #endif
+>
+>+ #ifndef WORKNET
+>+ 	/* Braindamaged WorkNet from Altos doesn't know how to change
+>+ 	   a file's access time if it is on another system */
+>  #ifdef BSD
+>  	if (utime(cur_folder, utime_buffer) != 0) {
+>  #else
+>***************
+>*** 569,574 ****
+>--- 572,578 ----
+>  	  error2("Error %s trying to change file %s access time.",
+>  		   error_name(errno), cur_folder);
+>  	}
+>+ #endif  /* WORKNET */
+>
+>
+>  	mailfile_size = bytes(cur_folder);
+>
+>
+>Jyrki Kuoppala    Helsinki University of Technology, Finland.
+>Internet :        jkp@cs.hut.fi           [128.214.3.119]
+>BITNET :          jkp@fingate.bitnet      Gravity is a myth, the Earth sucks!
+
+					Syd Weinstein
+					Elm Coordinator
+					elm@DSI.COM
+					(dsinc!elm)

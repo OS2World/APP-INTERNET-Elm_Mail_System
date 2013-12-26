@@ -1,0 +1,162 @@
+Using Elm for OS/2 together with IBM TCP/IP's sendmail
+------------------------------------------------------
+
+[It is assumed that you have read the README.OS2 file first.]
+
+
+Introduction
+------------
+
+This version of Elm also supports TCP/IP sendmail (provided by IBM
+in TCP/IP for OS/2) as an alternative mail transport. This is done by
+faking to Elm that it would run with UUPC.
+
+The OS/2 Warp 3.0 Internet Access Kit can also provide sendmail
+transport. However, it is initially configured for POP3 mail, which is
+NOT officially supported by this release of Elm. However, a user has
+reported success in setting up such a configuration. Please see his
+instructions in the file README.POP.
+
+
+Configuration File Setup
+------------------------
+
+You just make a UUPC system.rc file with the required settings for Elm
+and let the UUPCSYSRC and UUPCUSRRC environment variables both point
+to the same file. Elm recognizes that it is working with sendmail by
+reading the rmail=sendmail line in that dummy .rc file.
+
+See the sample elm-tcp.rc file which shows how to set up a .rc file to
+use Elm with sendmail.
+
+The .rc file must contain the settings "rmail=sendmail", as a flag for
+Elm that it runs with TCP/IP sendmail and the settings "NodeName=",
+"Domain=", "ConfDir=", "SpoolDir=", "MailDir=", "TempDir=", "PostMaster=",
+"MailBox=", "Name=", "Home=", "Editor=" and "Pager=" and optionally
+also a "FromDomain=" and a "ReplyTo=" setting.
+
+If you use sendmail, you have a choice how to run sendmail from within
+Elm when sending mail. The default behaviour is for Elm to run
+sendmail synchronously, i.e. to wait until it has finished sending the
+message. This way you are told about an eventual failure. 
+
+Optionally, you can cause Elm to run sendmail asynchonously
+("detached"), i.e. NOT to wait until it has completed. This may be
+preferable if you are connected to a busy network where delivery of
+messages can take a while (up to a minute, for example) and you don't
+always want to wait that long.
+
+Both modes of running IBM's sendmail.exe require a small helper
+program for Elm (the included sndmail.exe program) to clean up the
+temporary message file after sendmail completes, especially in the
+case of "detached" use of sendmail. You must install the sndmail.exe
+program on your system (in a directory listed in PATH).
+
+To select the "detached" mode for sendmail, add the line
+"Options=background" to your .rc file (see comment in the included
+sample elm-tcp.rc file).
+
+
+Incoming Mail
+-------------
+
+Incoming mail can be received by IBM's sendmail program which is
+included with TCP/IP for OS/2 (version 2.0 base kit or version 3.0 and
+above as included with Warp Connect and Warp Server).
+
+Depending on if you use TCP/IP 2.0 or TCP/IP 3.0, the sendmail program
+will act a bit different. For TCP/IP 2.0, it will deliver incoming
+mail into a directory to be processed by the LaMail program. For
+TCP/IP 3.0, it will be delivered to Ultimail/Lite. Both modes can NOT
+be used with Elm.
+
+So, in both cases, you have to modify your sendmail.cf file to deliver
+mail into a format readable with Elm. For this purpose, a small
+utility (rcvmail.exe) is included with this version of Elm that can be
+used as the delivery agent with IBM's sendmail.
+
+The rcvmail.exe takes two or three arguments. The first is the
+absolute path of the directory where the user mailbox files are
+stored (the same directory specified with MailDir= in the .rc file).
+The second is the user name for which the mail is delivered. The
+optional third argument is the option -u which must precede the
+other two, if used. The -u option causes rcvmail.exe to add the UUPC
+style message separators to the messages stored in the user mailbox
+files, which is recommended when using Elm.
+
+Locate the line in your sendmail.cf that starts with the Mlocal
+keyword and modify it as indicated in the sample line below:
+
+Mlocal, P=x:/tcpip/bin/rcvmail.exe, F=lsDFMP, S=10, R=20, A=-u x:/tcpip/mail $u
+
+The $u symbol causes sendmail to pass the user name the mail is for as
+the argument to rcvmail.exe.
+
+The MailDir= setting tells Elm where it should maintain the Unix-style
+mailbox file where it transfers incoming mail to. I would suggest
+using x:\tcpip\mail (you have to create that directory manually, of
+course). And if you set the MailBox= setting to, for example, higgins,
+then your mailbox file will be x:\tcpip\mail\higgins. Any mail coming
+in for a user called higgins will be delivered by rcvmail.exe into
+that same file.
+
+The rcvmail.exe program will not accept mail for any arbitrary user,
+only for known ones. To make users known to it, you need to create a
+Unix style passwd file in the ConfDir= directory. See the sample
+included passwd file to make yourself familiar with the format. Any
+mail to a user name not defined in the passwd file is delivered into a
+mailbox file with the name specified with PostMaster= in the .rc file.
+
+
+Forward Files
+-------------
+
+If a "forward" file is found in the home directory of a user rcvmail
+is trying to deliver mail for (the home directories are defined in the
+passwd file), it is processed line by line. Each line can contain either
+a local user name to which the mail is forwarded (and for whom in
+turn rcvmail checks for a forward file), a remote e-mail address (with
+a @ in it) to which the mail is forwarded, a \ followed by a local mailbox
+file name (i.e. a user name without further checking and forward 
+expansion) or a | followed by a system command into which the mail 
+message is piped on standard input. 
+
+If all lines of a forward file failed to be processed properly, the 
+mail is delivered to the owning user despite the presence of the forward
+file. If there is at least one successfull delivery during the processing 
+of a forward file, the owning user does not get a copy of the message in
+his/her mailbox file.
+
+
+Sent/Delivered Mail Log Files
+-----------------------------
+
+In the directory configured with the SpoolDir= line in the .rc file,
+both sndmail and rcvmail maintain log files with timestamped entries
+for each sent and received message. This way, you can always verify
+if a message was sent successfully, for example, even if you use
+the "detached" mode for senmail (Options=background).
+
+
+Sendmail Configuration File
+---------------------------
+
+By the way, a sample sendmail.cf for OS/2 file is included with this
+version of Elm. It is well commented and was written by Niel Kempson.
+Better use that as the starting point to create your own one than
+the sendmail.cf file include with OS/2's TCP/IP package because IBM's
+is not nearly as good commented and figuring out how to configure
+sendmail can become difficult.
+
+
+Mail Filtering
+--------------
+
+Both the sndmail and rcvmail programs allow filtering of messages.
+Before further processing, both programs pass the messages through
+"sndfilt" and "rcvfilt" programs, respectively, if they exist.
+
+These can, for example. be programs written in REXX. Included in
+this package are two samples that I use to convert to/from MIME
+encoding of messages with 8-bit characters as "quoted printable".
+
